@@ -11,23 +11,33 @@ import io.appium.java_client.AppiumDriver;
  */
 public class DriverContext {
 
-  private AppiumDriver driver;
+  private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
 
   /**
-   * Sets the driver instance.
+   * Sets the driver instance for the current thread.
    *
-   * @param driver AppiumDriver instance
+   * @param driverInstance AppiumDriver instance
    */
-  public void setDriver(AppiumDriver driver) {
-    this.driver = driver;
+  public void setDriver(AppiumDriver driverInstance) {
+    driver.set(driverInstance);
   }
 
   /**
-   * Returns the current driver.
+   * Returns the driver instance associated with the current thread.
    *
    * @return AppiumDriver instance
    */
   public AppiumDriver getDriver() {
-    return driver;
+    return driver.get();
+  }
+
+  /**
+   * Removes the driver instance from the current thread.
+   *
+   * <p>This method should be called after test execution to prevent memory leaks
+   * and ensure proper cleanup in parallel environments.</p>
+   */
+  public void removeDriver() {
+    driver.remove();
   }
 }
