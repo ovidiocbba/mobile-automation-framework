@@ -1,6 +1,6 @@
 package com.ovidiomiranda.framework.core.driver;
 
-import com.ovidiomiranda.framework.core.providers.PlatformType;
+import com.ovidiomiranda.framework.core.enums.PlatformType;
 import io.appium.java_client.AppiumDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +34,8 @@ public final class DriverManager {
    */
   public static void initDriver(final PlatformType platformType) {
     if (DRIVER.get() == null) {
-      LOGGER.info("Initializing AppiumDriver for platform: {}", platformType);
       AppiumDriver driver = DriverFactory.createDriver(platformType);
       DRIVER.set(driver);
-    } else {
-      LOGGER.warn("Driver is already initialized for this thread.");
     }
   }
 
@@ -71,7 +68,6 @@ public final class DriverManager {
     try {
       AppiumDriver driver = DRIVER.get();
       if (driver != null) {
-        LOGGER.info("Closing AppiumDriver session.");
         driver.quit();
       }
     } finally {
