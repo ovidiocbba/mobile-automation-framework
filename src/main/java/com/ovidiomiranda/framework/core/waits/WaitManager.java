@@ -1,7 +1,7 @@
 package com.ovidiomiranda.framework.core.waits;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
-import com.ovidiomiranda.framework.core.config.PropertiesInput;
+import com.ovidiomiranda.framework.core.enums.PropertiesInput;
 import com.ovidiomiranda.framework.core.driver.DriverManager;
 import java.time.Duration;
 import org.openqa.selenium.WebDriver;
