@@ -95,7 +95,7 @@ public class CommonHooks {
     }
 
     LOGGER.info(SEPARATOR);
-    driverContext.getDriver().quit();
+    driverContext.removeDriver();
   }
 
   /**
