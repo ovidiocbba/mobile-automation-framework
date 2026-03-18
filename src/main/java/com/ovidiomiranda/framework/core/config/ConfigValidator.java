@@ -5,17 +5,16 @@ import com.ovidiomiranda.framework.core.enums.PropertiesInput;
 /**
  * Utility class used to validate configuration properties.
  *
- * <p>This class ensures required configuration values exist before they are used by the
- * framework.</p>
+ * <p>Ensures required properties exist before use.</p>
  *
  * @author Ovidio Miranda
  */
-public final class ConfigValidator {
+public class ConfigValidator {
 
-  /**
-   * Private constructor to prevent instantiation.
-   */
-  private ConfigValidator() {
+  private final PropertiesManager propertiesManager;
+
+  public ConfigValidator(PropertiesManager propertiesManager) {
+    this.propertiesManager = propertiesManager;
   }
 
   /**
@@ -25,8 +24,8 @@ public final class ConfigValidator {
    * @return property value
    * @throws IllegalArgumentException if the property is missing
    */
-  public static String require(final PropertiesInput key) {
-    String value = PropertiesManager.getInstance().getProperty(key);
+  public String require(final PropertiesInput key) {
+    String value = propertiesManager.getProperty(key);
     if (value == null || value.isBlank()) {
       throw new IllegalArgumentException(
           "Required property is missing: " + key.getPropertiesName());
@@ -40,8 +39,8 @@ public final class ConfigValidator {
    * @param key configuration key
    * @return property value or null
    */
-  public static String optional(final PropertiesInput key) {
-    return PropertiesManager.getInstance().getProperty(key);
+  public String optional(final PropertiesInput key) {
+    return propertiesManager.getProperty(key);
   }
 
   /**
@@ -50,7 +49,7 @@ public final class ConfigValidator {
    * @param key configuration key
    * @return integer value
    */
-  public static int requireInt(final PropertiesInput key) {
+  public int requireInt(final PropertiesInput key) {
     String value = require(key);
     try {
       return Integer.parseInt(value);
@@ -63,11 +62,11 @@ public final class ConfigValidator {
   /**
    * Returns an optional integer property.
    *
-   * @param key configuration key
+   * @param key          configuration key
    * @param defaultValue value used if property is missing
    * @return integer value
    */
-  public static int optionalInt(final PropertiesInput key, final int defaultValue) {
+  public int optionalInt(final PropertiesInput key, final int defaultValue) {
     String value = optional(key);
     if (value == null || value.isBlank()) {
       return defaultValue;
