@@ -8,18 +8,17 @@ import java.util.Properties;
 /**
  * Loads and provides configuration values from config.properties.
  *
- * <p>This class uses a singleton pattern to ensure properties are loaded only once.</p>
+ * @author Ovidio Miranda
  */
-public final class PropertiesManager {
+public class PropertiesManager {
 
-  private static PropertiesManager propertiesManager;
   private final Properties properties;
 
   /**
    * Constructor for PropertiesManager.
    */
-  private PropertiesManager() {
-    properties = loadProperties();
+  public PropertiesManager() {
+    this.properties = loadProperties();
   }
 
   /**
@@ -38,18 +37,6 @@ public final class PropertiesManager {
       throw new RuntimeException("Failed to load properties", e);
     }
     return props;
-  }
-
-  /**
-   * Gets the singleton instance of PropertiesManager.
-   *
-   * @return PropertiesManager instance
-   */
-  public static synchronized PropertiesManager getInstance() {
-    if (propertiesManager == null) {
-      propertiesManager = new PropertiesManager();
-    }
-    return propertiesManager;
   }
 
   /**
