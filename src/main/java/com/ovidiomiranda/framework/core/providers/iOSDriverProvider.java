@@ -2,7 +2,7 @@ package com.ovidiomiranda.framework.core.providers;
 
 import com.ovidiomiranda.framework.core.capabilities.iOSCapabilities;
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
-import com.ovidiomiranda.framework.core.config.PropertiesInput;
+import com.ovidiomiranda.framework.core.enums.PropertiesInput;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
