@@ -1,8 +1,8 @@
 package com.ovidiomiranda.framework.core.capabilities;
 
 import static com.ovidiomiranda.framework.core.capabilities.BaseCapabilities.setCommonCapabilities;
-import static com.ovidiomiranda.framework.core.config.PropertiesInput.APP;
-import static com.ovidiomiranda.framework.core.config.PropertiesInput.BUNDLE_ID;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BUNDLE_ID;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import io.appium.java_client.ios.options.XCUITestOptions;
