@@ -11,10 +11,25 @@ import java.net.URL;
 /**
  * Creates Android driver instances.
  *
- * <p>This implementation connects to the Appium server and starts a session using Android
- * capabilities.</p>
+ * <p>Connects to Appium server and starts a session with Android capabilities.</p>
+ *
+ * @author Ovidio Miranda
  */
 public class AndroidDriverProvider implements DriverProvider {
+
+  private final ConfigValidator config;
+  private final AndroidCapabilities androidCapabilities;
+
+  /**
+   * Constructor.
+   *
+   * @param config              configuration validator
+   * @param androidCapabilities Android capabilities builder
+   */
+  public AndroidDriverProvider(ConfigValidator config, AndroidCapabilities androidCapabilities) {
+    this.config = config;
+    this.androidCapabilities = androidCapabilities;
+  }
 
   /**
    * {@inheritDoc}
@@ -22,8 +37,8 @@ public class AndroidDriverProvider implements DriverProvider {
   @Override
   public AppiumDriver getDriver() {
     try {
-      UiAutomator2Options capabilities = AndroidCapabilities.getCapabilities();
-      String appiumServerUrl = ConfigValidator.require(PropertiesInput.APPIUM_SERVER_URL);
+      UiAutomator2Options capabilities = androidCapabilities.getCapabilities();
+      String appiumServerUrl = config.require(PropertiesInput.APPIUM_SERVER_URL);
       return new AndroidDriver(new URL(appiumServerUrl), capabilities);
     } catch (Exception e) {
       throw new RuntimeException("Failed to create Android driver", e);
