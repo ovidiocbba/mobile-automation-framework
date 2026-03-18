@@ -4,8 +4,8 @@ import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PASSWORD;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.USERNAME;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
-import com.ovidiomiranda.framework.ui.pages.LoginPage;
 import com.ovidiomiranda.framework.ui.navigation.MenuNavigation;
+import com.ovidiomiranda.framework.ui.pages.LoginPage;
 import com.ovidiomiranda.framework.ui.pages.ProductsPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,9 +19,26 @@ import org.testng.Assert;
  */
 public class LoginSteps {
 
-  private final MenuNavigation menuNavigation = new MenuNavigation();
-  private final LoginPage loginPage = new LoginPage();
-  private final ProductsPage productsPage = new ProductsPage();
+  private final MenuNavigation menuNavigation;
+  private final LoginPage loginPage;
+  private final ProductsPage productsPage;
+  private final ConfigValidator config;
+
+  /**
+   * Constructor.
+   *
+   * @param config         configuration validator
+   * @param menuNavigation menu navigation utility
+   * @param loginPage      login page object
+   * @param productsPage   products page object
+   */
+  public LoginSteps(ConfigValidator config, MenuNavigation menuNavigation, LoginPage loginPage,
+      ProductsPage productsPage) {
+    this.config = config;
+    this.menuNavigation = menuNavigation;
+    this.loginPage = loginPage;
+    this.productsPage = productsPage;
+  }
 
   /**
    * Navigates to 'Login' screen.
@@ -32,17 +49,17 @@ public class LoginSteps {
   }
 
   /**
-   * Performs login with valid credentials.
+   * Performs login using valid credentials from configuration.
    */
   @When("the user logs in with valid credentials")
   public void login() {
-    String username = ConfigValidator.require(USERNAME);
-    String password = ConfigValidator.require(PASSWORD);
+    String username = config.require(USERNAME);
+    String password = config.require(PASSWORD);
     loginPage.login(username, password);
   }
 
   /**
-   * Verifies products screen is displayed.
+   * Verifies that the products screen is displayed.
    */
   @Then("the user should see the products screen")
   public void validateLogin() {
