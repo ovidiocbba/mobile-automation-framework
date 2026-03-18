@@ -1,9 +1,9 @@
 package com.ovidiomiranda.framework.core.capabilities;
 
 import static com.ovidiomiranda.framework.core.capabilities.BaseCapabilities.setCommonCapabilities;
-import static com.ovidiomiranda.framework.core.config.PropertiesInput.APP;
-import static com.ovidiomiranda.framework.core.config.PropertiesInput.APP_ACTIVITY;
-import static com.ovidiomiranda.framework.core.config.PropertiesInput.APP_PACKAGE;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP_ACTIVITY;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP_PACKAGE;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import io.appium.java_client.android.options.UiAutomator2Options;
