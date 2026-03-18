@@ -8,39 +8,43 @@ import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import io.appium.java_client.ios.options.XCUITestOptions;
 
 /**
- * Builds iOS capabilities used to start a mobile session.
+ * Builds iOS capabilities for Appium sessions.
  *
  * <p>The app can be launched using the app file path or the installed app bundle identifier.</p>
  *
  * @author Ovidio Miranda
  */
-public final class iOSCapabilities {
+public class iOSCapabilities {
+
+  private final ConfigValidator config;
 
   /**
-   * Private constructor to prevent instantiation.
+   * Constructor.
+   *
+   * @param config configuration validator
    */
-  private iOSCapabilities() {
+  public iOSCapabilities(ConfigValidator config) {
+    this.config = config;
   }
 
   /**
    * Creates iOS capabilities.
    *
-   * <p>If the {@code app} property is provided,
-   * the framework installs the application. Otherwise, the app is launched using the bundle
-   * id.</p>
+   * <p>If the {@code app} property is provided, the framework installs the application. Otherwise,
+   * the app is launched using the bundle id.</p>
    *
    * @return configured XCUITestOptions
    */
-  public static XCUITestOptions getCapabilities() {
+  public XCUITestOptions getCapabilities() {
     XCUITestOptions options = new XCUITestOptions();
     options.setPlatformName("iOS");
     options.setAutoAcceptAlerts(true);
-    setCommonCapabilities(options);
-    String app = ConfigValidator.optional(APP);
+    setCommonCapabilities(options, config);
+    String app = config.optional(APP);
     if (app != null && !app.isBlank()) {
       options.setApp(app);
     } else {
-      options.setBundleId(ConfigValidator.require(BUNDLE_ID));
+      options.setBundleId(config.require(BUNDLE_ID));
     }
     return options;
   }
