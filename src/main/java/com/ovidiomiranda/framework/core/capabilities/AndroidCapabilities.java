@@ -9,17 +9,24 @@ import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import io.appium.java_client.android.options.UiAutomator2Options;
 
 /**
- * Builds Android capabilities used to start a mobile session.
+ * Builds Android capabilities for Appium sessions.
  *
  * <p>The configuration values are loaded from {@code config.properties}.
  * The app can be launched using the APK path or using the installed app package and activity.</p>
+ *
+ * @author Ovidio Miranda
  */
-public final class AndroidCapabilities {
+public class AndroidCapabilities {
+
+  private final ConfigValidator config;
 
   /**
-   * Private constructor to prevent instantiation.
+   * Constructor.
+   *
+   * @param config configuration validator
    */
-  private AndroidCapabilities() {
+  public AndroidCapabilities(ConfigValidator config) {
+    this.config = config;
   }
 
   /**
@@ -31,16 +38,16 @@ public final class AndroidCapabilities {
    *
    * @return configured UiAutomator2Options
    */
-  public static UiAutomator2Options getCapabilities() {
+  public UiAutomator2Options getCapabilities() {
     UiAutomator2Options options = new UiAutomator2Options();
     options.setPlatformName("Android");
-    setCommonCapabilities(options);
-    String app = ConfigValidator.optional(APP);
+    setCommonCapabilities(options, config);
+    String app = config.optional(APP);
     if (app != null && !app.isBlank()) {
       options.setApp(app);
     } else {
-      options.setCapability("appPackage", ConfigValidator.require(APP_PACKAGE));
-      options.setCapability("appActivity", ConfigValidator.require(APP_ACTIVITY));
+      options.setCapability("appPackage", config.require(APP_PACKAGE));
+      options.setCapability("appActivity", config.require(APP_ACTIVITY));
     }
     return options;
   }
