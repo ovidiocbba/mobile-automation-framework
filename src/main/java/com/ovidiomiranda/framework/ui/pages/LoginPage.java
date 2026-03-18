@@ -1,5 +1,6 @@
 package com.ovidiomiranda.framework.ui.pages;
 
+import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
@@ -16,12 +17,22 @@ public class LoginPage extends BasePage {
   private final By loginButton = AppiumBy.id("com.saucelabs.mydemoapp.android:id/loginBtn");
 
   /**
+   * Constructor.
+   *
+   * @param driverContext driver context
+   * @param actions       MobileElementActions utility
+   */
+  public LoginPage(DriverContext driverContext, MobileElementActions actions) {
+    super(driverContext, actions);
+  }
+
+  /**
    * Enters username in the input field.
    *
    * @param username user name
    */
   public void enterUsername(String username) {
-    MobileElementActions.type(usernameInput, username);
+    actions.type(usernameInput, username);
   }
 
   /**
@@ -30,21 +41,21 @@ public class LoginPage extends BasePage {
    * @param password user password
    */
   public void enterPassword(String password) {
-    MobileElementActions.type(passwordInput, password);
+    actions.type(passwordInput, password);
   }
 
   /**
    * Taps login button.
    */
   public void tapLoginButton() {
-    MobileElementActions.tap(loginButton);
+    actions.tap(loginButton);
   }
 
   /**
-   * Performs full login flow.
+   * Performs the full login flow: enter username, password, and tap login.
    *
-   * @param username user name
-   * @param password user password
+   * @param username user name string
+   * @param password user password string
    */
   public void login(String username, String password) {
     enterUsername(username);
