@@ -9,9 +9,11 @@ import io.appium.java_client.remote.options.BaseOptions;
 import java.time.Duration;
 
 /**
- * Defines capabilities shared by all mobile platforms.
+ * Base capabilities for mobile platforms.
  *
  * <p>This class centralizes common configuration used by Android and iOS sessions.</p>
+ *
+ * @author Ovidio Miranda
  */
 public abstract class BaseCapabilities {
 
@@ -23,12 +25,13 @@ public abstract class BaseCapabilities {
   /**
    * Applies common capabilities to the given options object.
    *
-   * @param options platform-specific options
+   * @param options platform options
+   * @param config  configuration validator
    */
-  protected static void setCommonCapabilities(BaseOptions<?> options) {
-    options.setCapability("deviceName", ConfigValidator.require(DEVICE_NAME));
-    options.setCapability("platformVersion", ConfigValidator.require(PLATFORM_VERSION));
-    options.setCapability("automationName", ConfigValidator.require(AUTOMATION_NAME));
+  protected static void setCommonCapabilities(BaseOptions<?> options, ConfigValidator config) {
+    options.setCapability("deviceName", config.require(DEVICE_NAME));
+    options.setCapability("platformVersion", config.require(PLATFORM_VERSION));
+    options.setCapability("automationName", config.require(AUTOMATION_NAME));
     options.setCapability("noReset", true);
     options.setCapability("newCommandTimeout", NEW_COMMAND_TIMEOUT.getSeconds());
   }
