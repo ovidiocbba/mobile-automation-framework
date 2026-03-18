@@ -1,35 +1,45 @@
 package com.ovidiomiranda.framework.core.waits;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
+import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.enums.PropertiesInput;
-import com.ovidiomiranda.framework.core.driver.DriverManager;
 import java.time.Duration;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Creates configured WebDriverWait instances.
+ * Creates configured WebDriverWait instances for explicit waits.
  *
- * <p>The timeout value is read from the configuration.</p>
+ * <p>Timeout is read from configuration.</p>
  *
  * @author Ovidio Miranda
  */
-public final class WaitManager {
+public class WaitManager {
+
+  private final DriverContext driverContext;
+  private final ConfigValidator config;
+  private WebDriverWait wait;
 
   /**
-   * Private constructor to prevent instantiation.
+   * Constructor.
+   *
+   * @param driverContext driver context holding AppiumDriver
+   * @param config        configuration validator
    */
-  private WaitManager() {
+  public WaitManager(DriverContext driverContext, ConfigValidator config) {
+    this.driverContext = driverContext;
+    this.config = config;
   }
 
   /**
-   * Returns a configured WebDriverWait.
+   * Returns a configured WebDriverWait instance.
    *
    * @return WebDriverWait instance
    */
-  public static WebDriverWait getWait() {
-    int timeout = ConfigValidator.optionalInt(PropertiesInput.EXPLICIT_WAIT, 15);
-    WebDriver driver = DriverManager.getDriver();
-    return new WebDriverWait(driver, Duration.ofSeconds(timeout));
+  public WebDriverWait getWait() {
+    if (wait == null) {
+      int timeout = config.optionalInt(PropertiesInput.EXPLICIT_WAIT, 15);
+      wait = new WebDriverWait(driverContext.getDriver(), Duration.ofSeconds(timeout));
+    }
+    return wait;
   }
 }
