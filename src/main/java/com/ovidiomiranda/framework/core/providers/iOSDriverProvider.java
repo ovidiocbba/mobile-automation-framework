@@ -13,8 +13,24 @@ import java.net.URL;
  *
  * <p>This implementation connects to the Appium server and starts a session using iOS
  * capabilities.</p>
+ *
+ * @author Ovidio Miranda
  */
 public class iOSDriverProvider implements DriverProvider {
+
+  private final ConfigValidator config;
+  private final iOSCapabilities iosCapabilities;
+
+  /**
+   * Constructor.
+   *
+   * @param config          configuration validator
+   * @param iosCapabilities iOS capabilities builder
+   */
+  public iOSDriverProvider(ConfigValidator config, iOSCapabilities iosCapabilities) {
+    this.config = config;
+    this.iosCapabilities = iosCapabilities;
+  }
 
   /**
    * {@inheritDoc}
@@ -22,8 +38,8 @@ public class iOSDriverProvider implements DriverProvider {
   @Override
   public AppiumDriver getDriver() {
     try {
-      XCUITestOptions capabilities = iOSCapabilities.getCapabilities();
-      String appiumServerUrl = ConfigValidator.require(PropertiesInput.APPIUM_SERVER_URL);
+      XCUITestOptions capabilities = iosCapabilities.getCapabilities();
+      String appiumServerUrl = config.require(PropertiesInput.APPIUM_SERVER_URL);
       return new IOSDriver(new URL(appiumServerUrl), capabilities);
     } catch (Exception e) {
       throw new RuntimeException("Failed to create IOS driver", e);
