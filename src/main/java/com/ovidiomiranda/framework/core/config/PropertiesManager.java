@@ -1,5 +1,6 @@
 package com.ovidiomiranda.framework.core.config;
 
+import com.ovidiomiranda.framework.core.enums.PropertiesInput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
