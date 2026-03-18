@@ -5,8 +5,10 @@ import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseId;
 import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseTitle;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
-import com.ovidiomiranda.framework.core.driver.DriverManager;
+import com.ovidiomiranda.framework.core.driver.DriverContext;
+import com.ovidiomiranda.framework.core.driver.DriverFactory;
 import com.ovidiomiranda.framework.core.enums.PlatformType;
+import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -28,6 +30,24 @@ public class CommonHooks {
   private long startTime;
   private static final String SEPARATOR = "============================================================";
 
+  private final DriverContext driverContext;
+  private final DriverFactory driverFactory;
+  private final ConfigValidator config;
+
+  /**
+   * Constructor.
+   *
+   * @param driverContext driver context
+   * @param driverFactory driver factory
+   * @param config        config validator
+   */
+  public CommonHooks(DriverContext driverContext, DriverFactory driverFactory,
+      ConfigValidator config) {
+    this.driverContext = driverContext;
+    this.driverFactory = driverFactory;
+    this.config = config;
+  }
+
   /**
    * Initializes execution timing and logs scenario start.
    *
@@ -36,12 +56,9 @@ public class CommonHooks {
   @Before(order = -1)
   public void beforeScenario(final Scenario scenario) {
     startTime = System.currentTimeMillis();
-
-    if (LOGGER.isInfoEnabled()) {
-      LOGGER.info(SEPARATOR);
-      LOGGER.info(">>> STARTING SCENARIO | {}", getTestCaseTitle(scenario));
-      LOGGER.info(SEPARATOR);
-    }
+    LOGGER.info(SEPARATOR);
+    LOGGER.info(">>> STARTING SCENARIO | {}", getTestCaseTitle(scenario));
+    LOGGER.info(SEPARATOR);
   }
 
   /**
@@ -51,8 +68,9 @@ public class CommonHooks {
    */
   @Before(order = 0)
   public void setUp() {
-    String platform = ConfigValidator.require(PLATFORM);
-    DriverManager.initDriver(PlatformType.valueOf(platform.toUpperCase()));
+    String platform = config.require(PLATFORM);
+    AppiumDriver driver = driverFactory.createDriver(PlatformType.valueOf(platform.toUpperCase()));
+    driverContext.setDriver(driver);
   }
 
   /**
@@ -77,7 +95,7 @@ public class CommonHooks {
     }
 
     LOGGER.info(SEPARATOR);
-    DriverManager.quitDriver();
+    driverContext.getDriver().quit();
   }
 
   /**
@@ -87,8 +105,8 @@ public class CommonHooks {
    */
   private void attachScreenshot(String name) {
     try {
-      byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver())
-          .getScreenshotAs(OutputType.BYTES);
+      byte[] screenshot = ((TakesScreenshot) driverContext.getDriver()).getScreenshotAs(
+          OutputType.BYTES);
 
       Allure.addAttachment(name, new ByteArrayInputStream(screenshot));
 
