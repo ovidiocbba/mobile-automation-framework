@@ -1,8 +1,8 @@
 package com.ovidiomiranda.framework.core.capabilities;
 
-import static com.ovidiomiranda.framework.core.config.PropertiesInput.AUTOMATION_NAME;
-import static com.ovidiomiranda.framework.core.config.PropertiesInput.DEVICE_NAME;
-import static com.ovidiomiranda.framework.core.config.PropertiesInput.PLATFORM_VERSION;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.AUTOMATION_NAME;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.DEVICE_NAME;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM_VERSION;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import io.appium.java_client.remote.options.BaseOptions;
