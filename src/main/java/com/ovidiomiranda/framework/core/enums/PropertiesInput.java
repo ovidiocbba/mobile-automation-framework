@@ -1,4 +1,4 @@
-package com.ovidiomiranda.framework.core.config;
+package com.ovidiomiranda.framework.core.enums;
 
 /**
  * Enum containing all configuration keys supported by the framework.
@@ -9,6 +9,15 @@ package com.ovidiomiranda.framework.core.config;
  */
 public enum PropertiesInput {
 
+  /**
+   * Username for login.
+   */
+  USERNAME("username"),
+
+  /**
+   * Password for login.
+   */
+  PASSWORD("password"),
   /**
    * Mobile platform where tests will run (ANDROID or IOS).
    */
