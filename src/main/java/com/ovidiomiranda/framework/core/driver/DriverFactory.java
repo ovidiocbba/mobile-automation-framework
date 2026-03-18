@@ -2,7 +2,7 @@ package com.ovidiomiranda.framework.core.driver;
 
 import com.ovidiomiranda.framework.core.providers.AndroidDriverProvider;
 import com.ovidiomiranda.framework.core.providers.DriverProvider;
-import com.ovidiomiranda.framework.core.providers.PlatformType;
+import com.ovidiomiranda.framework.core.enums.PlatformType;
 import com.ovidiomiranda.framework.core.providers.iOSDriverProvider;
 import io.appium.java_client.AppiumDriver;
 import java.util.EnumMap;
