@@ -1,11 +1,14 @@
 package com.ovidiomiranda.framework.core.waits;
 
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
- * Provides wait utilities for UI elements.
+ * Utility class for explicit waits on UI elements.
+ *
+ * <p>Provides common wait conditions for mobile.</p>
  *
  * @author Ovidio Miranda
  */
@@ -55,5 +58,38 @@ public final class ElementWaits {
    */
   public static WebElement waitForPresence(By locator) {
     return WaitManager.getWait().until(ExpectedConditions.presenceOfElementLocated(locator));
+  }
+
+  /**
+   * Waits until all elements are visible.
+   *
+   * @param locator elements locator
+   * @return list of visible elements
+   */
+  public static List<WebElement> waitForAllVisible(By locator) {
+    return WaitManager.getWait()
+        .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+  }
+
+  /**
+   * Waits until at least one element is present.
+   *
+   * @param locator elements locator
+   * @return list of elements
+   */
+  public static List<WebElement> waitForAllPresence(By locator) {
+    return WaitManager.getWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+  }
+
+  /**
+   * Waits until element contains specific text.
+   *
+   * @param locator element locator
+   * @param text    expected text
+   * @return true if text is present
+   */
+  public static boolean waitForText(By locator, String text) {
+    return WaitManager.getWait()
+        .until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
   }
 }
