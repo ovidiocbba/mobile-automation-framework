@@ -1,21 +1,33 @@
 package com.ovidiomiranda.framework.ui.navigation;
 
+import static com.ovidiomiranda.framework.ui.enums.MenuOption.LOGIN;
+
 import com.ovidiomiranda.framework.ui.components.SideMenuComponent;
-import com.ovidiomiranda.framework.ui.enums.MenuOption;
 
 /**
- * Handles app Menu navigation flows.
+ * Handles navigation through the app menu.
+ *
+ * <p>Provides specific navigation methods to app screens using the side menu.</p>
  *
  * @author Ovidio Miranda
  */
 public class MenuNavigation {
 
-  private final SideMenuComponent sideMenu = new SideMenuComponent();
+  private final SideMenuComponent sideMenu;
 
   /**
-   * Navigates to 'Login' screen.
+   * Constructor.
+   *
+   * @param sideMenu side menu component
+   */
+  public MenuNavigation(SideMenuComponent sideMenu) {
+    this.sideMenu = sideMenu;
+  }
+
+  /**
+   * Navigates to 'Login' screen using the side menu.
    */
   public void goToLogin() {
-    sideMenu.navigateTo(MenuOption.LOGIN);
+    sideMenu.navigateTo(LOGIN);
   }
 }
