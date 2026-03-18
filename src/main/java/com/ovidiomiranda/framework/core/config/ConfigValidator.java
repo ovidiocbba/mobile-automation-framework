@@ -1,5 +1,7 @@
 package com.ovidiomiranda.framework.core.config;
 
+import com.ovidiomiranda.framework.core.enums.PropertiesInput;
+
 /**
  * Utility class used to validate configuration properties.
  *
