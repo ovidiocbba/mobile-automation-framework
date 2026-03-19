@@ -12,7 +12,7 @@ import org.openqa.selenium.By;
  */
 public class ProductsPage extends BasePage {
 
-  private final By productsTitle = AppiumBy.id("com.saucelabs.mydemoapp.android:id/productTV");
+  private final By productsTitle = AppiumBy.id("productTV");
 
   /**
    * Constructor.
@@ -44,7 +44,7 @@ public class ProductsPage extends BasePage {
    * @return cart item count as text
    */
   public String getCartBadgeCount() {
-    By cartBadge = AppiumBy.id("com.saucelabs.mydemoapp.android:id/cartTV");
+    By cartBadge = AppiumBy.id("cartTV");
     return actions.getText(cartBadge);
   }
 
