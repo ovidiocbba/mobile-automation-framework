@@ -1,9 +1,11 @@
 package com.ovidiomiranda.framework.ui.pages;
 
-
+import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
+import com.ovidiomiranda.framework.ui.components.BaseComponent;
 import io.appium.java_client.AppiumDriver;
+
 
 /**
  * Base class for all Page Objects.
@@ -12,28 +14,17 @@ import io.appium.java_client.AppiumDriver;
  *
  * @author Ovidio Miranda
  */
-public abstract class BasePage {
-
-  protected final DriverContext driverContext;
-  protected final MobileElementActions actions;
+public abstract class BasePage extends BaseComponent {
 
   /**
    * Constructor.
    *
-   * @param driverContext driver context for current Appium session
-   * @param actions       MobileElementActions utility
+   * @param config        config validator
+   * @param driverContext driver context
+   * @param actions       mobile actions utility
    */
-  protected BasePage(DriverContext driverContext, MobileElementActions actions) {
-    this.driverContext = driverContext;
-    this.actions = actions;
-  }
-
-  /**
-   * Gets the current AppiumDriver instance.
-   *
-   * @return active AppiumDriver
-   */
-  protected AppiumDriver getDriver() {
-    return driverContext.getDriver();
+  protected BasePage(ConfigValidator config, DriverContext driverContext,
+      MobileElementActions actions) {
+    super(config, driverContext, actions);
   }
 }
