@@ -39,6 +39,12 @@ Appium-Inspector-2026.2.1-mac-arm64.dmg
 Appium-Inspector-2026.2.1-mac-x64.dmg
 ```
 
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
+
 ---
 
 ## :gear: 2. Installation
@@ -50,6 +56,13 @@ Appium-Inspector-2026.2.1-mac-x64.dmg
 ![1-follow-installation-wizard.png](images/appium-inspector/1-follow-installation-wizard.png)
 
 ![2-launch-appium-inspector.png](images/appium-inspector/2-launch-appium-inspector.png)
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
+
 ---
 
 ## :electric_plug: 3. Start Emulator (Optional)
@@ -77,6 +90,12 @@ emulator -avd <AVD_NAME>
 emulator -avd Pixel_7
 ```
 
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
+
 ---
 
 ## :wrench: 4. Configure Session
@@ -91,6 +110,12 @@ Use the following capabilities:
   "app": "C:/Users/ovidio.miranda/Documents/Projects/mobile-automation-framework/apps/android/mda-2.2.0-25.apk"
 }
 ```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
 
 ---
 
@@ -107,6 +132,12 @@ Then click **Start Session**.
 ![3-configure-session.png](images/appium-inspector/3-configure-session.png)
 
 ![4-start-session.png](images/appium-inspector/4-start-session.png)
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
 
 ---
 
@@ -129,6 +160,12 @@ com.saucelabs.mydemoapp.android:id/menuIV
 AppiumBy.id("menuIV")
 ```
 
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
+
 ---
 
 #### 2. **accessibilityId (SECONDARY)**
@@ -141,6 +178,12 @@ AppiumBy.id("menuIV")
 AppiumBy.accessibilityId("Login Menu Item")
 ```
 
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
+
 ---
 
 #### 3. **xpath (FALLBACK ONLY)**
@@ -152,6 +195,12 @@ AppiumBy.accessibilityId("Login Menu Item")
 ```java
 AppiumBy.xpath("//*[@resource-id='com.saucelabs.mydemoapp.android:id/itemTV' and @text='Log In']")
 ```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
 
 ---
 
@@ -166,6 +215,12 @@ AppiumBy.xpath("//*[@resource-id='com.saucelabs.mydemoapp.android:id/itemTV' and
 - elementId
 - only class
 
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
+
 ---
 
 ### :bar_chart: 6.3 Summary
@@ -175,5 +230,11 @@ AppiumBy.xpath("//*[@resource-id='com.saucelabs.mydemoapp.android:id/itemTV' and
 | 1        | resource-id     | Default for Android elements         |
 | 2        | accessibilityId | When ID is not unique or unavailable |
 | 3        | xpath           | Only if no other option exists       |
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
 
 ---
