@@ -1,5 +1,6 @@
 package com.ovidiomiranda.framework.ui.pages;
 
+import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
 import io.appium.java_client.AppiumBy;
@@ -17,11 +18,13 @@ public class ProductDetailPage extends BasePage {
   /**
    * Constructor.
    *
+   * @param config        config validator
    * @param driverContext driver context
    * @param actions       MobileElementActions utility
    */
-  public ProductDetailPage(DriverContext driverContext, MobileElementActions actions) {
-    super(driverContext, actions);
+  public ProductDetailPage(ConfigValidator config, DriverContext driverContext,
+      MobileElementActions actions) {
+    super(config, driverContext, actions);
   }
 
   /**
