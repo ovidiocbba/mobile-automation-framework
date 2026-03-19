@@ -3,12 +3,14 @@ package com.ovidiomiranda.framework.ui.components;
 import static com.ovidiomiranda.framework.ui.enums.MenuOption.LOGIN;
 import static com.ovidiomiranda.framework.ui.enums.MenuOption.LOGOUT;
 
+import com.ovidiomiranda.framework.core.config.ConfigValidator;
+import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
+import com.ovidiomiranda.framework.core.locators.MobileLocator;
 import com.ovidiomiranda.framework.ui.enums.MenuOption;
 import io.appium.java_client.AppiumBy;
 import java.util.EnumMap;
 import java.util.Map;
-import org.openqa.selenium.By;
 
 /**
  * Represents the side navigation menu (hamburger menu).
@@ -17,31 +19,42 @@ import org.openqa.selenium.By;
  *
  * @author Ovidio Miranda
  */
-public class SideMenuComponent {
+public class SideMenuComponent extends BaseComponent {
 
-  private final MobileElementActions actions;
-  private final By hamburgerButton = AppiumBy.id("com.saucelabs.mydemoapp.android:id/menuIV");
-  private static final Map<MenuOption, By> MENU_OPTIONS = new EnumMap<>(MenuOption.class);
+  /**
+   * Hamburger menu button locator for both platforms.
+   */
+  private final MobileLocator hamburgerButton = new MobileLocator(AppiumBy.id("menuIV"),
+      AppiumBy.accessibilityId("menu_button"));
+
+  private static final Map<MenuOption, MobileLocator> MENU_OPTIONS = new EnumMap<>(
+      MenuOption.class);
 
   static {
-    MENU_OPTIONS.put(LOGIN, AppiumBy.accessibilityId("Login Menu Item"));
-    MENU_OPTIONS.put(LOGOUT, AppiumBy.accessibilityId("Logout Menu Item"));
+    MENU_OPTIONS.put(LOGIN, new MobileLocator(AppiumBy.accessibilityId("Login Menu Item"),
+        AppiumBy.accessibilityId("login_menu_item")));
+
+    MENU_OPTIONS.put(LOGOUT, new MobileLocator(AppiumBy.accessibilityId("Logout Menu Item"),
+        AppiumBy.accessibilityId("logout_menu_item")));
   }
 
   /**
    * Constructor.
    *
-   * @param actions MobileElementActions instance for element interaction
+   * @param config        config validator
+   * @param driverContext driver context
+   * @param actions       MobileElementActions utility
    */
-  public SideMenuComponent(MobileElementActions actions) {
-    this.actions = actions;
+  public SideMenuComponent(ConfigValidator config, DriverContext driverContext,
+      MobileElementActions actions) {
+    super(config, driverContext, actions);
   }
 
   /**
    * Opens the side menu by tapping the hamburger button.
    */
   public void openMenu() {
-    actions.tap(hamburgerButton);
+    actions.tap(resolve(hamburgerButton));
   }
 
   /**
@@ -52,10 +65,10 @@ public class SideMenuComponent {
    */
   public void navigateTo(MenuOption option) {
     openMenu();
-    By locator = MENU_OPTIONS.get(option);
+    MobileLocator locator = MENU_OPTIONS.get(option);
     if (locator == null) {
       throw new IllegalArgumentException("Invalid menu option: " + option);
     }
-    actions.tap(locator);
+    actions.tap(resolve(locator));
   }
 }
