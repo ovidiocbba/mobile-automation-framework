@@ -32,7 +32,7 @@ public abstract class BaseCapabilities {
     options.setCapability("deviceName", config.require(DEVICE_NAME));
     options.setCapability("platformVersion", config.require(PLATFORM_VERSION));
     options.setCapability("automationName", config.require(AUTOMATION_NAME));
-    options.setCapability("noReset", true);
+    options.setCapability("noReset", false);
     options.setCapability("newCommandTimeout", NEW_COMMAND_TIMEOUT.getSeconds());
   }
 }
