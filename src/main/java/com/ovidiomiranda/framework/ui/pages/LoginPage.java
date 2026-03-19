@@ -1,9 +1,10 @@
 package com.ovidiomiranda.framework.ui.pages;
 
+import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
+import com.ovidiomiranda.framework.core.locators.MobileLocator;
 import io.appium.java_client.AppiumBy;
-import org.openqa.selenium.By;
 
 /**
  * Represents the 'Login' page and its components.
@@ -12,18 +13,25 @@ import org.openqa.selenium.By;
  */
 public class LoginPage extends BasePage {
 
-  private final By usernameInput = AppiumBy.id("nameET");
-  private final By passwordInput = AppiumBy.id("passwordET");
-  private final By loginButton = AppiumBy.id("loginBtn");
+  private final MobileLocator usernameInput = new MobileLocator(AppiumBy.id("nameET"),
+      AppiumBy.accessibilityId("username"));
+
+  private final MobileLocator passwordInput = new MobileLocator(AppiumBy.id("passwordET"),
+      AppiumBy.accessibilityId("password"));
+
+  private final MobileLocator loginButton = new MobileLocator(AppiumBy.id("loginBtn"),
+      AppiumBy.accessibilityId("login_button"));
 
   /**
    * Constructor.
    *
+   * @param config        config validator
    * @param driverContext driver context
    * @param actions       MobileElementActions utility
    */
-  public LoginPage(DriverContext driverContext, MobileElementActions actions) {
-    super(driverContext, actions);
+  public LoginPage(ConfigValidator config, DriverContext driverContext,
+      MobileElementActions actions) {
+    super(config, driverContext, actions);
   }
 
   /**
@@ -32,7 +40,7 @@ public class LoginPage extends BasePage {
    * @param username user name
    */
   public void enterUsername(String username) {
-    actions.type(usernameInput, username);
+    actions.type(resolve(usernameInput), username);
   }
 
   /**
@@ -41,14 +49,14 @@ public class LoginPage extends BasePage {
    * @param password user password
    */
   public void enterPassword(String password) {
-    actions.type(passwordInput, password);
+    actions.type(resolve(passwordInput), password);
   }
 
   /**
    * Taps login button.
    */
   public void tapLoginButton() {
-    actions.tap(loginButton);
+    actions.tap(resolve(loginButton));
   }
 
   /**
