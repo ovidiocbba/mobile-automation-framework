@@ -12,7 +12,7 @@ import org.openqa.selenium.By;
  */
 public class ProductDetailPage extends BasePage {
 
-  private final By addToCartButton = AppiumBy.id("com.saucelabs.mydemoapp.android:id/cartBt");
+  private final By addToCartButton = AppiumBy.id("cartBt");
 
   /**
    * Constructor.
