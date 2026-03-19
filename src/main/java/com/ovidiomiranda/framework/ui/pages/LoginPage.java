@@ -12,9 +12,9 @@ import org.openqa.selenium.By;
  */
 public class LoginPage extends BasePage {
 
-  private final By usernameInput = AppiumBy.id("com.saucelabs.mydemoapp.android:id/nameET");
-  private final By passwordInput = AppiumBy.id("com.saucelabs.mydemoapp.android:id/passwordET");
-  private final By loginButton = AppiumBy.id("com.saucelabs.mydemoapp.android:id/loginBtn");
+  private final By usernameInput = AppiumBy.id("nameET");
+  private final By passwordInput = AppiumBy.id("passwordET");
+  private final By loginButton = AppiumBy.id("loginBtn");
 
   /**
    * Constructor.
