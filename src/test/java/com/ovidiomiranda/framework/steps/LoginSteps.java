@@ -59,6 +59,18 @@ public class LoginSteps {
   }
 
   /**
+   * Ensures that the user is logged into the application.
+   *
+   * <p>This step performs login using valid credentials.
+   * It can be reused across multiple scenarios.</p>
+   */
+  @Given("the user is logged in")
+  public void userIsLoggedIn() {
+    userIsOnLoginScreen();
+    login();
+  }
+
+  /**
    * Verifies that the products screen is displayed.
    */
   @Then("the user should see the products screen")
