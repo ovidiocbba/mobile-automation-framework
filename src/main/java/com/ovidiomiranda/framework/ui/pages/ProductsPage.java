@@ -25,6 +25,30 @@ public class ProductsPage extends BasePage {
   }
 
   /**
+   * Selects the first product from the product list.
+   *
+   * <p>This method opens the product detail screen for the first available product.</p>
+   */
+  public void selectFirstProduct() {
+    By firstProduct = AppiumBy.xpath(
+        "(//android.widget.ImageView[@content-desc='Product Image'])[1]");
+    actions.tap(firstProduct);
+  }
+
+  /**
+   * Gets the cart badge count.
+   *
+   * <p>This method retrieves the number of items currently displayed
+   * in the cart badge icon.</p>
+   *
+   * @return cart item count as text
+   */
+  public String getCartBadgeCount() {
+    By cartBadge = AppiumBy.id("com.saucelabs.mydemoapp.android:id/cartTV");
+    return actions.getText(cartBadge);
+  }
+
+  /**
    * Verifies if Products page is displayed.
    *
    * @return true if page is visible, false otherwise
