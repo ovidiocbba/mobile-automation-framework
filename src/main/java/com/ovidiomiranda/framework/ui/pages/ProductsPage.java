@@ -5,6 +5,7 @@ import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
 import com.ovidiomiranda.framework.core.locators.MobileLocator;
 import io.appium.java_client.AppiumBy;
+import org.openqa.selenium.By;
 
 /**
  * Represents the 'Product' page and its components.
@@ -42,6 +43,15 @@ public class ProductsPage extends BasePage {
    */
   public void selectFirstProduct() {
     actions.tap(resolve(firstProduct));
+  }
+
+  /**
+   * Selects a product by name.
+   */
+  public void selectProductByName(final String productName) {
+    final By product = By.xpath("//android.widget.TextView[@text='" + productName
+        + "']/preceding-sibling::android.widget.ImageView");
+    actions.tap(product);
   }
 
   /**
