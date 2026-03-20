@@ -5,6 +5,7 @@ import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
 import com.ovidiomiranda.framework.core.locators.MobileLocator;
 import io.appium.java_client.AppiumBy;
+import org.openqa.selenium.By;
 
 /**
  * Represents the 'Login' page and its components.
@@ -21,6 +22,10 @@ public class LoginPage extends BasePage {
 
   private final MobileLocator loginButton = new MobileLocator(AppiumBy.id("loginBtn"),
       AppiumBy.accessibilityId("login_button"));
+
+  private final By usernameRequiredMessage = AppiumBy.id("nameErrorTV");
+
+  private final By passwordRequiredMessage = AppiumBy.id("passwordErrorTV");
 
   /**
    * Constructor.
@@ -69,5 +74,23 @@ public class LoginPage extends BasePage {
     enterUsername(username);
     enterPassword(password);
     tapLoginButton();
+  }
+
+  /**
+   * Verifies if the validation message for an empty username field is displayed.
+   *
+   * @return true if the username required message is visible, false otherwise
+   */
+  public boolean isUsernameRequiredMessageDisplayed() {
+    return actions.isDisplayed(usernameRequiredMessage);
+  }
+
+  /**
+   * Verifies if the validation message for an empty password field is displayed.
+   *
+   * @return true if the password required message is visible, false otherwise
+   */
+  public boolean isPasswordRequiredMessageDisplayed() {
+    return actions.isDisplayed(passwordRequiredMessage);
   }
 }
