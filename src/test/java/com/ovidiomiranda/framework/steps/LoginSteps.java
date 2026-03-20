@@ -7,6 +7,7 @@ import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.ui.navigation.MenuNavigation;
 import com.ovidiomiranda.framework.ui.pages.LoginPage;
 import com.ovidiomiranda.framework.ui.pages.ProductsPage;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -43,38 +44,82 @@ public class LoginSteps {
   /**
    * Navigates to 'Login' screen.
    */
-  @Given("the user is on the login screen")
-  public void userIsOnLoginScreen() {
+  @Given("I navigate to the 'Login' screen")
+  public void navigateToLoginScreen() {
     menuNavigation.goToLogin();
   }
 
   /**
-   * Performs login using valid credentials from configuration.
+   * Logs in using valid credentials.
    */
-  @When("the user logs in with valid credentials")
-  public void login() {
+  @When("I log in with valid credentials")
+  public void loginWithValidCredentials() {
     String username = config.require(USERNAME);
     String password = config.require(PASSWORD);
     loginPage.login(username, password);
   }
 
   /**
-   * Ensures that the user is logged into the application.
-   *
-   * <p>This step performs login using valid credentials.
-   * It can be reused across multiple scenarios.</p>
+   * Ensures the user is logged in.
    */
-  @Given("the user is logged in")
-  public void userIsLoggedIn() {
-    userIsOnLoginScreen();
-    login();
+  @Given("I am logged in")
+  public void ensureUserIsLoggedIn() {
+    navigateToLoginScreen();
+    loginWithValidCredentials();
   }
 
   /**
-   * Verifies that the products screen is displayed.
+   * Leaves the 'Username' field empty.
    */
-  @Then("the user should see the products screen")
-  public void validateLogin() {
-    Assert.assertTrue(productsPage.isDisplayed(), "Products screen not displayed");
+  @And("I leave the 'Username' field empty")
+  public void leaveUsernameFieldEmpty() {
+    loginPage.enterUsername("");
+  }
+
+  /**
+   * Enters a username.
+   *
+   * @param username value to enter
+   */
+  @When("I enter {string} in the Username field")
+  public void enterUsername(final String username) {
+    loginPage.enterUsername(username);
+  }
+
+  /**
+   * Enters a password.
+   *
+   * @param password value to enter
+   */
+  @And("I enter {string} in the Password field")
+  public void enterPassword(final String password) {
+    loginPage.enterPassword(password);
+  }
+
+  /**
+   * Taps the 'Login' button.
+   */
+  @And("I tap the 'Login' button")
+  public void tapLoginButton() {
+    loginPage.tapLoginButton();
+  }
+
+
+  /**
+   * Verifies the username required message is displayed.
+   */
+  @Then("the username required message should be displayed")
+  public void verifyUsernameRequiredMessage() {
+    Assert.assertTrue(loginPage.isUsernameRequiredMessageDisplayed(),
+        "Username required message was not displayed");
+  }
+
+  /**
+   * Verifies the password required message is displayed.
+   */
+  @Then("the password required message should be displayed")
+  public void verifyPasswordRequiredMessage() {
+    Assert.assertTrue(loginPage.isPasswordRequiredMessageDisplayed(),
+        "Password required message was not displayed");
   }
 }
