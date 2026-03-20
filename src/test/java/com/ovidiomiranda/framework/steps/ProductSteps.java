@@ -40,6 +40,14 @@ public class ProductSteps {
   }
 
   /**
+   * Opens a product by name.
+   */
+  @When("I open the product {string}")
+  public void openProductByName(String productName) {
+    productsPage.selectProductByName(productName);
+  }
+
+  /**
    * Verifies the 'Cart' badge count.
    *
    * @param expectedCount expected number of items in the cart
