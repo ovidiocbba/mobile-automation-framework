@@ -434,6 +434,18 @@ allure serve build/allure-results
 
 ---
 
+# :mag: Tools
+
+### Appium Inspector
+
+Tool used to inspect mobile elements and obtain locators.
+
+👉 **Open documentation:**
+
+[APPIUM_INSPECTOR.md](docs/APPIUM_INSPECTOR.md)
+
+---
+
 # :information_source: Notes
 
 * Emulator must be running before tests
