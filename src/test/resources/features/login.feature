@@ -25,3 +25,10 @@ Feature: Login functionality
     And I enter "standard_user" in the Username field
     When I tap the 'Login' button
     Then the password required message should be displayed
+
+  @TC-00005 @regression
+  Scenario: Open product detail and validate product information
+    Given I am logged in
+    When I open the product "Sauce Labs Backpack"
+    Then the product name should be "Sauce Labs Backpack"
+    And the product price should be "$ 29.99"
