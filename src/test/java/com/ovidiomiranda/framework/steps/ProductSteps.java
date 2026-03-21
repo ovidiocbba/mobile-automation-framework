@@ -36,7 +36,7 @@ public class ProductSteps {
   @When("I add a product to the cart")
   public void addProductToCart() {
     productsPage.selectFirstProduct();
-    productDetailPage.addToCart();
+    productDetailPage.tapAddToCartButton();
   }
 
   /**
@@ -45,17 +45,6 @@ public class ProductSteps {
   @When("I open the product {string}")
   public void openProductByName(String productName) {
     productsPage.selectProductByName(productName);
-  }
-
-  /**
-   * Verifies the 'Cart' badge count.
-   *
-   * @param expectedCount expected number of items in the cart
-   */
-  @Then("the 'Cart' badge should show {int} item")
-  public void verifyCartBadgeCount(final int expectedCount) {
-    final String actual = productsPage.getCartBadgeCount();
-    Assert.assertEquals(actual, String.valueOf(expectedCount), "Cart count mismatch");
   }
 
   /**
