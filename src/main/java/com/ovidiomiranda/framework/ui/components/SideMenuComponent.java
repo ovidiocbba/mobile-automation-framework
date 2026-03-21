@@ -38,6 +38,9 @@ public class SideMenuComponent extends BaseComponent {
         AppiumBy.accessibilityId("logout_menu_item")));
   }
 
+  private final MobileLocator cartBadge = new MobileLocator(AppiumBy.id("cartTV"),
+      AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
+
   /**
    * Constructor.
    *
@@ -70,5 +73,24 @@ public class SideMenuComponent extends BaseComponent {
       throw new IllegalArgumentException("Invalid menu option: " + option);
     }
     actions.tap(resolve(locator));
+  }
+
+  /**
+   * Taps the 'Cart' badge.
+   */
+  public void tapCartBadge() {
+    actions.tap(resolve(cartBadge));
+  }
+
+
+  /**
+   * Gets the 'Cart' badge count.
+   *
+   * <p>This method retrieves the number of items currently displayed in the cart badge icon.</p>
+   *
+   * @return cart item count as text
+   */
+  public String getCartBadgeCount() {
+    return actions.getText(resolve(cartBadge));
   }
 }
