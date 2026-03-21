@@ -21,9 +21,6 @@ public class ProductsPage extends BasePage {
       AppiumBy.xpath("(//android.widget.ImageView[@content-desc='Product Image'])[1]"),
       AppiumBy.xpath("(//XCUIElementTypeImage[@name='Product Image'])[1]"));
 
-  private final MobileLocator cartBadge = new MobileLocator(AppiumBy.id("cartTV"),
-      AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
-
   /**
    * Constructor.
    *
@@ -45,6 +42,7 @@ public class ProductsPage extends BasePage {
     actions.tap(resolve(firstProduct));
   }
 
+
   /**
    * Selects a product by name.
    */
@@ -52,18 +50,6 @@ public class ProductsPage extends BasePage {
     final By product = By.xpath("//android.widget.TextView[@text='" + productName
         + "']/preceding-sibling::android.widget.ImageView");
     actions.tap(product);
-  }
-
-  /**
-   * Gets the cart badge count.
-   *
-   * <p>This method retrieves the number of items currently displayed
-   * in the cart badge icon.</p>
-   *
-   * @return cart item count as text
-   */
-  public String getCartBadgeCount() {
-    return actions.getText(resolve(cartBadge));
   }
 
   /**
