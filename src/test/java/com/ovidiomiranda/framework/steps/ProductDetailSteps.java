@@ -2,6 +2,7 @@ package com.ovidiomiranda.framework.steps;
 
 import com.ovidiomiranda.framework.ui.pages.ProductDetailPage;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.testng.Assert;
 
 /**
@@ -23,11 +24,19 @@ public class ProductDetailSteps {
   }
 
   /**
+   * Taps the 'Add to cart' button.
+   */
+  @When("I tap the 'Add to cart' button")
+  public void tapAddToCart() {
+    productDetailPage.tapAddToCartButton();
+  }
+
+  /**
    * Verifies the product name in the detail screen.
    */
   @Then("the product name should be {string}")
   public void verifyProductName(String expectedName) {
-    String actual = productDetailPage.getProductName();
+    String actual = productDetailPage.getProductNameLabel();
     Assert.assertEquals(actual, expectedName, "Product name mismatch");
   }
 
@@ -36,7 +45,7 @@ public class ProductDetailSteps {
    */
   @Then("the product price should be {string}")
   public void verifyProductPrice(String expectedPrice) {
-    String actual = productDetailPage.getProductPrice();
+    String actual = productDetailPage.getProductPriceLabel();
     Assert.assertEquals(actual, expectedPrice, "Product price mismatch");
   }
 }
