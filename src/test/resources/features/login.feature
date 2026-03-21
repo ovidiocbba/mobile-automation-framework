@@ -32,3 +32,11 @@ Feature: Login functionality
     When I open the product "Sauce Labs Backpack"
     Then the product name should be "Sauce Labs Backpack"
     And the product price should be "$ 29.99"
+
+  @TC-00006 @regression
+  Scenario: Verify correct product is added to the cart
+    Given I am logged in
+    When I open the product "Sauce Labs Backpack"
+    And I tap the 'Add to cart' button
+    And I tap the 'Cart' badge
+    Then the product "Sauce Labs Backpack" should be displayed in the Cart
