@@ -14,8 +14,8 @@ import org.openqa.selenium.By;
 public class ProductDetailPage extends BasePage {
 
   private final By addToCartButton = AppiumBy.id("cartBt");
-  private final By productName = AppiumBy.id("productTV");
-  private final By productPrice = By.id("priceTV");
+  private final By productNameLabel = AppiumBy.id("productTV");
+  private final By productPriceLabel = AppiumBy.id("priceTV");
 
   /**
    * Constructor.
@@ -30,25 +30,23 @@ public class ProductDetailPage extends BasePage {
   }
 
   /**
-   * Adds the current product to the cart.
-   *
-   * <p>This method taps on the 'Add to Cart' button.</p>
+   * Taps the 'Add to Cart' button.
    */
-  public void addToCart() {
+  public void tapAddToCartButton() {
     actions.tap(addToCartButton);
   }
 
   /**
    * Returns the product name.
    */
-  public String getProductName() {
-    return actions.getText(productName);
+  public String getProductNameLabel() {
+    return actions.getText(productNameLabel);
   }
 
   /**
    * Returns the product price.
    */
-  public String getProductPrice() {
-    return actions.getText(productPrice);
+  public String getProductPriceLabel() {
+    return actions.getText(productPriceLabel);
   }
 }
