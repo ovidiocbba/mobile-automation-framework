@@ -7,11 +7,11 @@ package com.ovidiomiranda.framework.ui.enums;
  */
 public enum MenuOption {
   /**
-   * Navigates to 'Login' screen
+   * Navigates to 'Login' screen.
    */
   LOGIN,
   /**
-   * Logs out the current user
+   * Logs out the current user.
    */
   LOGOUT
 }
