@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'io.qameta.allure' version "3.0.2"
+    id 'checkstyle'
+    id 'pmd'
 }
 
 java {
@@ -8,6 +10,11 @@ java {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
+
+// Loads static code analysis configuration (Checkstyle + PMD)
+apply from: 'code-quality-plugins.gradle'
+// Loads Javadoc configuration
+apply from: 'javadoc.gradle'
 
 group = 'com.ovidiomiranda'
 version = '1.0-SNAPSHOT'
