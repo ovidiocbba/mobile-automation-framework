@@ -29,6 +29,8 @@ public class CartPage extends BasePage {
 
   /**
    * Returns the product name displayed in the cart.
+   *
+   * @return product name displayed in the cart
    */
   public String getProductNameLabel() {
     return actions.getText(productNameLabel);
