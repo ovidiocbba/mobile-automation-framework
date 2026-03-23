@@ -3,6 +3,7 @@ package com.ovidiomiranda.framework.hooks;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM;
 import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseId;
 import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseTitle;
+import static java.util.Locale.ENGLISH;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
@@ -28,7 +29,8 @@ public class CommonHooks {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CommonHooks.class);
   private long startTime;
-  private static final String SEPARATOR = "============================================================";
+  private static final String SEPARATOR =
+      "============================================================";
 
   private final DriverContext driverContext;
   private final DriverFactory driverFactory;
@@ -56,9 +58,11 @@ public class CommonHooks {
   @Before(order = -1)
   public void beforeScenario(final Scenario scenario) {
     startTime = System.currentTimeMillis();
-    LOGGER.info(SEPARATOR);
-    LOGGER.info(">>> STARTING SCENARIO | {}", getTestCaseTitle(scenario));
-    LOGGER.info(SEPARATOR);
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info(SEPARATOR);
+      LOGGER.info(">>> STARTING SCENARIO | {}", getTestCaseTitle(scenario));
+      LOGGER.info(SEPARATOR);
+    }
   }
 
   /**
@@ -69,7 +73,8 @@ public class CommonHooks {
   @Before(order = 0)
   public void setUp() {
     String platform = config.require(PLATFORM);
-    AppiumDriver driver = driverFactory.createDriver(PlatformType.valueOf(platform.toUpperCase()));
+    AppiumDriver driver = driverFactory.createDriver(
+        PlatformType.valueOf(platform.toUpperCase(ENGLISH)));
     driverContext.setDriver(driver);
   }
 
