@@ -4,7 +4,6 @@ import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
 import com.ovidiomiranda.framework.ui.components.BaseComponent;
-import io.appium.java_client.AppiumDriver;
 
 
 /**
