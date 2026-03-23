@@ -24,6 +24,8 @@ public class CartSteps {
 
   /**
    * Verifies a product is displayed in the cart.
+   *
+   * @param expectedProduct expected product name displayed in the cart
    */
   @Then("the product {string} should be displayed in the Cart")
   public void verifyProductInCart(final String expectedProduct) {
