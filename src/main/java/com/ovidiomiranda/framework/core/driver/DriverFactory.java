@@ -6,7 +6,7 @@ import static com.ovidiomiranda.framework.core.enums.PlatformType.IOS;
 import com.ovidiomiranda.framework.core.enums.PlatformType;
 import com.ovidiomiranda.framework.core.providers.AndroidDriverProvider;
 import com.ovidiomiranda.framework.core.providers.DriverProvider;
-import com.ovidiomiranda.framework.core.providers.iOSDriverProvider;
+import com.ovidiomiranda.framework.core.providers.IosDriverProvider;
 import io.appium.java_client.AppiumDriver;
 import java.util.EnumMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class DriverFactory {
    * @param androidProvider provider for Android drivers
    * @param iosProvider     provider for iOS drivers
    */
-  public DriverFactory(AndroidDriverProvider androidProvider, iOSDriverProvider iosProvider) {
+  public DriverFactory(AndroidDriverProvider androidProvider, IosDriverProvider iosProvider) {
     this.drivers = new EnumMap<>(PlatformType.class);
     drivers.put(ANDROID, androidProvider);
     drivers.put(IOS, iosProvider);

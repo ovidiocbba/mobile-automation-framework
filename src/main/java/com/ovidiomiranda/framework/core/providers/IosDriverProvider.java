@@ -1,6 +1,6 @@
 package com.ovidiomiranda.framework.core.providers;
 
-import com.ovidiomiranda.framework.core.capabilities.iOSCapabilities;
+import com.ovidiomiranda.framework.core.capabilities.IosCapabilities;
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.enums.PropertiesInput;
 import io.appium.java_client.AppiumDriver;
@@ -16,10 +16,10 @@ import java.net.URL;
  *
  * @author Ovidio Miranda
  */
-public class iOSDriverProvider implements DriverProvider {
+public class IosDriverProvider implements DriverProvider {
 
   private final ConfigValidator config;
-  private final iOSCapabilities iosCapabilities;
+  private final IosCapabilities iosCapabilities;
 
   /**
    * Constructor.
@@ -27,7 +27,7 @@ public class iOSDriverProvider implements DriverProvider {
    * @param config          configuration validator
    * @param iosCapabilities iOS capabilities builder
    */
-  public iOSDriverProvider(ConfigValidator config, iOSCapabilities iosCapabilities) {
+  public IosDriverProvider(ConfigValidator config, IosCapabilities iosCapabilities) {
     this.config = config;
     this.iosCapabilities = iosCapabilities;
   }
