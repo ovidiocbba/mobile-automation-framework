@@ -13,6 +13,11 @@ public class ConfigValidator {
 
   private final PropertiesManager propertiesManager;
 
+  /**
+   * Constructor.
+   *
+   * @param propertiesManager properties manager used to access configuration values
+   */
   public ConfigValidator(PropertiesManager propertiesManager) {
     this.propertiesManager = propertiesManager;
   }
