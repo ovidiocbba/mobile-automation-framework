@@ -6,7 +6,6 @@ import static com.ovidiomiranda.framework.core.enums.PropertiesInput.USERNAME;
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.ui.navigation.MenuNavigation;
 import com.ovidiomiranda.framework.ui.pages.LoginPage;
-import com.ovidiomiranda.framework.ui.pages.ProductsPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -22,7 +21,6 @@ public class LoginSteps {
 
   private final MenuNavigation menuNavigation;
   private final LoginPage loginPage;
-  private final ProductsPage productsPage;
   private final ConfigValidator config;
 
   /**
@@ -31,14 +29,11 @@ public class LoginSteps {
    * @param config         configuration validator
    * @param menuNavigation menu navigation utility
    * @param loginPage      login page object
-   * @param productsPage   products page object
    */
-  public LoginSteps(ConfigValidator config, MenuNavigation menuNavigation, LoginPage loginPage,
-      ProductsPage productsPage) {
+  public LoginSteps(ConfigValidator config, MenuNavigation menuNavigation, LoginPage loginPage) {
     this.config = config;
     this.menuNavigation = menuNavigation;
     this.loginPage = loginPage;
-    this.productsPage = productsPage;
   }
 
   /**
