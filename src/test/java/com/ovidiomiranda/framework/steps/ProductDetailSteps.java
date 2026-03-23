@@ -33,6 +33,8 @@ public class ProductDetailSteps {
 
   /**
    * Verifies the product name in the detail screen.
+   *
+   * @param expectedName expected product name
    */
   @Then("the product name should be {string}")
   public void verifyProductName(String expectedName) {
@@ -42,6 +44,8 @@ public class ProductDetailSteps {
 
   /**
    * Verifies the product price in the detail screen.
+   *
+   * @param expectedPrice expected product price
    */
   @Then("the product price should be {string}")
   public void verifyProductPrice(String expectedPrice) {
