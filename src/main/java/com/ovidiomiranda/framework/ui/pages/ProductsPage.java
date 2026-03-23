@@ -42,9 +42,10 @@ public class ProductsPage extends BasePage {
     actions.tap(resolve(firstProduct));
   }
 
-
   /**
    * Selects a product by name.
+   *
+   * @param productName name of the product to select
    */
   public void selectProductByName(final String productName) {
     final By product = By.xpath("//android.widget.TextView[@text='" + productName
