@@ -14,7 +14,7 @@ import io.appium.java_client.ios.options.XCUITestOptions;
  *
  * @author Ovidio Miranda
  */
-public class iOSCapabilities {
+public class IosCapabilities {
 
   private final ConfigValidator config;
 
@@ -23,7 +23,7 @@ public class iOSCapabilities {
    *
    * @param config configuration validator
    */
-  public iOSCapabilities(ConfigValidator config) {
+  public IosCapabilities(ConfigValidator config) {
     this.config = config;
   }
 
