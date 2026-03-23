@@ -1,6 +1,7 @@
 package com.ovidiomiranda.framework.ui.components;
 
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM;
+import static java.util.Locale.ENGLISH;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
@@ -54,7 +55,7 @@ public abstract class BaseComponent {
    */
   protected By resolve(MobileLocator locator) {
     String platform = config.require(PLATFORM);
-    PlatformType platformType = PlatformType.valueOf(platform.toUpperCase());
+    PlatformType platformType = PlatformType.valueOf(platform.toUpperCase(ENGLISH));
     return locator.get(platformType);
   }
 }
