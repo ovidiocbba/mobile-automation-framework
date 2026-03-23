@@ -41,6 +41,8 @@ public class ProductSteps {
 
   /**
    * Opens a product by name.
+   *
+   * @param productName name of the product to open
    */
   @When("I open the product {string}")
   public void openProductByName(final String productName) {
