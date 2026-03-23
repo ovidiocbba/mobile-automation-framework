@@ -20,8 +20,17 @@ import org.openqa.selenium.By;
  */
 public abstract class BaseComponent {
 
+  /**
+   * Configuration validator used to retrieve required properties.
+   */
   protected final ConfigValidator config;
+  /**
+   * Provides access to the current Appium driver instance.
+   */
   protected final DriverContext driverContext;
+  /**
+   * Utility class for performing mobile element interactions.
+   */
   protected final MobileElementActions actions;
 
   /**
