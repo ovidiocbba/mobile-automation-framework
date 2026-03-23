@@ -38,6 +38,8 @@ public class ProductDetailPage extends BasePage {
 
   /**
    * Returns the product name.
+   *
+   * @return product name displayed on the product detail page
    */
   public String getProductNameLabel() {
     return actions.getText(productNameLabel);
@@ -45,6 +47,8 @@ public class ProductDetailPage extends BasePage {
 
   /**
    * Returns the product price.
+   *
+   * @return product price displayed on the product detail page
    */
   public String getProductPriceLabel() {
     return actions.getText(productPriceLabel);
