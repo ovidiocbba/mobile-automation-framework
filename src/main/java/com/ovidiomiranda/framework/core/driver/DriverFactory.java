@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Factory to create AppiumDriver instances for different platforms.
  *
- * <p>Selects the correct driver provider (Android or iOS) based on the platform type.</p>
+ * <p>Selects the correct driver provider (Android or iOS) based on the platform type.
  *
  * @author Ovidio Miranda
  */
@@ -26,7 +26,7 @@ public class DriverFactory {
    * Constructor to initialize driver providers.
    *
    * @param androidProvider provider for Android drivers
-   * @param iosProvider     provider for iOS drivers
+   * @param iosProvider provider for iOS drivers
    */
   public DriverFactory(AndroidDriverProvider androidProvider, IosDriverProvider iosProvider) {
     this.drivers = new EnumMap<>(PlatformType.class);
