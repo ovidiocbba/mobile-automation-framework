@@ -1,15 +1,15 @@
 plugins {
-    id 'java'
-    id 'io.qameta.allure' version "3.0.2"
-    id 'checkstyle'
-    id 'pmd'
-    id 'com.diffplug.spotless' version '6.25.0'
+	id 'java'
+	id 'io.qameta.allure' version "3.0.2"
+	id 'checkstyle'
+	id 'pmd'
+	id 'com.diffplug.spotless' version '6.25.0'
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
 }
 
 // Loads custom test tasks (Cucumber execution + Allure)
@@ -23,33 +23,33 @@ group = 'com.ovidiomiranda'
 version = '1.0-SNAPSHOT'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    // Selenium
-    implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
+	// Selenium
+	implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
 
-    // Appium Java Client
-    implementation 'io.appium:java-client:9.2.2'
+	// Appium Java Client
+	implementation 'io.appium:java-client:9.2.2'
 
-    // Cucumber
-    testImplementation 'io.cucumber:cucumber-java:7.17.0'
-    testImplementation 'io.cucumber:cucumber-testng:7.17.0'
-    testImplementation 'io.cucumber:cucumber-picocontainer:7.17.0'
+	// Cucumber
+	testImplementation 'io.cucumber:cucumber-java:7.17.0'
+	testImplementation 'io.cucumber:cucumber-testng:7.17.0'
+	testImplementation 'io.cucumber:cucumber-picocontainer:7.17.0'
 
-    // TestNG
-    testImplementation 'org.testng:testng:7.9.0'
+	// TestNG
+	testImplementation 'org.testng:testng:7.9.0'
 
-    // Allure
-    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.33.0'
-    testImplementation 'io.qameta.allure:allure-testng:2.33.0'
+	// Allure
+	testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.33.0'
+	testImplementation 'io.qameta.allure:allure-testng:2.33.0'
 
-    // Logging (SLF4J + Logback)
-    implementation 'org.slf4j:slf4j-api:2.0.12'
-    implementation 'ch.qos.logback:logback-classic:1.4.14'
+	// Logging (SLF4J + Logback)
+	implementation 'org.slf4j:slf4j-api:2.0.12'
+	implementation 'ch.qos.logback:logback-classic:1.4.14'
 }
 
 allure {
-    version = '2.33.0'
+	version = '2.33.0'
 }
