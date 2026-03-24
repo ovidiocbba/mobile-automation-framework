@@ -18,12 +18,12 @@ public class CartPage extends BasePage {
   /**
    * Constructor.
    *
-   * @param config        config validator
+   * @param config config validator
    * @param driverContext driver context
-   * @param actions       MobileElementActions utility
+   * @param actions MobileElementActions utility
    */
-  public CartPage(ConfigValidator config, DriverContext driverContext,
-      MobileElementActions actions) {
+  public CartPage(
+      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
