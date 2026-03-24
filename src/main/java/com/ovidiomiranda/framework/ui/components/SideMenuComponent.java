@@ -15,47 +15,50 @@ import java.util.Map;
 /**
  * Represents the side navigation menu (hamburger menu).
  *
- * <p>Provides methods to open the menu and navigate using menu options. Reusable across pages.</p>
+ * <p>Provides methods to open the menu and navigate using menu options. Reusable across pages.
  *
  * @author Ovidio Miranda
  */
 public class SideMenuComponent extends BaseComponent {
 
-  /**
-   * Hamburger menu button locator for both platforms.
-   */
-  private final MobileLocator hamburgerButton = new MobileLocator(AppiumBy.id("menuIV"),
-      AppiumBy.accessibilityId("menu_button"));
+  /** Hamburger menu button locator for both platforms. */
+  private final MobileLocator hamburgerButton =
+      new MobileLocator(AppiumBy.id("menuIV"), AppiumBy.accessibilityId("menu_button"));
 
-  private static final Map<MenuOption, MobileLocator> MENU_OPTIONS = new EnumMap<>(
-      MenuOption.class);
+  private static final Map<MenuOption, MobileLocator> MENU_OPTIONS =
+      new EnumMap<>(MenuOption.class);
 
   static {
-    MENU_OPTIONS.put(LOGIN, new MobileLocator(AppiumBy.accessibilityId("Login Menu Item"),
-        AppiumBy.accessibilityId("login_menu_item")));
+    MENU_OPTIONS.put(
+        LOGIN,
+        new MobileLocator(
+            AppiumBy.accessibilityId("Login Menu Item"),
+            AppiumBy.accessibilityId("login_menu_item")));
 
-    MENU_OPTIONS.put(LOGOUT, new MobileLocator(AppiumBy.accessibilityId("Logout Menu Item"),
-        AppiumBy.accessibilityId("logout_menu_item")));
+    MENU_OPTIONS.put(
+        LOGOUT,
+        new MobileLocator(
+            AppiumBy.accessibilityId("Logout Menu Item"),
+            AppiumBy.accessibilityId("logout_menu_item")));
   }
 
-  private final MobileLocator cartBadge = new MobileLocator(AppiumBy.id("cartTV"),
-      AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
+  private final MobileLocator cartBadge =
+      new MobileLocator(
+          AppiumBy.id("cartTV"), AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
 
   /**
    * Constructor.
    *
-   * @param config        config validator
+   * @param config config validator
    * @param driverContext driver context
-   * @param actions       MobileElementActions utility
+   * @param actions MobileElementActions utility
    */
-  public SideMenuComponent(ConfigValidator config, DriverContext driverContext,
-      MobileElementActions actions) {
+  public SideMenuComponent(
+      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
-  /**
-   * Opens the side menu by tapping the hamburger button.
-   */
+  /** Opens the side menu by tapping the hamburger button. */
   public void openMenu() {
     actions.tap(resolve(hamburgerButton));
   }
@@ -75,18 +78,15 @@ public class SideMenuComponent extends BaseComponent {
     actions.tap(resolve(locator));
   }
 
-  /**
-   * Taps the 'Cart' badge.
-   */
+  /** Taps the 'Cart' badge. */
   public void tapCartBadge() {
     actions.tap(resolve(cartBadge));
   }
 
-
   /**
    * Gets the 'Cart' badge count.
    *
-   * <p>This method retrieves the number of items currently displayed in the cart badge icon.</p>
+   * <p>This method retrieves the number of items currently displayed in the cart badge icon.
    *
    * @return cart item count as text
    */
