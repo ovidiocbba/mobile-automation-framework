@@ -3,6 +3,7 @@ plugins {
     id 'io.qameta.allure' version "3.0.2"
     id 'checkstyle'
     id 'pmd'
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
 java {
