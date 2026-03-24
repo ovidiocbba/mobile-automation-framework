@@ -25,7 +25,7 @@ tasks.withType(Javadoc).configureEach {
 	options.header = "UI Automation Framework - v${project.version}"
 
 	// Fail build if Javadoc has warnings (professional mode)
-	options.addStringOption('Xwerror', '-quiet')
+	options.addStringOption('Xwerror')
 
 	// Hide timestamps for reproducible builds
 	options.addBooleanOption('noTimestamp', true)
