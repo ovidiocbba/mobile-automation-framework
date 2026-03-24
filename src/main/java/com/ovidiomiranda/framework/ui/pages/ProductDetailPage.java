@@ -20,18 +20,16 @@ public class ProductDetailPage extends BasePage {
   /**
    * Constructor.
    *
-   * @param config        config validator
+   * @param config config validator
    * @param driverContext driver context
-   * @param actions       MobileElementActions utility
+   * @param actions MobileElementActions utility
    */
-  public ProductDetailPage(ConfigValidator config, DriverContext driverContext,
-      MobileElementActions actions) {
+  public ProductDetailPage(
+      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
-  /**
-   * Taps the 'Add to Cart' button.
-   */
+  /** Taps the 'Add to Cart' button. */
   public void tapAddToCartButton() {
     actions.tap(addToCartButton);
   }
