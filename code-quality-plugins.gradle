@@ -89,6 +89,20 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
     }
+
+    format 'misc', {
+        target '*.md', 'docs/**/*.md', '.gitignore'
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    format 'gradle', {
+        target '*.gradle'
+        greclipse()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
     lineEndings 'UNIX'
 }
 
