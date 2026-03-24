@@ -11,8 +11,8 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 /**
  * Builds Android capabilities for Appium sessions.
  *
- * <p>The configuration values are loaded from {@code config.properties}.
- * The app can be launched using the APK path or using the installed app package and activity.</p>
+ * <p>The configuration values are loaded from {@code config.properties}. The app can be launched
+ * using the APK path or using the installed app package and activity.
  *
  * @author Ovidio Miranda
  */
@@ -32,9 +32,9 @@ public class AndroidCapabilities {
   /**
    * Creates Android capabilities.
    *
-   * <p>If the {@code app} property is provided, the framework installs
-   * the application from the APK file. Otherwise, it launches the already installed app using
-   * {@code appPackage} and {@code appActivity}.</p>
+   * <p>If the {@code app} property is provided, the framework installs the application from the APK
+   * file. Otherwise, it launches the already installed app using {@code appPackage} and {@code
+   * appActivity}.
    *
    * @return configured UiAutomator2Options
    */
