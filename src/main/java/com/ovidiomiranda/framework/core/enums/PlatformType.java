@@ -6,12 +6,8 @@ package com.ovidiomiranda.framework.core.enums;
  * @author Ovidio Miranda
  */
 public enum PlatformType {
-  /**
-   * Android platform.
-   */
+  /** Android platform. */
   ANDROID,
-  /**
-   * iOS platform.
-   */
+  /** iOS platform. */
   IOS
 }
