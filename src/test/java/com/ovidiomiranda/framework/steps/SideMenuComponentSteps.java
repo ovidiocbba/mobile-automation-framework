@@ -23,9 +23,7 @@ public class SideMenuComponentSteps {
     this.sideMenu = sideMenu;
   }
 
-  /**
-   * Taps the 'Cart' badge.
-   */
+  /** Taps the 'Cart' badge. */
   @When("I tap the 'Cart' badge")
   public void tapCartBadge() {
     sideMenu.tapCartBadge();
