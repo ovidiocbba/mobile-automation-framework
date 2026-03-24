@@ -10,7 +10,7 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 /**
  * Builds iOS capabilities for Appium sessions.
  *
- * <p>The app can be launched using the app file path or the installed app bundle identifier.</p>
+ * <p>The app can be launched using the app file path or the installed app bundle identifier.
  *
  * @author Ovidio Miranda
  */
@@ -31,7 +31,7 @@ public class IosCapabilities {
    * Creates iOS capabilities.
    *
    * <p>If the {@code app} property is provided, the framework installs the application. Otherwise,
-   * the app is launched using the bundle id.</p>
+   * the app is launched using the bundle id.
    *
    * @return configured XCUITestOptions
    */
