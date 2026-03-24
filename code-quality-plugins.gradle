@@ -1,124 +1,118 @@
 /*
-=====================================================
+ =====================================================
  CODE QUALITY GUIDE
-=====================================================
-
-Apply automatic Java code formatting:
-    ./gradlew spotlessApply
-
-Validate Java code formatting only:
-    ./gradlew spotlessCheck
-
-Run full static analysis (Spotless + Checkstyle + PMD):
-    ./gradlew staticAnalysis
-
-Run Checkstyle only:
-    ./gradlew checkstyleMain
-    ./gradlew checkstyleTest
-
-Run PMD only:
-    ./gradlew pmdMain
-    ./gradlew pmdTest
-
-Run full verification (tests + static analysis):
-    ./gradlew clean check
-
-Reports location:
-    build/reports/checkstyle/
-    build/reports/pmd/
-
-=====================================================
-*/
+ =====================================================
+ Apply automatic Java code formatting:
+ ./gradlew spotlessApply
+ Validate Java code formatting only:
+ ./gradlew spotlessCheck
+ Run full static analysis (Spotless + Checkstyle + PMD):
+ ./gradlew staticAnalysis
+ Run Checkstyle only:
+ ./gradlew checkstyleMain
+ ./gradlew checkstyleTest
+ Run PMD only:
+ ./gradlew pmdMain
+ ./gradlew pmdTest
+ Run full verification (tests + static analysis):
+ ./gradlew clean check
+ Reports location:
+ build/reports/checkstyle/
+ build/reports/pmd/
+ =====================================================
+ */
 
 // [OM] Checkstyle configuration.
 checkstyle {
-    // [OM] Set version to use.
-    toolVersion = '10.12.4'
-    // [OM] Ignore warning and let the build continue.
-    ignoreFailures = false
-    // [OM] Whether rule violations are to be displayed on the console.
-    showViolations = true
-    // [OM] The path to the configuration file.
-    configFile = rootProject.file("config/checkstyle/google_checks.xml")
+	// [OM] Set version to use.
+	toolVersion = '10.12.4'
+	// [OM] Ignore warning and let the build continue.
+	ignoreFailures = false
+	// [OM] Whether rule violations are to be displayed on the console.
+	showViolations = true
+	// [OM] The path to the configuration file.
+	configFile = rootProject.file("config/checkstyle/google_checks.xml")
 }
 
 tasks.withType(Checkstyle).configureEach {
 
-    exclude '**/generated/**'
-    exclude '**/build/**'
+	exclude '**/generated/**'
+	exclude '**/build/**'
 
-    reports {
-        xml.required = false
-        html.required = true
-        // [OM] The custom HTML report using an XSLT stylesheet.
-        html.stylesheet = resources.text.fromFile(
-                rootProject.file("config/checkstyle/xsl/checkstyle-noframes-severity-sorted.xsl")
-        )
-    }
+	reports {
+		xml.required = false
+		html.required = true
+		// [OM] The custom HTML report using an XSLT stylesheet.
+		html.stylesheet = resources.text.fromFile(
+				rootProject.file("config/checkstyle/xsl/checkstyle-noframes-severity-sorted.xsl")
+				)
+	}
 }
 
 // [OM] PMD configuration.
 pmd {
-    // [OM] Set version to use.
-    toolVersion = '6.55.0'
-    // [OM] Ignore warning and let the build continue.
-    ignoreFailures = false
-    // [OM] Whether violations are displayed in the console.
-    consoleOutput = true
-    // [OM] Set rules to use.
-    ruleSets = ["rulesets/java/quickstart.xml"]
+	// [OM] Set version to use.
+	toolVersion = '6.55.0'
+	// [OM] Ignore warning and let the build continue.
+	ignoreFailures = false
+	// [OM] Whether violations are displayed in the console.
+	consoleOutput = true
+	// [OM] Set rules to use.
+	ruleSets = [
+		"rulesets/java/quickstart.xml"
+	]
 }
 
 tasks.withType(Pmd).configureEach {
 
-    exclude '**/generated/**'
-    exclude '**/build/**'
+	exclude '**/generated/**'
+	exclude '**/build/**'
 
-    reports {
-        xml.required = false
-        html.required = true
-    }
+	reports {
+		xml.required = false
+		html.required = true
+	}
 }
 
 // [OM] Spotless configuration.
 spotless {
-    java {
-        target 'src/*/java/**/*.java'
-        googleJavaFormat('1.17.0')
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
+	java {
+		target 'src/*/java/**/*.java'
+		googleJavaFormat('1.17.0')
+		removeUnusedImports()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
 
-    format 'misc', {
-        target '*.md', 'docs/**/*.md', '.gitignore'
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
+	format 'misc', {
+		target '*.md', 'docs/**/*.md', '.gitignore'
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
 
-    groovyGradle {
-        target '*.gradle'
-        greclipse()
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
+	groovyGradle {
+		target '*.gradle'
+		greclipse()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
 
-    lineEndings 'UNIX'
+	lineEndings 'UNIX'
 }
 
 tasks.register('staticAnalysis') {
-    group = "verification"
-    description = "Runs Spotless, Checkstyle and PMD analysis"
+	group = "verification"
+	description = "Runs Spotless, Checkstyle and PMD analysis"
 
-    dependsOn(
-            'spotlessCheck',
-            'checkstyleMain',
-            'checkstyleTest',
-            'pmdMain',
-            'pmdTest'
-    )
+	dependsOn(
+			'spotlessCheck',
+			'checkstyleMain',
+			'checkstyleTest',
+			'pmdMain',
+			'pmdTest'
+			)
 }
 
 tasks.named('check') {
-    dependsOn 'staticAnalysis'
+	dependsOn 'staticAnalysis'
 }
