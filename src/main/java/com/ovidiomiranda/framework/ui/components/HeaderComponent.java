@@ -20,7 +20,13 @@ public class HeaderComponent extends BaseComponent {
       new MobileLocator(
           AppiumBy.id("cartTV"), AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
 
-  /** Constructor. */
+  /**
+   * Constructor
+   *
+   * @param config configuration validator
+   * @param driverContext driver context
+   * @param actions mobile actions utility.
+   */
   public HeaderComponent(
       ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
     super(config, driverContext, actions);
