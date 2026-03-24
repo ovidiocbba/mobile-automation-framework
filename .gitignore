@@ -1,11 +1,11 @@
 # =========================
 # IntelliJ IDEA
 # =========================
-.idea/
-*.iml
-*.ipr
-*.iws
+.idea/*
+!.idea/codeStyles/
+!.idea/codeStyles/*
 out/
+*.iml
 
 # =========================
 # Gradle
