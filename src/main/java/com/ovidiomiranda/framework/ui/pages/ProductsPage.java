@@ -14,29 +14,30 @@ import org.openqa.selenium.By;
  */
 public class ProductsPage extends BasePage {
 
-  private final MobileLocator productsTitle = new MobileLocator(AppiumBy.id("productTV"),
-      AppiumBy.accessibilityId("products_title"));
+  private final MobileLocator productsTitle =
+      new MobileLocator(AppiumBy.id("productTV"), AppiumBy.accessibilityId("products_title"));
 
-  private final MobileLocator firstProduct = new MobileLocator(
-      AppiumBy.xpath("(//android.widget.ImageView[@content-desc='Product Image'])[1]"),
-      AppiumBy.xpath("(//XCUIElementTypeImage[@name='Product Image'])[1]"));
+  private final MobileLocator firstProduct =
+      new MobileLocator(
+          AppiumBy.xpath("(//android.widget.ImageView[@content-desc='Product Image'])[1]"),
+          AppiumBy.xpath("(//XCUIElementTypeImage[@name='Product Image'])[1]"));
 
   /**
    * Constructor.
    *
-   * @param config        config validator
+   * @param config config validator
    * @param driverContext driver context
-   * @param actions       MobileElementActions utility
+   * @param actions MobileElementActions utility
    */
-  public ProductsPage(ConfigValidator config, DriverContext driverContext,
-      MobileElementActions actions) {
+  public ProductsPage(
+      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
   /**
    * Selects the first product from the product list.
    *
-   * <p>This method opens the product detail screen for the first available product.</p>
+   * <p>This method opens the product detail screen for the first available product.
    */
   public void selectFirstProduct() {
     actions.tap(resolve(firstProduct));
@@ -48,8 +49,11 @@ public class ProductsPage extends BasePage {
    * @param productName name of the product to select
    */
   public void selectProductByName(final String productName) {
-    final By product = By.xpath("//android.widget.TextView[@text='" + productName
-        + "']/preceding-sibling::android.widget.ImageView");
+    final By product =
+        By.xpath(
+            "//android.widget.TextView[@text='"
+                + productName
+                + "']/preceding-sibling::android.widget.ImageView");
     actions.tap(product);
   }
 
