@@ -164,19 +164,16 @@ tasks.withType(Test).configureEach {
         def envFile = new File(resultsDir, "environment.properties")
 
         envFile.text = """
+Project=${project.name}
 Platform=${platformName}
 DeviceName=${deviceName}
 PlatformVersion=${platformVersion}
 Threads=${threads}
 
-OS=${System.getProperty("os.name")}
-OSVersion=${System.getProperty("os.version")}
-
 Java=${System.getProperty("java.version")}
 
 Gradle=${gradle.gradleVersion}
 
-Project=${project.name}
 
 CI=${ciEnv}
 BuildNumber=${buildNumber}
