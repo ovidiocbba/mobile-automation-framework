@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 /**
  * Utility class for common explicit waits on mobile elements.
  *
- * <p>Provides common wait conditions for mobile.</p>
+ * <p>Provides common wait conditions for mobile.
  *
  * @author Ovidio Miranda
  */
@@ -72,7 +72,8 @@ public class ElementWaits {
    * @return list of visible elements
    */
   public List<WebElement> waitForAllVisible(By locator) {
-    return waitManager.getWait()
+    return waitManager
+        .getWait()
         .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
   }
 
@@ -90,11 +91,12 @@ public class ElementWaits {
    * Waits until an element contains specific text.
    *
    * @param locator element locator
-   * @param text    expected text
+   * @param text expected text
    * @return true if text is present in element
    */
   public boolean waitForText(By locator, String text) {
-    return waitManager.getWait()
+    return waitManager
+        .getWait()
         .until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
   }
 }
