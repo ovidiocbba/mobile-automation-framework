@@ -14,9 +14,7 @@ public class PropertiesManager {
 
   private final Properties properties;
 
-  /**
-   * Constructor for PropertiesManager.
-   */
+  /** Constructor for PropertiesManager. */
   public PropertiesManager() {
     this.properties = loadProperties();
   }
@@ -42,7 +40,7 @@ public class PropertiesManager {
   /**
    * Gets property value based on enum key.
    *
-   * <p>System properties override values from the config file.</p>
+   * <p>System properties override values from the config file.
    *
    * @param key configuration key
    * @return property value
