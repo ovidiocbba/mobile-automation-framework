@@ -5,11 +5,10 @@ import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
 import com.ovidiomiranda.framework.ui.components.BaseComponent;
 
-
 /**
  * Base class for all Page Objects.
  *
- * <p>Provides access to driver and shared interactions.</p>
+ * <p>Provides access to driver and shared interactions.
  *
  * @author Ovidio Miranda
  */
@@ -18,12 +17,12 @@ public abstract class BasePage extends BaseComponent {
   /**
    * Constructor.
    *
-   * @param config        config validator
+   * @param config config validator
    * @param driverContext driver context
-   * @param actions       mobile actions utility
+   * @param actions mobile actions utility
    */
-  protected BasePage(ConfigValidator config, DriverContext driverContext,
-      MobileElementActions actions) {
+  protected BasePage(
+      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 }
