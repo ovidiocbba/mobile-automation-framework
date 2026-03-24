@@ -26,9 +26,9 @@ public class LoginSteps {
   /**
    * Constructor.
    *
-   * @param config         configuration validator
+   * @param config configuration validator
    * @param menuNavigation menu navigation utility
-   * @param loginPage      login page object
+   * @param loginPage login page object
    */
   public LoginSteps(ConfigValidator config, MenuNavigation menuNavigation, LoginPage loginPage) {
     this.config = config;
@@ -36,17 +36,13 @@ public class LoginSteps {
     this.loginPage = loginPage;
   }
 
-  /**
-   * Navigates to 'Login' screen.
-   */
+  /** Navigates to 'Login' screen. */
   @Given("I navigate to the 'Login' screen")
   public void navigateToLoginScreen() {
     menuNavigation.goToLogin();
   }
 
-  /**
-   * Logs in using valid credentials.
-   */
+  /** Logs in using valid credentials. */
   @When("I log in with valid credentials")
   public void loginWithValidCredentials() {
     String username = config.require(USERNAME);
@@ -54,18 +50,14 @@ public class LoginSteps {
     loginPage.login(username, password);
   }
 
-  /**
-   * Ensures the user is logged in.
-   */
+  /** Ensures the user is logged in. */
   @Given("I am logged in")
   public void ensureUserIsLoggedIn() {
     navigateToLoginScreen();
     loginWithValidCredentials();
   }
 
-  /**
-   * Leaves the 'Username' field empty.
-   */
+  /** Leaves the 'Username' field empty. */
   @And("I leave the 'Username' field empty")
   public void leaveUsernameFieldEmpty() {
     loginPage.enterUsername("");
@@ -91,30 +83,25 @@ public class LoginSteps {
     loginPage.enterPassword(password);
   }
 
-  /**
-   * Taps the 'Login' button.
-   */
+  /** Taps the 'Login' button. */
   @And("I tap the 'Login' button")
   public void tapLoginButton() {
     loginPage.tapLoginButton();
   }
 
-
-  /**
-   * Verifies the username required message is displayed.
-   */
+  /** Verifies the username required message is displayed. */
   @Then("the username required message should be displayed")
   public void verifyUsernameRequiredMessage() {
-    Assert.assertTrue(loginPage.isUsernameRequiredMessageDisplayed(),
+    Assert.assertTrue(
+        loginPage.isUsernameRequiredMessageDisplayed(),
         "Username required message was not displayed");
   }
 
-  /**
-   * Verifies the password required message is displayed.
-   */
+  /** Verifies the password required message is displayed. */
   @Then("the password required message should be displayed")
   public void verifyPasswordRequiredMessage() {
-    Assert.assertTrue(loginPage.isPasswordRequiredMessageDisplayed(),
+    Assert.assertTrue(
+        loginPage.isPasswordRequiredMessageDisplayed(),
         "Password required message was not displayed");
   }
 }
