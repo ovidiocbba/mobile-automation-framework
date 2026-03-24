@@ -13,17 +13,13 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * Represents the side navigation menu (hamburger menu).
+ * Represents the side menu panel.
  *
  * <p>Provides methods to open the menu and navigate using menu options. Reusable across pages.
  *
  * @author Ovidio Miranda
  */
 public class SideMenuComponent extends BaseComponent {
-
-  /** Hamburger menu button locator for both platforms. */
-  private final MobileLocator hamburgerButton =
-      new MobileLocator(AppiumBy.id("menuIV"), AppiumBy.accessibilityId("menu_button"));
 
   private static final Map<MenuOption, MobileLocator> MENU_OPTIONS =
       new EnumMap<>(MenuOption.class);
@@ -42,10 +38,6 @@ public class SideMenuComponent extends BaseComponent {
             AppiumBy.accessibilityId("logout_menu_item")));
   }
 
-  private final MobileLocator cartBadge =
-      new MobileLocator(
-          AppiumBy.id("cartTV"), AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
-
   /**
    * Constructor.
    *
@@ -58,39 +50,17 @@ public class SideMenuComponent extends BaseComponent {
     super(config, driverContext, actions);
   }
 
-  /** Opens the side menu by tapping the hamburger button. */
-  public void openMenu() {
-    actions.tap(resolve(hamburgerButton));
-  }
-
   /**
-   * Navigates to a menu option.
+   * Selects a menu option.
    *
-   * @param option MenuOption to navigate to
+   * @param option menu option
    * @throws IllegalArgumentException if menu option is invalid
    */
   public void navigateTo(MenuOption option) {
-    openMenu();
     MobileLocator locator = MENU_OPTIONS.get(option);
     if (locator == null) {
       throw new IllegalArgumentException("Invalid menu option: " + option);
     }
     actions.tap(resolve(locator));
-  }
-
-  /** Taps the 'Cart' badge. */
-  public void tapCartBadge() {
-    actions.tap(resolve(cartBadge));
-  }
-
-  /**
-   * Gets the 'Cart' badge count.
-   *
-   * <p>This method retrieves the number of items currently displayed in the cart badge icon.
-   *
-   * @return cart item count as text
-   */
-  public String getCartBadgeCount() {
-    return actions.getText(resolve(cartBadge));
   }
 }
