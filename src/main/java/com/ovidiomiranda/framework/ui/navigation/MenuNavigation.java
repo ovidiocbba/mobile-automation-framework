@@ -21,6 +21,7 @@ public class MenuNavigation {
   /**
    * Constructor.
    *
+   * @param header header component
    * @param sideMenu side menu component
    */
   public MenuNavigation(HeaderComponent header, SideMenuComponent sideMenu) {
