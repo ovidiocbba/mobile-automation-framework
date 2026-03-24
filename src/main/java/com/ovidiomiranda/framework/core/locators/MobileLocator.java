@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
  * Represents a locator that supports both Android and iOS.
  *
  * <p>This class allows defining one locator per platform and resolving it at runtime based on the
- * current platform.</p>
+ * current platform.
  *
  * @author Ovidio Miranda
  */
@@ -20,7 +20,7 @@ public class MobileLocator {
    * Constructor for MobileLocator.
    *
    * @param android locator for Android platform
-   * @param ios     locator for iOS platform
+   * @param ios locator for iOS platform
    */
   public MobileLocator(By android, By ios) {
     this.android = android;
