@@ -1,0 +1,221 @@
+/*
+=====================================================
+ EXECUTION GUIDE
+=====================================================
+
+Run all tests (default: 1 thread):
+    ./gradlew clean executeFeatures
+
+Run with parallel threads (only if multiple devices are available):
+    ./gradlew clean executeFeatures -Dthreads=2
+
+Run by tag:
+    ./gradlew clean executeFeatures -Dcucumber.filter.tags='@regression'
+    ./gradlew clean executeFeatures -Dcucumber.filter.tags='@smoke'
+    ./gradlew clean executeFeatures -Dcucumber.filter.tags='@TC-00001'
+
+Override default configuration (from config.properties):
+    ./gradlew clean executeFeatures -Dusername=standard_user -Dpassword=secret_sauce -Dplatform=ANDROID -DdeviceName=emulator-5554 -DplatformVersion=14 -DautomationName=UiAutomator2 -Dapp=apps/android/mda-2.2.0-25.apk -DappiumServerUrl=http://127.0.0.1:4723
+
+Re-run only failed scenarios:
+    ./gradlew reExecuteFeatures
+
+-----------------------------------------------------
+ ALLURE REPORT
+-----------------------------------------------------
+Generate and open report automatically in browser:
+    ./gradlew allureServe
+
+=====================================================
+*/
+
+// ========================================
+// Load config.properties (Test configuration)
+// ========================================
+def configFile = file("$rootDir/src/test/resources/config.properties")
+def configProps = new Properties()
+
+if (!configFile.exists()) {
+    throw new GradleException("config.properties not found at: $configFile")
+}
+
+// Load properties into memory
+configFile.withInputStream { stream -> configProps.load(stream)
+}
+
+// ========================================
+// Helper function to resolve properties
+// Priority: Command Line > config.properties > default value
+// ========================================
+def getProp = { key, defaultValue = null -> System.getProperty(key) ?: configProps.getProperty(key) ?: defaultValue
+}
+
+// ========================================
+// Supported runtime properties
+// ========================================
+def supportedProperties = ["cucumber.filter.tags",
+                           "username",
+                           "password",
+                           "platform",
+                           "deviceName",
+                           "platformVersion",
+                           "automationName",
+                           "app",
+                           "appPackage",
+                           "appActivity",
+                           "bundleId",
+                           "appiumServerUrl",
+                           "explicitWait",
+                           "threads"]
+
+// ========================================
+// Base configuration applied to ALL Test tasks
+// ========================================
+tasks.withType(Test).configureEach {
+
+    // Disable caching for tests
+    // Test results may change depending on environment.
+    outputs.cacheIf { false }
+
+    useTestNG()
+
+    // Required for Cucumber + TestNG integration
+    scanForTestClasses = false
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "short"
+        showStandardStreams = true
+    }
+
+    def platform = getProp("platform", "ANDROID")
+
+    reports {
+        junitXml.required = true
+        junitXml.outputLocation = layout.buildDirectory.dir("test-results/${platform}")
+
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir("reports/tests/${platform}")
+    }
+
+    // Pass supported properties to runtime
+    supportedProperties.each { key ->
+        // First priority: Command line
+        def value = getProp(key)
+        // If value exists, pass it to test runtime
+        if (value != null) {
+            systemProperty key, value
+        }
+    }
+
+    def threadCount = getProp("threads", "1")
+
+    // Required by TestNG to control parallel DataProvider threads
+    systemProperty "dataproviderthreadcount", threadCount
+
+    // Fixing deprecation warnings by explicitly setting test classes directories
+    // This ensures Gradle uses the correct paths for test classes and dependencies during test execution
+    classpath = sourceSets.test.runtimeClasspath
+    testClassesDirs = sourceSets.test.output.classesDirs
+
+    // ========================================
+    // Allure Environment Information
+    // Generates environment.properties automatically
+    // ========================================
+    doFirst {
+
+        def resultsDir = file("$buildDir/allure-results")
+        resultsDir.mkdirs()
+
+        def platformName = getProp("platform", "ANDROID")
+        def deviceName = getProp("deviceName", "N/A")
+        def platformVersion = getProp("platformVersion", "N/A")
+        def explicitWait = getProp("explicitWait", "20")
+        def threads = getProp("threads", "1")
+
+        // CI detection
+        def ciEnv = "Local"
+        def buildNumber = "local"
+
+        if (System.getenv("GITHUB_ACTIONS")) {
+            ciEnv = "GitHub Actions"
+            buildNumber = System.getenv("GITHUB_RUN_NUMBER") ?: "unknown"
+        } else if (System.getenv("JENKINS_URL")) {
+            ciEnv = "Jenkins"
+            buildNumber = System.getenv("BUILD_NUMBER") ?: "unknown"
+        }
+
+        // ========================================
+        // Branch detection (supports Jenkins + GitHub)
+        // Priority: Command Line > CI Environment Variables
+        // Allows Jenkins to pass branch using -Dbranch
+        // ========================================
+        def branch =
+                System.getProperty("branch") ?: System.getenv("GITHUB_REF_NAME") ?: System.getenv("BRANCH_NAME") ?: System.getenv("GIT_BRANCH") ?: "unknown"
+
+        // ========================================
+        // Commit detection
+        // Priority: Command Line > CI Environment Variables
+        // Allows Jenkins to pass commit using -Dcommit
+        // ========================================
+        def commit =
+                System.getProperty("commit") ?: System.getenv("GITHUB_SHA") ?: System.getenv("GIT_COMMIT") ?: "unknown"
+
+        def envFile = new File(resultsDir, "environment.properties")
+
+        envFile.text = """
+Platform=${platformName}
+DeviceName=${deviceName}
+PlatformVersion=${platformVersion}
+Threads=${threads}
+
+OS=${System.getProperty("os.name")}
+OSVersion=${System.getProperty("os.version")}
+
+Java=${System.getProperty("java.version")}
+
+Gradle=${gradle.gradleVersion}
+
+Project=${project.name}
+
+CI=${ciEnv}
+BuildNumber=${buildNumber}
+Branch=${branch}
+Commit=${commit}
+"""
+    }
+}
+
+// ========================================
+// Main execution task
+// ========================================
+tasks.register('executeFeatures', Test) {
+
+    group = "Execution"
+    description = "Runs all Cucumber feature files"
+
+    doFirst {
+        // Clean previous rerun file
+        file("build/rerun.txt").delete()
+    }
+}
+
+// ========================================
+// Re-run failed scenarios
+// ========================================
+tasks.register('reExecuteFeatures', Test) {
+
+    group = "Execution"
+    description = "Re-runs failed scenarios from rerun.txt"
+
+    doFirst {
+        def rerunFile = file("build/rerun.txt")
+
+        if (!rerunFile.exists()) {
+            throw new GradleException("rerun.txt not found. Execute 'executeFeatures' first.")
+        }
+    }
+
+    // Tell Cucumber to execute only failed scenarios
+    systemProperty "cucumber.features", "@build/rerun.txt"
+}
