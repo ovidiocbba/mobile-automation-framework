@@ -89,6 +89,7 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
     }
+    lineEndings 'UNIX'
 }
 
 tasks.register('staticAnalysis') {
