@@ -109,10 +109,15 @@ tasks.register('staticAnalysis') {
 			'checkstyleMain',
 			'checkstyleTest',
 			'pmdMain',
-			'pmdTest'
-			)
+			'pmdTest')
 }
 
-tasks.named('check') {
-	dependsOn 'staticAnalysis'
+tasks.register('preCommitCheck') {
+	group = "verification"
+	description = "Runs all checks required before commit"
+
+	dependsOn(
+			'staticAnalysis',
+			'javadoc'
+			)
 }
