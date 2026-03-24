@@ -11,6 +11,8 @@ java {
     }
 }
 
+// Loads custom test tasks (Cucumber execution + Allure)
+apply from: 'test-tasks.gradle'
 // Loads static code analysis configuration (Checkstyle + PMD)
 apply from: 'code-quality-plugins.gradle'
 // Loads Javadoc configuration
@@ -39,15 +41,12 @@ dependencies {
     testImplementation 'org.testng:testng:7.9.0'
 
     // Allure
+    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.33.0'
     testImplementation 'io.qameta.allure:allure-testng:2.33.0'
 
     // Logging (SLF4J + Logback)
     implementation 'org.slf4j:slf4j-api:2.0.12'
     implementation 'ch.qos.logback:logback-classic:1.4.14'
-}
-
-test {
-    useTestNG()
 }
 
 allure {
