@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Creates configured WebDriverWait instances for explicit waits.
  *
- * <p>Timeout is read from configuration.</p>
+ * <p>Timeout is read from configuration.
  *
  * @author Ovidio Miranda
  */
@@ -23,7 +23,7 @@ public class WaitManager {
    * Constructor.
    *
    * @param driverContext driver context holding AppiumDriver
-   * @param config        configuration validator
+   * @param config configuration validator
    */
   public WaitManager(DriverContext driverContext, ConfigValidator config) {
     this.driverContext = driverContext;
