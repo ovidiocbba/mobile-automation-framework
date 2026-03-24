@@ -5,7 +5,7 @@ import io.appium.java_client.AppiumDriver;
 /**
  * Holds the AppiumDriver instance for the current scenario.
  *
- * <p>This class provides getter and setter to manage the driver across pages and steps.</p>
+ * <p>This class provides getter and setter to manage the driver across pages and steps.
  *
  * @author Ovidio Miranda
  */
@@ -34,8 +34,8 @@ public class DriverContext {
   /**
    * Removes the driver instance from the current thread.
    *
-   * <p>This method should be called after test execution to prevent memory leaks
-   * and ensure proper cleanup in parallel environments.</p>
+   * <p>This method should be called after test execution to prevent memory leaks and ensure proper
+   * cleanup in parallel environments.
    */
   public void removeDriver() {
     driver.remove();
