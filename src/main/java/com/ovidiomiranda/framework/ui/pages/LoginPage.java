@@ -14,14 +14,14 @@ import org.openqa.selenium.By;
  */
 public class LoginPage extends BasePage {
 
-  private final MobileLocator usernameInput = new MobileLocator(AppiumBy.id("nameET"),
-      AppiumBy.accessibilityId("username"));
+  private final MobileLocator usernameInput =
+      new MobileLocator(AppiumBy.id("nameET"), AppiumBy.accessibilityId("username"));
 
-  private final MobileLocator passwordInput = new MobileLocator(AppiumBy.id("passwordET"),
-      AppiumBy.accessibilityId("password"));
+  private final MobileLocator passwordInput =
+      new MobileLocator(AppiumBy.id("passwordET"), AppiumBy.accessibilityId("password"));
 
-  private final MobileLocator loginButton = new MobileLocator(AppiumBy.id("loginBtn"),
-      AppiumBy.accessibilityId("login_button"));
+  private final MobileLocator loginButton =
+      new MobileLocator(AppiumBy.id("loginBtn"), AppiumBy.accessibilityId("login_button"));
 
   private final By usernameRequiredMessage = AppiumBy.id("nameErrorTV");
 
@@ -30,12 +30,12 @@ public class LoginPage extends BasePage {
   /**
    * Constructor.
    *
-   * @param config        config validator
+   * @param config config validator
    * @param driverContext driver context
-   * @param actions       MobileElementActions utility
+   * @param actions MobileElementActions utility
    */
-  public LoginPage(ConfigValidator config, DriverContext driverContext,
-      MobileElementActions actions) {
+  public LoginPage(
+      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
@@ -57,9 +57,7 @@ public class LoginPage extends BasePage {
     actions.type(resolve(passwordInput), password);
   }
 
-  /**
-   * Taps login button.
-   */
+  /** Taps login button. */
   public void tapLoginButton() {
     actions.tap(resolve(loginButton));
   }
