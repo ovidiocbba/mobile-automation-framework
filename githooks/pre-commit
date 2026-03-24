@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "==> Running pre-commit checks..."
+
+./gradlew spotlessApply spotlessCheck
+
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+  echo "[ERROR] Pre-commit checks failed. Commit aborted."
+  exit 1
+fi
+
+echo "[OK] Pre-commit checks passed."
+exit 0
