@@ -11,8 +11,7 @@ import java.net.URL;
 /**
  * Creates iOS driver instances.
  *
- * <p>This implementation connects to the Appium server and starts a session using iOS
- * capabilities.</p>
+ * <p>This implementation connects to the Appium server and starts a session using iOS capabilities.
  *
  * @author Ovidio Miranda
  */
@@ -24,7 +23,7 @@ public class IosDriverProvider implements DriverProvider {
   /**
    * Constructor.
    *
-   * @param config          configuration validator
+   * @param config configuration validator
    * @param iosCapabilities iOS capabilities builder
    */
   public IosDriverProvider(ConfigValidator config, IosCapabilities iosCapabilities) {
@@ -32,9 +31,7 @@ public class IosDriverProvider implements DriverProvider {
     this.iosCapabilities = iosCapabilities;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public AppiumDriver getDriver() {
     try {
