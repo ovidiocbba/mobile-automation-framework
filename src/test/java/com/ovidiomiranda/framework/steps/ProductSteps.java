@@ -19,7 +19,7 @@ public class ProductSteps {
   /**
    * Constructor.
    *
-   * @param productsPage      products page object
+   * @param productsPage products page object
    * @param productDetailPage product detail page object
    */
   public ProductSteps(ProductsPage productsPage, ProductDetailPage productDetailPage) {
@@ -30,8 +30,8 @@ public class ProductSteps {
   /**
    * Adds a product to the cart.
    *
-   * <p>This step selects the first product from the product list
-   * and adds it to the cart from the product detail screen.</p>
+   * <p>This step selects the first product from the product list and adds it to the cart from the
+   * product detail screen.
    */
   @When("I add a product to the cart")
   public void addProductToCart() {
@@ -49,9 +49,7 @@ public class ProductSteps {
     productsPage.selectProductByName(productName);
   }
 
-  /**
-   * Verifies the 'Products' screen is displayed.
-   */
+  /** Verifies the 'Products' screen is displayed. */
   @Then("the 'Products' screen should be displayed")
   public void verifyProductsScreenIsDisplayed() {
     Assert.assertTrue(productsPage.isDisplayed(), "Products screen not displayed");
