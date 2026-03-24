@@ -171,7 +171,7 @@ SystemPropertiesAdvanced
 
 2. Set:
 
-**Name**: ANDROID_HOME  
+**Name**: ANDROID_HOME
 **Value**: C:\Users\<user>\AppData\Local\Android\Sdk
 
 **Example:**
@@ -189,7 +189,7 @@ C:\Users\ovidio.miranda\AppData\Local\Android\Sdk
 2. Click **Edit**
 3. Click **New** and add:
 ```
-%ANDROID_HOME%\platform-tools  
+%ANDROID_HOME%\platform-tools
 %ANDROID_HOME%\emulator
 ```
 
@@ -209,16 +209,16 @@ C:\Users\ovidio.miranda\AppData\Local\Android\Sdk
 
 Run:
 ```
-adb version  
-emulator -version  
+adb version
+emulator -version
 emulator -list-avds
 ```
 ---
 
 ### Expected output
 
-adb version -> shows Android Debug Bridge version  
-emulator -version -> shows emulator version  
+adb version -> shows Android Debug Bridge version
+emulator -version -> shows emulator version
 emulator -list-avds -> shows available devices
 
 ```
@@ -454,4 +454,3 @@ Tool used to inspect mobile elements and obtain locators.
 * iOS requires macOS and Xcode
 
 ---
-
