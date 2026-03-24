@@ -41,10 +41,10 @@ public class CommonHooks {
    *
    * @param driverContext driver context
    * @param driverFactory driver factory
-   * @param config        config validator
+   * @param config config validator
    */
-  public CommonHooks(DriverContext driverContext, DriverFactory driverFactory,
-      ConfigValidator config) {
+  public CommonHooks(
+      DriverContext driverContext, DriverFactory driverFactory, ConfigValidator config) {
     this.driverContext = driverContext;
     this.driverFactory = driverFactory;
     this.config = config;
@@ -68,13 +68,13 @@ public class CommonHooks {
   /**
    * Initializes the driver based on configured platform.
    *
-   * <p>Reads platform from configuration and starts Appium driver.</p>
+   * <p>Reads platform from configuration and starts Appium driver.
    */
   @Before(order = 0)
   public void setUp() {
     String platform = config.require(PLATFORM);
-    AppiumDriver driver = driverFactory.createDriver(
-        PlatformType.valueOf(platform.toUpperCase(ENGLISH)));
+    AppiumDriver driver =
+        driverFactory.createDriver(PlatformType.valueOf(platform.toUpperCase(ENGLISH)));
     driverContext.setDriver(driver);
   }
 
@@ -110,8 +110,8 @@ public class CommonHooks {
    */
   private void attachScreenshot(String name) {
     try {
-      byte[] screenshot = ((TakesScreenshot) driverContext.getDriver()).getScreenshotAs(
-          OutputType.BYTES);
+      byte[] screenshot =
+          ((TakesScreenshot) driverContext.getDriver()).getScreenshotAs(OutputType.BYTES);
 
       Allure.addAttachment(name, new ByteArrayInputStream(screenshot));
 
