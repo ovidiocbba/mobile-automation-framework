@@ -11,9 +11,7 @@ import io.cucumber.java.Scenario;
  */
 public final class ScenarioUtils {
 
-  /**
-   * Private constructor to prevent instantiation.
-   */
+  /** Private constructor to prevent instantiation. */
   private ScenarioUtils() {
     throw new UnsupportedOperationException("ScenarioUtils class and cannot be instantiated");
   }
@@ -27,8 +25,11 @@ public final class ScenarioUtils {
    * @return the Test Case ID without the '@' symbol, or "NO-TC-ID" if not present
    */
   public static String getTestCaseId(final Scenario scenario) {
-    final String pbiId = scenario.getSourceTagNames().stream().filter(tag -> tag.startsWith("@TC-"))
-        .findFirst().orElse("@NO-TC-ID");
+    final String pbiId =
+        scenario.getSourceTagNames().stream()
+            .filter(tag -> tag.startsWith("@TC-"))
+            .findFirst()
+            .orElse("@NO-TC-ID");
     return pbiId.replace("@", "");
   }
 
@@ -36,6 +37,7 @@ public final class ScenarioUtils {
    * Builds a formatted scenario title including Test Case ID and scenario name.
    *
    * <p>Example output:
+   *
    * <pre>
    * TC-00003 - Search for a valid product
    * </pre>
