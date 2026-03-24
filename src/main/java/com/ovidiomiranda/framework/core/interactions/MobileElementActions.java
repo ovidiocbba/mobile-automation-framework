@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Utility class to perform common mobile element actions.
  *
- * <p>Provides reusable methods to interact with mobile elements</p>.
+ * <p>Provides reusable methods to interact with mobile elements.
  *
  * @author Ovidio Miranda
  */
@@ -43,7 +43,7 @@ public class MobileElementActions {
    * Types text into an input field.
    *
    * @param locator element locator
-   * @param text    value to enter
+   * @param text value to enter
    */
   public void type(By locator, String text) {
     WebElement element = waits.waitForVisible(locator);
@@ -83,7 +83,9 @@ public class MobileElementActions {
    * @return list of text values for visible elements
    */
   public List<String> getElementsText(By locator) {
-    return waits.waitForAllVisible(locator).stream().map(WebElement::getText)
-        .filter(text -> !text.isBlank()).collect(Collectors.toList());
+    return waits.waitForAllVisible(locator).stream()
+        .map(WebElement::getText)
+        .filter(text -> !text.isBlank())
+        .collect(Collectors.toList());
   }
 }
