@@ -84,7 +84,7 @@ tasks.withType(Pmd).configureEach {
 spotless {
     java {
         target 'src/*/java/**/*.java'
-        googleJavaFormat()
+        googleJavaFormat('1.17.0')
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()
