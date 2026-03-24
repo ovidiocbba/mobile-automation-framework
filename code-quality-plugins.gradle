@@ -3,7 +3,13 @@
  CODE QUALITY GUIDE
 =====================================================
 
-Run full static analysis (Checkstyle + PMD):
+Apply automatic Java code formatting:
+    ./gradlew spotlessApply
+
+Validate Java code formatting only:
+    ./gradlew spotlessCheck
+
+Run full static analysis (Spotless + Checkstyle + PMD):
     ./gradlew staticAnalysis
 
 Run Checkstyle only:
@@ -35,6 +41,7 @@ checkstyle {
     // [OM] The path to the configuration file.
     configFile = rootProject.file("config/checkstyle/google_checks.xml")
 }
+
 tasks.withType(Checkstyle).configureEach {
 
     exclude '**/generated/**'
@@ -56,6 +63,7 @@ pmd {
     toolVersion = '6.55.0'
     // [OM] Ignore warning and let the build continue.
     ignoreFailures = false
+    // [OM] Whether violations are displayed in the console.
     consoleOutput = true
     // [OM] Set rules to use.
     ruleSets = ["rulesets/java/quickstart.xml"]
@@ -72,14 +80,30 @@ tasks.withType(Pmd).configureEach {
     }
 }
 
+// [OM] Spotless configuration.
+spotless {
+    java {
+        target 'src/*/java/**/*.java'
+        googleJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
 tasks.register('staticAnalysis') {
     group = "verification"
-    description = "Runs Checkstyle and PMD analysis"
+    description = "Runs Spotless, Checkstyle and PMD analysis"
 
     dependsOn(
+            'spotlessCheck',
             'checkstyleMain',
             'checkstyleTest',
             'pmdMain',
             'pmdTest'
     )
+}
+
+tasks.named('check') {
+    dependsOn 'staticAnalysis'
 }
