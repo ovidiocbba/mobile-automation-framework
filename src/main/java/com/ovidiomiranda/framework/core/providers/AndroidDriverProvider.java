@@ -11,7 +11,7 @@ import java.net.URL;
 /**
  * Creates Android driver instances.
  *
- * <p>Connects to Appium server and starts a session with Android capabilities.</p>
+ * <p>Connects to Appium server and starts a session with Android capabilities.
  *
  * @author Ovidio Miranda
  */
@@ -23,7 +23,7 @@ public class AndroidDriverProvider implements DriverProvider {
   /**
    * Constructor.
    *
-   * @param config              configuration validator
+   * @param config configuration validator
    * @param androidCapabilities Android capabilities builder
    */
   public AndroidDriverProvider(ConfigValidator config, AndroidCapabilities androidCapabilities) {
@@ -31,9 +31,7 @@ public class AndroidDriverProvider implements DriverProvider {
     this.androidCapabilities = androidCapabilities;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public AppiumDriver getDriver() {
     try {
