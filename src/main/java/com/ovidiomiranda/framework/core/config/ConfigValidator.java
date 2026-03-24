@@ -5,7 +5,7 @@ import com.ovidiomiranda.framework.core.enums.PropertiesInput;
 /**
  * Utility class used to validate configuration properties.
  *
- * <p>Ensures required properties exist before use.</p>
+ * <p>Ensures required properties exist before use.
  *
  * @author Ovidio Miranda
  */
@@ -67,7 +67,7 @@ public class ConfigValidator {
   /**
    * Returns an optional integer property.
    *
-   * @param key          configuration key
+   * @param key configuration key
    * @param defaultValue value used if property is missing
    * @return integer value
    */
