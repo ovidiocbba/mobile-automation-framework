@@ -11,22 +11,20 @@ import java.time.Duration;
 /**
  * Base capabilities for mobile platforms.
  *
- * <p>This class centralizes common configuration used by Android and iOS sessions.</p>
+ * <p>This class centralizes common configuration used by Android and iOS sessions.
  *
  * @author Ovidio Miranda
  */
 public abstract class BaseCapabilities {
 
-  /**
-   * Maximum time Appium waits for a new command before closing the session.
-   */
+  /** Maximum time Appium waits for a new command before closing the session. */
   protected static final Duration NEW_COMMAND_TIMEOUT = Duration.ofSeconds(300);
 
   /**
    * Applies common capabilities to the given options object.
    *
    * @param options platform options
-   * @param config  configuration validator
+   * @param config configuration validator
    */
   protected static void setCommonCapabilities(BaseOptions<?> options, ConfigValidator config) {
     options.setCapability("deviceName", config.require(DEVICE_NAME));
