@@ -96,7 +96,7 @@ spotless {
         endWithNewline()
     }
 
-    format 'gradle', {
+    groovyGradle {
         target '*.gradle'
         greclipse()
         trimTrailingWhitespace()
