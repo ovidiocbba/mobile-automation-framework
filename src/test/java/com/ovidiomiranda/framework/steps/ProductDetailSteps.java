@@ -23,9 +23,7 @@ public class ProductDetailSteps {
     this.productDetailPage = productDetailPage;
   }
 
-  /**
-   * Taps the 'Add to cart' button.
-   */
+  /** Taps the 'Add to cart' button. */
   @When("I tap the 'Add to cart' button")
   public void tapAddToCart() {
     productDetailPage.tapAddToCartButton();
