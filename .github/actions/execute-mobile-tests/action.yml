@@ -71,6 +71,12 @@ runs:
         echo "Running Android tests"
         echo "================================="
 
+        # Validate credentials
+        if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ]; then
+          echo "Credentials not found"
+          exit 1
+        fi
+
         COMMON_PARAMS="\
         -Dcucumber.filter.tags=${{ inputs.scenarioTag }} \
         -Dplatform=ANDROID \
@@ -79,7 +85,9 @@ runs:
         -DautomationName=UiAutomator2 \
         -Dapp=${{ inputs.app }} \
         -DappiumServerUrl=${{ inputs.appiumServerUrl }} \
-        -Dthreads=${{ inputs.threads }}"
+        -Dthreads=${{ inputs.threads }} \
+        -Dusername=${USERNAME} \
+        -Dpassword=${PASSWORD}"
 
         # Gradle flags optimized for CI logs
         GRADLE_FLAGS="--no-daemon --console=plain --warning-mode summary"
