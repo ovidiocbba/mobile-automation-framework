@@ -6,7 +6,7 @@ import io.cucumber.java.en.When;
 import org.testng.Assert;
 
 /**
- * Step definitions for Header component validations.
+ * Step definitions for Header component.
  *
  * @author Ovidio Miranda
  */
@@ -21,6 +21,12 @@ public class HeaderSteps {
    */
   public HeaderSteps(HeaderComponent header) {
     this.header = header;
+  }
+
+  /** Taps the 'Hamburger' button. */
+  @When("I tap the 'Hamburger' button")
+  public void tapHamburgerButton() {
+    header.openMenu();
   }
 
   /** Taps the 'Cart' badge. */
