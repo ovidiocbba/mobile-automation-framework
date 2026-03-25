@@ -104,4 +104,10 @@ public class LoginSteps {
         loginPage.isPasswordRequiredMessageDisplayed(),
         "Password required message was not displayed");
   }
+
+  /** Verifies that the 'Login' screen is displayed. */
+  @Then("the 'Login' screen should be displayed")
+  public void verifyLoginScreenIsDisplayed() {
+    Assert.assertTrue(loginPage.isDisplayed(), "Login screen was not displayed");
+  }
 }
