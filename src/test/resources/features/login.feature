@@ -40,3 +40,12 @@ Feature: Login functionality
     And I tap the 'Add to cart' button
     And I tap the 'Cart' badge
     Then the product "Sauce Labs Backpack" should be displayed in the Cart
+
+  @TC-0006 @regression
+  Scenario: Successful logout from the application
+    Given I am logged in
+    When I tap the 'Hamburger' button
+    And I tap the 'Logout' option
+    Then a 'Logout Confirmation' popup should be displayed
+    When I tap the 'LOGOUT' button
+    Then the 'Login' screen should be displayed
