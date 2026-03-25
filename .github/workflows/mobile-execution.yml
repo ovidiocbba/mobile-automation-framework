@@ -14,9 +14,14 @@ on:
         default: "emulator-5554"
 
       platformVersion:
-        description: "Android version"
+        description: "Android version (used by Appium)"
         required: false
         default: "14"
+
+      apiLevel:
+        description: "Android API level (used by the emulator)"
+        required: false
+        default: "34"
 
       app:
         description: "APK path"
@@ -51,7 +56,7 @@ jobs:
       - name: Run Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ inputs.platformVersion }}
+          api-level: ${{ inputs.apiLevel }}
           target: default
           arch: x86_64
           profile: pixel_6
