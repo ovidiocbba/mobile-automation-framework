@@ -91,4 +91,13 @@ public class LoginPage extends BasePage {
   public boolean isPasswordRequiredMessageDisplayed() {
     return actions.isDisplayed(passwordRequiredMessage);
   }
+
+  /**
+   * Verifies if the 'Login' screen is displayed.
+   *
+   * @return true if the Login screen is visible, false otherwise
+   */
+  public boolean isDisplayed() {
+    return actions.isDisplayed(resolve(loginButton));
+  }
 }
