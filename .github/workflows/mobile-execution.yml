@@ -1,6 +1,5 @@
 name: Mobile Execution
 
-# Manual trigger
 on:
   workflow_dispatch:
     inputs:
@@ -24,24 +23,31 @@ on:
         required: false
         default: "apps/android/mda-2.2.0-25.apk"
 
+      threads:
+        description: "Parallel threads"
+        required: false
+        default: "1"
+
+      appiumServerUrl:
+        description: "Appium server URL"
+        required: false
+        default: "http://127.0.0.1:4723"
+
 jobs:
   android-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 40
 
     steps:
-      # Checkout repo
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Setup Java + tools
       - name: Setup environment
         uses: ./.github/actions/setup-environment
         with:
           java-ver: 17
           java-distribution: temurin
 
-      # Start Android emulator
       - name: Run Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -55,7 +61,6 @@ jobs:
             echo "Emulator ready"
             adb devices
 
-      # Execute mobile tests
       - name: Execute Mobile Tests
         uses: ./.github/actions/execute-mobile-tests
         with:
@@ -63,8 +68,9 @@ jobs:
           deviceName: ${{ inputs.deviceName }}
           platformVersion: ${{ inputs.platformVersion }}
           app: ${{ inputs.app }}
+          threads: ${{ inputs.threads }}
+          appiumServerUrl: ${{ inputs.appiumServerUrl }}
 
-  # Generate Allure report
   report:
     needs: android-tests
     if: always()
