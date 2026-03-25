@@ -1,0 +1,23 @@
+name: Setup Environment
+description: "Install Java and configure Gradle cache"
+
+# Inputs the action accepts.
+inputs:
+  java-ver:
+    description: "Java Version"
+    required: true
+  java-distribution:
+    description: "Java Distribution"
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Set up JDK for x64
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ inputs.java-ver }}
+        distribution: ${{ inputs.java-distribution }}
+        architecture: x64
+        cache: gradle # enable built-in Gradle caching to speed up CI executions
