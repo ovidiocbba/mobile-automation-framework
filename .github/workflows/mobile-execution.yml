@@ -41,7 +41,7 @@ on:
 jobs:
   android-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
 
     steps:
       - name: Checkout code
@@ -58,10 +58,11 @@ jobs:
         with:
           api-level: ${{ inputs.apiLevel }}
           target: google_apis
-          arch: x86
+          arch: x86_64
           profile: pixel
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -accel off -no-snapshot
           disable-animations: true
+          emulator-boot-timeout: 600
           script: |
             echo "Waiting for emulator..."
             adb wait-for-device
