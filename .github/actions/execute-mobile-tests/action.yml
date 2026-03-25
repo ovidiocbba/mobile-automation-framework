@@ -1,5 +1,5 @@
 name: "Execute Mobile Tests"
-description: "Run Android tests using Appium and Gradle with configurable inputs"
+description: "Run Android tests using Appium 2 and Gradle with configurable inputs"
 
 inputs:
   scenarioTag:
@@ -25,7 +25,7 @@ inputs:
   appiumServerUrl:
     description: "Appium server URL"
     required: true
-    default: "http://127.0.0.1:4723/"
+    default: "http://127.0.0.1:4723"
 
   threads:
     description: "Parallel threads"
@@ -36,15 +36,19 @@ runs:
   using: "composite"
 
   steps:
-    # Start Appium server
-    - name: Start Appium Server
+    - name: Start Appium Server (Appium 2)
       shell: bash
       run: |
-        echo "Starting Appium..."
+        echo "Installing Appium..."
         npm install -g appium
-        appium --base-path /wd/hub > appium.log 2>&1 &
 
-        echo "Waiting for Appium to be ready..."
+        echo "Installing UiAutomator2 driver..."
+        appium driver install uiautomator2
+
+        echo "Starting Appium..."
+        appium > appium.log 2>&1 &
+
+        echo "Waiting for Appium at ${{ inputs.appiumServerUrl }}..."
 
         # Dynamic wait with timeout (~60s)
         for i in {1..30}; do
@@ -82,8 +86,8 @@ runs:
 
         echo "Running tests..."
         ./gradlew clean executeFeatures \
-            $GRADLE_FLAGS \
-            $COMMON_PARAMS
+          $GRADLE_FLAGS \
+          $COMMON_PARAMS
 
         STATUS=$?
 
@@ -91,13 +95,12 @@ runs:
         if [ "$STATUS" -ne 0 ]; then
           echo "Re-running failed tests..."
           ./gradlew reExecuteFeatures \
-              $GRADLE_FLAGS \
-              $COMMON_PARAMS
+            $GRADLE_FLAGS \
+            $COMMON_PARAMS
         else
           echo "All tests passed. No retry needed."
         fi
 
-    # Upload logs
     - name: Upload logs
       if: always()
       uses: actions/upload-artifact@v4
@@ -106,7 +109,6 @@ runs:
         path: build/logs
         retention-days: 5
 
-    # Upload Allure results
     - name: Upload Allure Results
       if: always()
       uses: actions/upload-artifact@v4
