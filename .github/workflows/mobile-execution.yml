@@ -14,12 +14,12 @@ on:
         default: "emulator-5554"
 
       platformVersion:
-        description: "Android version (used by Appium)"
+        description: "Android version"
         required: false
         default: "14"
 
       apiLevel:
-        description: "Android API level (used by the emulator)"
+        description: "Android API Level (example: 34 for Android 14)"
         required: false
         default: "34"
 
@@ -66,6 +66,36 @@ jobs:
           script: |
             echo "Waiting for emulator..."
             adb wait-for-device
+
+            echo "Checking ADB connection..."
+            timeout=10
+            elapsed=0
+
+            while true; do
+              state=$(adb devices | grep emulator-5554 | awk '{print $2}')
+
+              if [ "$state" = "device" ]; then
+                echo "ADB connected successfully"
+                break
+              fi
+
+              if [ "$state" = "offline" ]; then
+                echo "ADB device is offline. Waiting 10 seconds before failing..."
+                sleep 10
+                echo "Stopping job due to ADB offline state"
+                exit 1
+              fi
+
+              sleep 2
+              elapsed=$((elapsed+2))
+
+              if [ $elapsed -gt $timeout ]; then
+                echo "ADB did not connect in time"
+                exit 1
+              fi
+            done
+
+            echo "Waiting for Android to finish booting..."
 
             boot_completed=""
             until [[ "$boot_completed" == "1" ]]; do
