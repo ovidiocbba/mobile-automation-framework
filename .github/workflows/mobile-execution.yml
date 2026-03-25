@@ -1,0 +1,87 @@
+name: Mobile Execution
+
+# Manual trigger
+on:
+  workflow_dispatch:
+    inputs:
+      scenarioTag:
+        description: "Tag to execute"
+        required: false
+        default: "@regression"
+
+      deviceName:
+        description: "Device name"
+        required: false
+        default: "emulator-5554"
+
+      platformVersion:
+        description: "Android version"
+        required: false
+        default: "14"
+
+      app:
+        description: "APK path"
+        required: false
+        default: "apps/android/mda-2.2.0-25.apk"
+
+jobs:
+  android-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      # Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Setup Java + tools
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          java-ver: 17
+          java-distribution: temurin
+
+      # Start Android emulator
+      - name: Run Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ inputs.platformVersion }}
+          target: default
+          arch: x86_64
+          profile: pixel_6
+          emulator-options: -no-window -no-audio -no-boot-anim
+          disable-animations: true
+          script: |
+            echo "Emulator ready"
+            adb devices
+
+      # Execute mobile tests
+      - name: Execute Mobile Tests
+        uses: ./.github/actions/execute-mobile-tests
+        with:
+          scenarioTag: ${{ inputs.scenarioTag }}
+          deviceName: ${{ inputs.deviceName }}
+          platformVersion: ${{ inputs.platformVersion }}
+          app: ${{ inputs.app }}
+
+  # Generate Allure report
+  report:
+    needs: android-tests
+    if: always()
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: deploy-gh-pages
+      cancel-in-progress: true
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate and Deploy Allure Report
+        uses: ./.github/actions/generate-report
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
