@@ -63,6 +63,9 @@ jobs:
 
       - name: Execute Mobile Tests
         uses: ./.github/actions/execute-mobile-tests
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         with:
           scenarioTag: ${{ inputs.scenarioTag }}
           deviceName: ${{ inputs.deviceName }}
