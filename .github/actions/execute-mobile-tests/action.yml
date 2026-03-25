@@ -1,0 +1,116 @@
+name: "Execute Mobile Tests"
+description: "Run Android tests using Appium and Gradle with configurable inputs"
+
+inputs:
+  scenarioTag:
+    description: "Cucumber tag (e.g. @regression)"
+    required: true
+    default: "@regression"
+
+  deviceName:
+    description: "Device name (e.g. emulator-5554)"
+    required: true
+    default: "emulator-5554"
+
+  platformVersion:
+    description: "Android version (e.g. 14)"
+    required: true
+    default: "14"
+
+  app:
+    description: "APK path"
+    required: true
+    default: "apps/android/mda-2.2.0-25.apk"
+
+  appiumServerUrl:
+    description: "Appium server URL"
+    required: true
+    default: "http://127.0.0.1:4723/"
+
+  threads:
+    description: "Parallel threads"
+    required: false
+    default: "1"
+
+runs:
+  using: "composite"
+
+  steps:
+    # Start Appium server
+    - name: Start Appium Server
+      shell: bash
+      run: |
+        echo "Starting Appium..."
+        npm install -g appium
+        appium --base-path /wd/hub > appium.log 2>&1 &
+
+        echo "Waiting for Appium to be ready..."
+
+        # Dynamic wait with timeout (~60s)
+        for i in {1..30}; do
+          curl -s "${{ inputs.appiumServerUrl }}/status" | grep -q '"ready":true' && break
+          sleep 2
+        done
+
+        # Fail if not ready
+        curl -s "${{ inputs.appiumServerUrl }}/status" | grep -q '"ready":true' || (echo "Appium failed to start" && exit 1)
+
+        echo "Appium is ready!"
+
+    # Execute tests
+    - name: Run Android Tests
+      shell: bash
+      run: |
+        set +e
+
+        echo "================================="
+        echo "Running Android tests"
+        echo "================================="
+
+        COMMON_PARAMS="\
+        -Dcucumber.filter.tags=${{ inputs.scenarioTag }} \
+        -Dplatform=ANDROID \
+        -DdeviceName=${{ inputs.deviceName }} \
+        -DplatformVersion=${{ inputs.platformVersion }} \
+        -DautomationName=UiAutomator2 \
+        -Dapp=${{ inputs.app }} \
+        -DappiumServerUrl=${{ inputs.appiumServerUrl }} \
+        -Dthreads=${{ inputs.threads }}"
+
+        # Gradle flags optimized for CI logs
+        GRADLE_FLAGS="--no-daemon --console=plain --warning-mode summary"
+
+        echo "Running tests..."
+        ./gradlew clean executeFeatures \
+            $GRADLE_FLAGS \
+            $COMMON_PARAMS
+
+        STATUS=$?
+
+        # Retry failed scenarios
+        if [ "$STATUS" -ne 0 ]; then
+          echo "Re-running failed tests..."
+          ./gradlew reExecuteFeatures \
+              $GRADLE_FLAGS \
+              $COMMON_PARAMS
+        else
+          echo "All tests passed. No retry needed."
+        fi
+
+    # Upload logs
+    - name: Upload logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: mobile-logs-${{ github.run_id }}
+        path: build/logs
+        retention-days: 5
+
+    # Upload Allure results
+    - name: Upload Allure Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results-android-${{ github.run_id }}
+        path: build/allure-results
+        retention-days: 5
