@@ -98,6 +98,13 @@ spotless {
         endWithNewline()
     }
 
+    format 'yaml', {
+        target '.github/**/*.yml', '.github/**/*.yaml'
+        prettier('3.2.5').config([
+                'parser': 'yaml'
+        ])
+    }
+
     lineEndings 'UNIX'
 }
 
