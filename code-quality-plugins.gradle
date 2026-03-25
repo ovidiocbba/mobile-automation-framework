@@ -32,6 +32,7 @@ checkstyle {
     showViolations = true
     // [OM] The path to the configuration file.
     configFile = rootProject.file("config/checkstyle/google_checks.xml")
+    maxWarnings = 0
 }
 
 tasks.withType(Checkstyle).configureEach {
