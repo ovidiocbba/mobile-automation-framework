@@ -57,12 +57,22 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ inputs.apiLevel }}
-          target: default
-          arch: x86_64
-          profile: pixel_6
-          emulator-options: -no-window -no-audio -no-boot-anim
+          target: google_apis
+          arch: x86
+          profile: pixel
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -accel off -no-snapshot
           disable-animations: true
           script: |
+            echo "Waiting for emulator..."
+            adb wait-for-device
+
+            boot_completed=""
+            until [[ "$boot_completed" == "1" ]]; do
+              boot_completed=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+              echo "Waiting for boot to complete..."
+              sleep 5
+            done
+
             echo "Emulator ready"
             adb devices
 
