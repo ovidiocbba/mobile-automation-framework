@@ -21,3 +21,7 @@ runs:
         distribution: ${{ inputs.java-distribution }}
         architecture: x64
         cache: gradle # enable built-in Gradle caching to speed up CI executions
+
+    - name: Verify Java
+      shell: bash
+      run: java -version
