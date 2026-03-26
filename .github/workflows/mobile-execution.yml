@@ -34,7 +34,6 @@ on:
 
 jobs:
   android-tests:
-    # macOS-14 is the key for Apple Silicon performance
     runs-on: macos-14
     timeout-minutes: 45
 
@@ -58,7 +57,9 @@ jobs:
           force-avd-creation: true
           disable-animations: true
           disable-spellchecker: true
-          # STRATEGIC FIX: 'cores' parameter is omitted to prevent HVF_UNSUPPORTED crash
+          # FIX: Overriding the default '2' cores with an empty string
+          # to prevent the 'hw.cpu.ncore' injection that causes HVF failure.
+          cores: ""
           emulator-options: >-
             -no-window
             -no-audio
@@ -75,27 +76,25 @@ jobs:
             echo "Waiting for device..."
             adb wait-for-device
 
-            echo "Checking boot progress..."
+            echo "Checking boot status..."
             attempt=0
             while [ $attempt -lt 30 ]; do
-              # The 'tr' command is vital to handle Android's carriage return
               BOOT_STATUS=$(adb shell getprop sys.boot_completed | tr -d '\r')
               if [ "$BOOT_STATUS" == "1" ]; then
-                echo "Emulator is up and running!"
+                echo "Emulator is ready!"
                 break
               fi
-              echo "Waiting... (Attempt $attempt, Status: ${BOOT_STATUS:-booting})"
+              echo "Waiting... (Attempt $attempt, Status: ${BOOT_STATUS:-loading})"
               sleep 10
               attempt=$((attempt+1))
             done
 
             if [ "$BOOT_STATUS" != "1" ]; then
-              echo "Error: Device did not boot in time"
+              echo "Error: Timeout waiting for boot."
               exit 1
             fi
 
             adb devices
-            # Unlock screen to ensure Appium can interact with the UI immediately
             adb shell input keyevent 82
 
       - name: Execute Mobile Tests
