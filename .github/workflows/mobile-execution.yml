@@ -60,11 +60,11 @@ jobs:
           disable-spellchecker: true
 
           # STABILITY FIXES FOR APPLE SILICON HYPERVISOR
-          cores: ""                    # Prevents CPU over-allocation
-          ram-size: 2048M               # Fixed RAM to avoid negotiation errors
-          heap-size: 512M               # Internal JVM heap for the emulator
-          disk-size: 6000M              # Ensures enough space for the AVD
-          disable-linux-hw-accel: true  # Fixes 'Invalid argument' on macOS ARM64
+          cores: "" # Prevents CPU over-allocation
+          ram-size: 2048M # Fixed RAM to avoid negotiation errors
+          heap-size: 512M # Internal JVM heap for the emulator
+          disk-size: 6000M # Ensures enough space for the AVD
+          disable-linux-hw-accel: true # Fixes 'Invalid argument' on macOS ARM64
 
           emulator-options: >-
             -no-window
