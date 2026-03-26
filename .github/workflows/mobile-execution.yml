@@ -40,8 +40,8 @@ on:
 
 jobs:
   android-tests:
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
+    runs-on: macos-latest
+    timeout-minutes: 60
 
     steps:
       - name: Checkout code
@@ -60,15 +60,15 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_5
-          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -accel off -no-snapshot
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot
           disable-animations: true
-          emulator-boot-timeout: 600
+          emulator-boot-timeout: 900
           script: |
             echo "Waiting for emulator..."
             adb wait-for-device
 
             echo "Checking ADB connection..."
-            timeout=10
+            timeout=30
             elapsed=0
 
             while true; do
@@ -80,10 +80,10 @@ jobs:
               fi
 
               if [ "$state" = "offline" ]; then
-                echo "ADB device is offline. Waiting 10 seconds before failing..."
-                sleep 10
-                echo "Stopping job due to ADB offline state"
-                exit 1
+                echo "ADB device is offline. Restarting ADB..."
+                adb kill-server
+                adb start-server
+                sleep 5
               fi
 
               sleep 2
@@ -91,6 +91,7 @@ jobs:
 
               if [ $elapsed -gt $timeout ]; then
                 echo "ADB did not connect in time"
+                adb devices
                 exit 1
               fi
             done
@@ -123,7 +124,7 @@ jobs:
   report:
     needs: android-tests
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     concurrency:
       group: deploy-gh-pages
