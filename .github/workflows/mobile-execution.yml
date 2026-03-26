@@ -7,32 +7,26 @@ on:
         description: "Tag to execute"
         required: false
         default: "@regression"
-
       deviceName:
         description: "Device name"
         required: false
         default: "emulator-5554"
-
       platformVersion:
         description: "Android version"
         required: false
         default: "14"
-
       apiLevel:
         description: "Android API Level (example: 34 for Android 14)"
         required: false
         default: "34"
-
       app:
         description: "APK path"
         required: false
         default: "apps/android/mda-2.2.0-25.apk"
-
       threads:
         description: "Parallel threads"
         required: false
         default: "1"
-
       appiumServerUrl:
         description: "Appium server URL"
         required: false
@@ -40,7 +34,8 @@ on:
 
 jobs:
   android-tests:
-    runs-on: ubuntu-latest
+    # Changed to macos-latest to provide hardware acceleration (KVM/Hypervisor)
+    runs-on: macos-latest
     timeout-minutes: 45
 
     steps:
@@ -58,9 +53,10 @@ jobs:
         with:
           api-level: ${{ inputs.apiLevel }}
           target: google_apis
-          arch: x86_64
+          # arm64-v8a is the native and faster architecture for macOS runners
+          arch: arm64-v8a
           profile: pixel_5
-          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -accel on -no-snapshot
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect
           disable-animations: true
           emulator-boot-timeout: 600
           script: |
