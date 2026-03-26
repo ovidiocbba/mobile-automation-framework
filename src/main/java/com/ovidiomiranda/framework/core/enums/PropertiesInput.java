@@ -14,6 +14,7 @@ public enum PropertiesInput {
 
   /** Password for login. */
   PASSWORD("password"),
+
   /** Mobile platform where tests will run (ANDROID or IOS). */
   PLATFORM("platform"),
 
@@ -45,7 +46,22 @@ public enum PropertiesInput {
   EXPLICIT_WAIT("explicitWait"),
 
   /** Number of threads for parallel execution. */
-  THREAD_COUNT("threads");
+  THREAD_COUNT("threads"),
+
+  /** BrowserStack username. */
+  BS_USERNAME("bs.username"),
+
+  /** BrowserStack access key. */
+  BS_ACCESS_KEY("bs.accessKey"),
+
+  /** BrowserStack app id. */
+  BS_APP("bs.app"),
+
+  /** BrowserStack hub URL. */
+  BS_URL("bs.url"),
+
+  /** Execution type (local, browserstack). */
+  EXECUTION("execution");
 
   private final String propertiesName;
 
