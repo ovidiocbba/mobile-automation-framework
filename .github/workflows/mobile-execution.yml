@@ -16,7 +16,7 @@ on:
         required: false
         default: "13"
       apiLevel:
-        description: "Android API Level (API 33 is highly stable on ARM64)"
+        description: "Android API Level"
         required: false
         default: "33"
       app:
@@ -34,7 +34,6 @@ on:
 
 jobs:
   android-tests:
-    # Using macos-14 (Intel/ARM hybrid support) for better hardware virtualization
     runs-on: macos-14
     timeout-minutes: 45
 
@@ -55,48 +54,42 @@ jobs:
           target: google_apis
           arch: arm64-v8a
           profile: pixel_5
-          # Letting the runner auto-allocate cores to avoid 'Invalid Argument' errors
-          emulator-options: -no-window -no-audio -no-boot-anim -no-metrics -no-snapshot-load
+          force-avd-creation: true
           disable-animations: true
+          disable-spellchecker: true
+          emulator-options: >-
+            -no-window
+            -no-audio
+            -no-boot-anim
+            -no-metrics
+            -no-snapshot-load
+            -gpu swiftshader_indirect
           emulator-boot-timeout: 600
           script: |
+            echo "Restarting ADB to ensure clean connection..."
+            adb kill-server
+            adb start-server
+
             echo "Waiting for emulator to be detected by ADB..."
             adb wait-for-device
 
-            echo "Validating ADB connection..."
-            timeout=60
-            elapsed=0
-
-            while true; do
-              # Check for specific device status in the list
-              state=$(adb devices | grep "emulator-5554" | awk '{print $2}')
-
-              if [ "$state" = "device" ]; then
-                echo "ADB connected and device is online"
-                break
-              fi
-
-              echo "Current state: ${state:-unknown}. Waiting..."
-              sleep 5
-              elapsed=$((elapsed+5))
-
-              if [ $elapsed -gt $timeout ]; then
-                echo "ADB connection timeout. Current devices list:"
-                adb devices
-                exit 1
-              fi
-            done
-
             echo "Checking Android boot completion..."
             boot_completed=""
-            while [ "$boot_completed" != "1" ]; do
+            attempt=0
+            while [ "$boot_completed" != "1" ] && [ $attempt -lt 30 ]; do
               boot_completed=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
               if [ "$boot_completed" == "1" ]; then
                 break
               fi
-              echo "Booting... current status: $boot_completed"
-              sleep 5
+              echo "Booting... attempt $attempt (status: ${boot_completed:-waiting})"
+              sleep 10
+              attempt=$((attempt+1))
             done
+
+            if [ "$boot_completed" != "1" ]; then
+              echo "Error: Emulator failed to boot in time."
+              exit 1
+            fi
 
             echo "Emulator is fully ready for testing"
             adb devices
