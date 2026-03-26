@@ -6,6 +6,8 @@ import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP_ACTIVIT
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP_PACKAGE;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
+import com.ovidiomiranda.framework.core.enums.ExecutionType;
+import com.ovidiomiranda.framework.core.utils.ExecutionUtils;
 import io.appium.java_client.android.options.UiAutomator2Options;
 
 /**
@@ -19,22 +21,29 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 public class AndroidCapabilities {
 
   private final ConfigValidator config;
+  private final BrowserStackCapabilitiesBuilder bsBuilder;
 
   /**
    * Constructor.
    *
    * @param config configuration validator
+   * @param bsBuilder BrowserStack capabilities builder
    */
-  public AndroidCapabilities(ConfigValidator config) {
+  public AndroidCapabilities(ConfigValidator config, BrowserStackCapabilitiesBuilder bsBuilder) {
+
     this.config = config;
+    this.bsBuilder = bsBuilder;
   }
 
   /**
    * Creates Android capabilities.
    *
-   * <p>If the {@code app} property is provided, the framework installs the application from the APK
-   * file. Otherwise, it launches the already installed app using {@code appPackage} and {@code
-   * appActivity}.
+   * <p>Supports two execution modes:
+   *
+   * <ul>
+   *   <li>Local execution (APK or appPackage + appActivity)
+   *   <li>BrowserStack execution (cloud app using bs://)
+   * </ul>
    *
    * @return configured UiAutomator2Options
    */
@@ -42,12 +51,22 @@ public class AndroidCapabilities {
     UiAutomator2Options options = new UiAutomator2Options();
     options.setPlatformName("Android");
     setCommonCapabilities(options, config);
-    String app = config.optional(APP);
-    if (app != null && !app.isBlank()) {
-      options.setApp(app);
-    } else {
-      options.setCapability("appPackage", config.require(APP_PACKAGE));
-      options.setCapability("appActivity", config.require(APP_ACTIVITY));
+    ExecutionType executionType = ExecutionUtils.getExecutionType(config);
+    switch (executionType) {
+      case BROWSERSTACK:
+        bsBuilder.apply(options, "Android Test");
+        break;
+
+      case LOCAL:
+      default:
+        String app = config.optional(APP);
+        if (app != null && !app.isBlank()) {
+          options.setApp(app);
+        } else {
+          options.setCapability("appPackage", config.require(APP_PACKAGE));
+          options.setCapability("appActivity", config.require(APP_ACTIVITY));
+        }
+        break;
     }
     return options;
   }
