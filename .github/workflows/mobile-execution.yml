@@ -14,11 +14,11 @@ on:
       platformVersion:
         description: "Android version"
         required: false
-        default: "14"
+        default: "13"
       apiLevel:
-        description: "Android API Level (example: 34 for Android 14)"
+        description: "Android API Level (API 33 is highly stable on ARM64)"
         required: false
-        default: "34"
+        default: "33"
       app:
         description: "APK path"
         required: false
@@ -34,7 +34,7 @@ on:
 
 jobs:
   android-tests:
-    # Switched to macos-14 to resolve the HVF_UNSUPPORTED error found in macOS 15 (Sequoia)
+    # Using macos-14 (Intel/ARM hybrid support) for better hardware virtualization
     runs-on: macos-14
     timeout-minutes: 45
 
@@ -55,8 +55,7 @@ jobs:
           target: google_apis
           arch: arm64-v8a
           profile: pixel_5
-          cores: 4
-          # -no-snapshot-load ensures a clean boot and avoids hardware compatibility issues
+          # Letting the runner auto-allocate cores to avoid 'Invalid Argument' errors
           emulator-options: -no-window -no-audio -no-boot-anim -no-metrics -no-snapshot-load
           disable-animations: true
           emulator-boot-timeout: 600
