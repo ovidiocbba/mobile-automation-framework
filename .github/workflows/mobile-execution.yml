@@ -34,7 +34,7 @@ on:
 
 jobs:
   android-tests:
-    # IMPORTANT: macos-14 uses Apple Silicon (ARM64) runners
+    # Running on Apple Silicon (M1/M2) Hosted Runners
     runs-on: macos-14
     timeout-minutes: 45
 
@@ -53,17 +53,19 @@ jobs:
         with:
           api-level: ${{ inputs.apiLevel }}
           target: google_apis
-          arch: arm64-v8a # Must be arm64 to run natively on macos-14
+          arch: arm64-v8a
           profile: pixel_5
           force-avd-creation: true
           disable-animations: true
           disable-spellchecker: true
 
-          # FIX: Leaving 'cores' empty prevents the 'HV_UNSUPPORTED' error
-          # by letting the emulator auto-detect the runner's resources.
-          cores: ""
+          # STABILITY FIXES FOR APPLE SILICON HYPERVISOR
+          cores: ""                    # Prevents CPU over-allocation
+          ram-size: 2048M               # Fixed RAM to avoid negotiation errors
+          heap-size: 512M               # Internal JVM heap for the emulator
+          disk-size: 6000M              # Ensures enough space for the AVD
+          disable-linux-hw-accel: true  # Fixes 'Invalid argument' on macOS ARM64
 
-          # GPU and Performance settings for CI
           emulator-options: >-
             -no-window
             -no-audio
@@ -73,23 +75,25 @@ jobs:
             -gpu swiftshader_indirect
 
           emulator-boot-timeout: 600
-
-          # Optimized boot script
           script: |
-            echo "Waiting for device to be online..."
+            echo "Waiting for device connection..."
             adb wait-for-device
 
-            echo "Checking boot completion status..."
-            # The reactivecircus action handles basic waiting,
-            # but this loop ensures the Android OS is fully interactive.
-            BOOT_STATUS=$(adb shell getprop sys.boot_completed | tr -d '\r')
-            while [ "$BOOT_STATUS" != "1" ]; do
-              echo "Waiting for system boot... (Current status: ${BOOT_STATUS:-loading})"
-              sleep 5
-              BOOT_STATUS=$(adb shell getprop sys.boot_completed | tr -d '\r')
+            echo "Verifying full system boot..."
+            # Precise loop to ensure the Android OS is fully responsive
+            MAX_ATTEMPTS=30
+            COUNT=0
+            while [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+              if [ $COUNT -ge $MAX_ATTEMPTS ]; then
+                echo "Error: Emulator took too long to boot."
+                exit 1
+              fi
+              echo "Booting... ($((COUNT*10))s elapsed)"
+              sleep 10
+              COUNT=$((COUNT+1))
             done
 
-            echo "Emulator is ready for testing!"
+            echo "Emulator is fully ready!"
             adb devices
             adb shell input keyevent 82
 
