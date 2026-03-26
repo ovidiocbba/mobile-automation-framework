@@ -34,6 +34,7 @@ on:
 
 jobs:
   android-tests:
+    # macOS-14 is the key for Apple Silicon performance
     runs-on: macos-14
     timeout-minutes: 45
 
@@ -57,6 +58,7 @@ jobs:
           force-avd-creation: true
           disable-animations: true
           disable-spellchecker: true
+          # STRATEGIC FIX: 'cores' parameter is omitted to prevent HVF_UNSUPPORTED crash
           emulator-options: >-
             -no-window
             -no-audio
@@ -66,33 +68,35 @@ jobs:
             -gpu swiftshader_indirect
           emulator-boot-timeout: 600
           script: |
-            echo "Restarting ADB to ensure clean connection..."
+            echo "Resetting ADB server..."
             adb kill-server
             adb start-server
 
-            echo "Waiting for emulator to be detected by ADB..."
+            echo "Waiting for device..."
             adb wait-for-device
 
-            echo "Checking Android boot completion..."
-            boot_completed=""
+            echo "Checking boot progress..."
             attempt=0
-            while [ "$boot_completed" != "1" ] && [ $attempt -lt 30 ]; do
-              boot_completed=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
-              if [ "$boot_completed" == "1" ]; then
+            while [ $attempt -lt 30 ]; do
+              # The 'tr' command is vital to handle Android's carriage return
+              BOOT_STATUS=$(adb shell getprop sys.boot_completed | tr -d '\r')
+              if [ "$BOOT_STATUS" == "1" ]; then
+                echo "Emulator is up and running!"
                 break
               fi
-              echo "Booting... attempt $attempt (status: ${boot_completed:-waiting})"
+              echo "Waiting... (Attempt $attempt, Status: ${BOOT_STATUS:-booting})"
               sleep 10
               attempt=$((attempt+1))
             done
 
-            if [ "$boot_completed" != "1" ]; then
-              echo "Error: Emulator failed to boot in time."
+            if [ "$BOOT_STATUS" != "1" ]; then
+              echo "Error: Device did not boot in time"
               exit 1
             fi
 
-            echo "Emulator is fully ready for testing"
             adb devices
+            # Unlock screen to ensure Appium can interact with the UI immediately
+            adb shell input keyevent 82
 
       - name: Execute Mobile Tests
         uses: ./.github/actions/execute-mobile-tests
@@ -111,9 +115,6 @@ jobs:
     needs: android-tests
     if: always()
     runs-on: ubuntu-latest
-    concurrency:
-      group: deploy-gh-pages
-      cancel-in-progress: true
     permissions:
       contents: write
     steps:
