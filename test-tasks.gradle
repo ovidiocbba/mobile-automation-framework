@@ -11,7 +11,7 @@
  ./gradlew clean executeFeatures -Dcucumber.filter.tags='@smoke'
  ./gradlew clean executeFeatures -Dcucumber.filter.tags='@TC-00001'
  Override default configuration (from config.properties):
- ./gradlew clean executeFeatures -Dusername=standard_user -Dpassword=secret_sauce -Dplatform=ANDROID -DdeviceName=emulator-5554 -DplatformVersion=14 -DautomationName=UiAutomator2 -Dapp=apps/android/mda-2.2.0-25.apk -DappiumServerUrl=http://127.0.0.1:4723
+ ./gradlew clean executeFeatures -Dusername=standard_user -Dpassword=secret_sauce -Dplatform=ANDROID -DdeviceName=emulator-5554 -DplatformVersion=14 -DautomationName=UiAutomator2 -Dapp=apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk -DappiumServerUrl=http://127.0.0.1:4723
  Re-run only failed scenarios:
  ./gradlew reExecuteFeatures
  -----------------------------------------------------
