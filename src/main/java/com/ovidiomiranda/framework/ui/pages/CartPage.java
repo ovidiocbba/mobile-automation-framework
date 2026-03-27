@@ -13,8 +13,6 @@ import org.openqa.selenium.By;
  */
 public class CartPage extends BasePage {
 
-  private final By productNameLabel = AppiumBy.id("titleTV");
-
   /**
    * Constructor.
    *
@@ -23,16 +21,22 @@ public class CartPage extends BasePage {
    * @param actions MobileElementActions utility
    */
   public CartPage(
-      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
+      final ConfigValidator config,
+      final DriverContext driverContext,
+      final MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
   /**
-   * Returns the product name displayed in the cart.
+   * Verifies if a product is displayed in the cart.
    *
-   * @return product name displayed in the cart
+   * @param productName expected product name
+   * @return true if displayed
    */
-  public String getProductNameLabel() {
-    return actions.getText(productNameLabel);
+  public boolean isProductDisplayed(final String productName) {
+    final By locator =
+        AppiumBy.androidUIAutomator("new UiSelector().text(\"" + productName + "\")");
+
+    return actions.isDisplayed(locator);
   }
 }
