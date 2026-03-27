@@ -23,9 +23,9 @@ public class HeaderSteps {
     this.header = header;
   }
 
-  /** Taps the 'Hamburger' button. */
-  @When("I tap the 'Hamburger' button")
-  public void tapHamburgerButton() {
+  /** Taps the 'Menu' button. */
+  @When("I tap the 'Menu' button")
+  public void tapMenuButton() {
     header.openMenu();
   }
 
