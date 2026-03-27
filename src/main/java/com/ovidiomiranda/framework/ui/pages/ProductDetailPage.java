@@ -13,9 +13,12 @@ import org.openqa.selenium.By;
  */
 public class ProductDetailPage extends BasePage {
 
-  private final By addToCartButton = AppiumBy.id("cartBt");
-  private final By productNameLabel = AppiumBy.id("productTV");
-  private final By productPriceLabel = AppiumBy.id("priceTV");
+  private final By addToCartButton = AppiumBy.accessibilityId("test-ADD TO CART");
+  private final By productNameLabel =
+      AppiumBy.xpath(
+          "(//android.view.ViewGroup[@content-desc='test-Description']"
+              + "/android.widget.TextView)[1]");
+  private final By productPriceLabel = AppiumBy.accessibilityId("test-Price");
 
   /**
    * Constructor.
@@ -25,13 +28,15 @@ public class ProductDetailPage extends BasePage {
    * @param actions MobileElementActions utility
    */
   public ProductDetailPage(
-      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
+      final ConfigValidator config,
+      final DriverContext driverContext,
+      final MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
   /** Taps the 'Add to Cart' button. */
   public void tapAddToCartButton() {
-    actions.tap(addToCartButton);
+    actions.scrollAndTap(addToCartButton);
   }
 
   /**
