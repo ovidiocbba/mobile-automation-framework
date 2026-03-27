@@ -25,7 +25,7 @@ public class PropertiesManager {
    * @return loaded Properties object
    */
   private Properties loadProperties() {
-    Properties props = new Properties();
+    final Properties props = new Properties();
     try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
       if (input == null) {
         throw new RuntimeException("config.properties not found");
@@ -45,8 +45,8 @@ public class PropertiesManager {
    * @param key configuration key
    * @return property value
    */
-  public String getProperty(PropertiesInput key) {
-    String systemValue = System.getProperty(key.getPropertiesName());
+  public String getProperty(final PropertiesInput key) {
+    final String systemValue = System.getProperty(key.getPropertiesName());
     return systemValue != null ? systemValue : properties.getProperty(key.getPropertiesName());
   }
 }
