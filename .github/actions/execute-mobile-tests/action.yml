@@ -20,7 +20,7 @@ inputs:
   app:
     description: "APK path"
     required: true
-    default: "apps/android/mda-2.2.0-25.apk"
+    default: "apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk"
 
   appiumServerUrl:
     description: "Appium server URL"
