@@ -28,7 +28,8 @@ public class DriverFactory {
    * @param androidProvider provider for Android drivers
    * @param iosProvider provider for iOS drivers
    */
-  public DriverFactory(AndroidDriverProvider androidProvider, IosDriverProvider iosProvider) {
+  public DriverFactory(
+      final AndroidDriverProvider androidProvider, final IosDriverProvider iosProvider) {
     this.drivers = new EnumMap<>(PlatformType.class);
     drivers.put(ANDROID, androidProvider);
     drivers.put(IOS, iosProvider);
@@ -42,7 +43,7 @@ public class DriverFactory {
    * @throws IllegalArgumentException if platform type is not supported
    */
   public AppiumDriver createDriver(final PlatformType platformType) {
-    DriverProvider provider = drivers.get(platformType);
+    final DriverProvider provider = drivers.get(platformType);
     if (provider == null) {
       throw new IllegalArgumentException("Unsupported platform type: " + platformType);
     }
