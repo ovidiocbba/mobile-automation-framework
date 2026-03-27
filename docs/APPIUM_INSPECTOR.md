@@ -105,9 +105,13 @@ Use the following capabilities:
 ```json
 {
   "platformName": "Android",
-  "deviceName": "Pixel_7",
-  "automationName": "UiAutomator2",
-  "app": "C:/Users/ovidio.miranda/Documents/Projects/mobile-automation-framework/apps/android/mda-2.2.0-25.apk"
+  "appium:deviceName": "Pixel_7",
+  "appium:automationName": "UiAutomator2",
+  "appium:app": "C:/Users/ovidio.miranda/Documents/Projects/mobile-automation-framework/apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk",
+  "appium:autoGrantPermissions": true,
+  "appium:appPackage": "com.swaglabsmobileapp",
+  "appium:appActivity": "com.swaglabsmobileapp.MainActivity",
+  "appium:appWaitActivity": "*"
 }
 ```
 
