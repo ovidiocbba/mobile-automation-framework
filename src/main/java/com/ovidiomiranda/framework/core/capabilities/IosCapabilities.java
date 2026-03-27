@@ -23,7 +23,7 @@ public class IosCapabilities {
    *
    * @param config configuration validator
    */
-  public IosCapabilities(ConfigValidator config) {
+  public IosCapabilities(final ConfigValidator config) {
     this.config = config;
   }
 
@@ -36,11 +36,11 @@ public class IosCapabilities {
    * @return configured XCUITestOptions
    */
   public XCUITestOptions getCapabilities() {
-    XCUITestOptions options = new XCUITestOptions();
+    final XCUITestOptions options = new XCUITestOptions();
     options.setPlatformName("iOS");
     options.setAutoAcceptAlerts(true);
     setCommonCapabilities(options, config);
-    String app = config.optional(APP);
+    final String app = config.optional(APP);
     if (app != null && !app.isBlank()) {
       options.setApp(app);
     } else {
