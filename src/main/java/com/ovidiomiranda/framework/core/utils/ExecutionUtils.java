@@ -22,7 +22,7 @@ public final class ExecutionUtils {
    * @param config configuration validator
    * @return ExecutionType
    */
-  public static ExecutionType getExecutionType(ConfigValidator config) {
+  public static ExecutionType getExecutionType(final ConfigValidator config) {
     return ExecutionType.from(config.optional(EXECUTION));
   }
 
@@ -32,7 +32,7 @@ public final class ExecutionUtils {
    * @param config configuration validator
    * @return true if BrowserStack
    */
-  public static boolean isBrowserStack(ConfigValidator config) {
+  public static boolean isBrowserStack(final ConfigValidator config) {
     return getExecutionType(config) == ExecutionType.BROWSERSTACK;
   }
 }
