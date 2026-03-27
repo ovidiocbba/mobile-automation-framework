@@ -18,7 +18,7 @@ public class DriverContext {
    *
    * @param driverInstance AppiumDriver instance
    */
-  public void setDriver(AppiumDriver driverInstance) {
+  public void setDriver(final AppiumDriver driverInstance) {
     driver.set(driverInstance);
   }
 
