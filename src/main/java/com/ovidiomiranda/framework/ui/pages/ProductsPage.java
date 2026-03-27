@@ -15,11 +15,13 @@ import org.openqa.selenium.By;
 public class ProductsPage extends BasePage {
 
   private final MobileLocator productsTitle =
-      new MobileLocator(AppiumBy.id("productTV"), AppiumBy.accessibilityId("products_title"));
+      new MobileLocator(
+          AppiumBy.xpath("//android.widget.TextView[@text='PRODUCTS']"),
+          AppiumBy.accessibilityId("products_title"));
 
   private final MobileLocator firstProduct =
       new MobileLocator(
-          AppiumBy.xpath("(//android.widget.ImageView[@content-desc='Product Image'])[1]"),
+          AppiumBy.xpath("(//android.view.ViewGroup[@content-desc='test-Item'])[1]"),
           AppiumBy.xpath("(//XCUIElementTypeImage[@name='Product Image'])[1]"));
 
   /**
@@ -30,7 +32,9 @@ public class ProductsPage extends BasePage {
    * @param actions MobileElementActions utility
    */
   public ProductsPage(
-      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
+      final ConfigValidator config,
+      final DriverContext driverContext,
+      final MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
@@ -51,9 +55,9 @@ public class ProductsPage extends BasePage {
   public void selectProductByName(final String productName) {
     final By product =
         By.xpath(
-            "//android.widget.TextView[@text='"
+            "//android.widget.TextView[@content-desc='test-Item title' and @text='"
                 + productName
-                + "']/preceding-sibling::android.widget.ImageView");
+                + "']");
     actions.tap(product);
   }
 
