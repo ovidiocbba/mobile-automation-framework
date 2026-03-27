@@ -37,7 +37,9 @@ public abstract class BaseComponent {
    * @param actions mobile actions utility
    */
   protected BaseComponent(
-      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
+      final ConfigValidator config,
+      final DriverContext driverContext,
+      final MobileElementActions actions) {
     this.config = config;
     this.driverContext = driverContext;
     this.actions = actions;
@@ -58,9 +60,9 @@ public abstract class BaseComponent {
    * @param locator mobile locator
    * @return resolved locator for current platform
    */
-  protected By resolve(MobileLocator locator) {
-    String platform = config.require(PLATFORM);
-    PlatformType platformType = PlatformType.valueOf(platform.toUpperCase(ENGLISH));
+  protected By resolve(final MobileLocator locator) {
+    final String platform = config.require(PLATFORM);
+    final PlatformType platformType = PlatformType.valueOf(platform.toUpperCase(ENGLISH));
     return locator.get(platformType);
   }
 }
