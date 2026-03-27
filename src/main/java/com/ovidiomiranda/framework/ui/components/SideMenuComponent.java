@@ -34,8 +34,7 @@ public class SideMenuComponent extends BaseComponent {
     MENU_OPTIONS.put(
         LOGOUT,
         new MobileLocator(
-            AppiumBy.accessibilityId("Logout Menu Item"),
-            AppiumBy.accessibilityId("logout_menu_item")));
+            AppiumBy.accessibilityId("test-LOGOUT"), AppiumBy.accessibilityId("logout_menu_item")));
   }
 
   /**
@@ -46,7 +45,9 @@ public class SideMenuComponent extends BaseComponent {
    * @param actions MobileElementActions utility
    */
   public SideMenuComponent(
-      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
+      final ConfigValidator config,
+      final DriverContext driverContext,
+      final MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
@@ -56,8 +57,8 @@ public class SideMenuComponent extends BaseComponent {
    * @param option menu option
    * @throws IllegalArgumentException if menu option is invalid
    */
-  public void navigateTo(MenuOption option) {
-    MobileLocator locator = MENU_OPTIONS.get(option);
+  public void navigateTo(final MenuOption option) {
+    final MobileLocator locator = MENU_OPTIONS.get(option);
     if (locator == null) {
       throw new IllegalArgumentException("Invalid menu option: " + option);
     }
