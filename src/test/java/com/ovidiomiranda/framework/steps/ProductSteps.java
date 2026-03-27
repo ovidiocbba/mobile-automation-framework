@@ -22,7 +22,7 @@ public class ProductSteps {
    * @param productsPage products page object
    * @param productDetailPage product detail page object
    */
-  public ProductSteps(ProductsPage productsPage, ProductDetailPage productDetailPage) {
+  public ProductSteps(final ProductsPage productsPage, final ProductDetailPage productDetailPage) {
     this.productsPage = productsPage;
     this.productDetailPage = productDetailPage;
   }
