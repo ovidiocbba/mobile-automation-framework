@@ -9,6 +9,7 @@ import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.enums.ExecutionType;
 import com.ovidiomiranda.framework.core.utils.ExecutionUtils;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import java.time.Duration;
 
 /**
  * Builds Android capabilities for Appium sessions.
@@ -29,8 +30,8 @@ public class AndroidCapabilities {
    * @param config configuration validator
    * @param bsBuilder BrowserStack capabilities builder
    */
-  public AndroidCapabilities(ConfigValidator config, BrowserStackCapabilitiesBuilder bsBuilder) {
-
+  public AndroidCapabilities(
+      final ConfigValidator config, final BrowserStackCapabilitiesBuilder bsBuilder) {
     this.config = config;
     this.bsBuilder = bsBuilder;
   }
@@ -48,10 +49,10 @@ public class AndroidCapabilities {
    * @return configured UiAutomator2Options
    */
   public UiAutomator2Options getCapabilities() {
-    UiAutomator2Options options = new UiAutomator2Options();
+    final UiAutomator2Options options = new UiAutomator2Options();
     options.setPlatformName("Android");
     setCommonCapabilities(options, config);
-    ExecutionType executionType = ExecutionUtils.getExecutionType(config);
+    final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
     switch (executionType) {
       case BROWSERSTACK:
         bsBuilder.apply(options, "Android Test");
@@ -59,13 +60,16 @@ public class AndroidCapabilities {
 
       case LOCAL:
       default:
-        String app = config.optional(APP);
+        final String app = config.optional(APP);
         if (app != null && !app.isBlank()) {
           options.setApp(app);
         } else {
-          options.setCapability("appPackage", config.require(APP_PACKAGE));
-          options.setCapability("appActivity", config.require(APP_ACTIVITY));
+          options.setAppPackage(config.require(APP_PACKAGE));
+          options.setAppActivity(config.require(APP_ACTIVITY));
         }
+        options.setAppWaitActivity("*");
+        options.setAppWaitDuration(Duration.ofSeconds(30));
+        options.setAutoGrantPermissions(true);
         break;
     }
     return options;
