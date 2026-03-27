@@ -15,17 +15,21 @@ import org.openqa.selenium.By;
 public class LoginPage extends BasePage {
 
   private final MobileLocator usernameInput =
-      new MobileLocator(AppiumBy.id("nameET"), AppiumBy.accessibilityId("username"));
+      new MobileLocator(
+          AppiumBy.accessibilityId("test-Username"), AppiumBy.accessibilityId("username"));
 
   private final MobileLocator passwordInput =
-      new MobileLocator(AppiumBy.id("passwordET"), AppiumBy.accessibilityId("password"));
+      new MobileLocator(
+          AppiumBy.accessibilityId("test-Password"), AppiumBy.accessibilityId("password"));
 
   private final MobileLocator loginButton =
-      new MobileLocator(AppiumBy.id("loginBtn"), AppiumBy.accessibilityId("login_button"));
+      new MobileLocator(
+          AppiumBy.accessibilityId("test-LOGIN"), AppiumBy.accessibilityId("login_button"));
 
-  private final By usernameRequiredMessage = AppiumBy.id("nameErrorTV");
+  private final By errorMessage = AppiumBy.accessibilityId("test-Error message");
 
-  private final By passwordRequiredMessage = AppiumBy.id("passwordErrorTV");
+  private final By errorTextMessage =
+      AppiumBy.xpath("//*[@content-desc='test-Error message']//android.widget.TextView");
 
   /**
    * Constructor.
@@ -35,7 +39,9 @@ public class LoginPage extends BasePage {
    * @param actions MobileElementActions utility
    */
   public LoginPage(
-      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
+      final ConfigValidator config,
+      final DriverContext driverContext,
+      final MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
@@ -44,7 +50,7 @@ public class LoginPage extends BasePage {
    *
    * @param username user name
    */
-  public void enterUsername(String username) {
+  public void enterUsername(final String username) {
     actions.type(resolve(usernameInput), username);
   }
 
@@ -53,7 +59,7 @@ public class LoginPage extends BasePage {
    *
    * @param password user password
    */
-  public void enterPassword(String password) {
+  public void enterPassword(final String password) {
     actions.type(resolve(passwordInput), password);
   }
 
@@ -63,33 +69,43 @@ public class LoginPage extends BasePage {
   }
 
   /**
+   * Enters username and password without tapping the login button.
+   *
+   * @param username user name string
+   * @param password user password string
+   */
+  public void enterCredentials(final String username, final String password) {
+    enterUsername(username);
+    enterPassword(password);
+  }
+
+  /**
    * Performs the full login flow: enter username, password, and tap login.
    *
    * @param username user name string
    * @param password user password string
    */
-  public void login(String username, String password) {
-    enterUsername(username);
-    enterPassword(password);
+  public void login(final String username, final String password) {
+    enterCredentials(username, password);
     tapLoginButton();
   }
 
   /**
-   * Verifies if the validation message for an empty username field is displayed.
+   * Verifies if an error message is displayed.
    *
-   * @return true if the username required message is visible, false otherwise
+   * @return true if visible
    */
-  public boolean isUsernameRequiredMessageDisplayed() {
-    return actions.isDisplayed(usernameRequiredMessage);
+  public boolean isErrorMessageDisplayed() {
+    return actions.isDisplayed(errorMessage);
   }
 
   /**
-   * Verifies if the validation message for an empty password field is displayed.
+   * Gets the error message text displayed in the login screen.
    *
-   * @return true if the password required message is visible, false otherwise
+   * @return error message text
    */
-  public boolean isPasswordRequiredMessageDisplayed() {
-    return actions.isDisplayed(passwordRequiredMessage);
+  public String getErrorMessageText() {
+    return actions.getText(errorTextMessage);
   }
 
   /**
