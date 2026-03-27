@@ -189,7 +189,7 @@ public class MobileElementActions {
   }
 
   /**
-   * Fast visibility check
+   * Fast visibility check.
    *
    * @param locator element locator
    */
