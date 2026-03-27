@@ -26,7 +26,7 @@ public class IosDriverProvider implements DriverProvider {
    * @param config configuration validator
    * @param iosCapabilities iOS capabilities builder
    */
-  public IosDriverProvider(ConfigValidator config, IosCapabilities iosCapabilities) {
+  public IosDriverProvider(final ConfigValidator config, final IosCapabilities iosCapabilities) {
     this.config = config;
     this.iosCapabilities = iosCapabilities;
   }
@@ -35,8 +35,8 @@ public class IosDriverProvider implements DriverProvider {
   @Override
   public AppiumDriver getDriver() {
     try {
-      XCUITestOptions capabilities = iosCapabilities.getCapabilities();
-      String appiumServerUrl = config.require(PropertiesInput.APPIUM_SERVER_URL);
+      final XCUITestOptions capabilities = iosCapabilities.getCapabilities();
+      final String appiumServerUrl = config.require(PropertiesInput.APPIUM_SERVER_URL);
       return new IOSDriver(new URL(appiumServerUrl), capabilities);
     } catch (Exception e) {
       throw new RuntimeException("Failed to create IOS driver", e);
