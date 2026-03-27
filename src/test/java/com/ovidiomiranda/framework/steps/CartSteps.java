@@ -18,7 +18,7 @@ public class CartSteps {
    *
    * @param cartPage cart page object
    */
-  public CartSteps(CartPage cartPage) {
+  public CartSteps(final CartPage cartPage) {
     this.cartPage = cartPage;
   }
 
@@ -29,7 +29,7 @@ public class CartSteps {
    */
   @Then("the product {string} should be displayed in the Cart")
   public void verifyProductInCart(final String expectedProduct) {
-    String actual = cartPage.getProductNameLabel();
-    Assert.assertEquals(actual, expectedProduct, "Product not found in cart");
+    final boolean actual = cartPage.isProductDisplayed(expectedProduct);
+    Assert.assertTrue(actual, "Expected product not found in cart: " + expectedProduct);
   }
 }
