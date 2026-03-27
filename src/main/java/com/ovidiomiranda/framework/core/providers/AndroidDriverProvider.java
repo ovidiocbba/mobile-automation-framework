@@ -37,7 +37,8 @@ public class AndroidDriverProvider implements DriverProvider {
    * @param config configuration validator
    * @param androidCapabilities Android capabilities builder
    */
-  public AndroidDriverProvider(ConfigValidator config, AndroidCapabilities androidCapabilities) {
+  public AndroidDriverProvider(
+      final ConfigValidator config, final AndroidCapabilities androidCapabilities) {
     this.config = config;
     this.androidCapabilities = androidCapabilities;
   }
@@ -46,12 +47,12 @@ public class AndroidDriverProvider implements DriverProvider {
   @Override
   public AppiumDriver getDriver() {
     try {
-      UiAutomator2Options capabilities = androidCapabilities.getCapabilities();
-      ExecutionType executionType = ExecutionUtils.getExecutionType(config);
+      final UiAutomator2Options capabilities = androidCapabilities.getCapabilities();
+      final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
       String url;
       switch (executionType) {
         case BROWSERSTACK:
-          String baseUrl = config.require(BS_URL);
+          final String baseUrl = config.require(BS_URL);
           url =
               baseUrl.replace(
                   "https://",
