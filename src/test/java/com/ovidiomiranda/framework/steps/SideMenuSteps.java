@@ -18,7 +18,7 @@ public class SideMenuSteps {
    *
    * @param sideMenu side menu component instance
    */
-  public SideMenuSteps(SideMenuComponent sideMenu) {
+  public SideMenuSteps(final SideMenuComponent sideMenu) {
     this.sideMenu = sideMenu;
   }
 
