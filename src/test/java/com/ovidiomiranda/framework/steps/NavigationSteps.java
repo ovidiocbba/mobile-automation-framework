@@ -17,7 +17,7 @@ public class NavigationSteps {
    *
    * @param menuNavigation menu Navigation
    */
-  public NavigationSteps(MenuNavigation menuNavigation) {
+  public NavigationSteps(final MenuNavigation menuNavigation) {
     this.menuNavigation = menuNavigation;
   }
 
