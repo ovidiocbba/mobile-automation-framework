@@ -22,7 +22,7 @@ public class MobileLocator {
    * @param android locator for Android platform
    * @param ios locator for iOS platform
    */
-  public MobileLocator(By android, By ios) {
+  public MobileLocator(final By android, final By ios) {
     this.android = android;
     this.ios = ios;
   }
@@ -33,7 +33,7 @@ public class MobileLocator {
    * @param platform platform type (ANDROID or IOS)
    * @return locator for the given platform
    */
-  public By get(PlatformType platform) {
+  public By get(final PlatformType platform) {
     if (platform == PlatformType.ANDROID) {
       return android;
     }
