@@ -59,9 +59,8 @@ pmd {
     // [OM] Whether violations are displayed in the console.
     consoleOutput = true
     // [OM] Set rules to use.
-    ruleSets = [
-        "rulesets/java/quickstart.xml"
-    ]
+    ruleSetFiles = files("config/pmd/pmd-ruleset.xml")
+    ruleSets = []
 }
 
 tasks.withType(Pmd).configureEach {
