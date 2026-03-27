@@ -24,7 +24,7 @@ public class MenuNavigation {
    * @param header header component
    * @param sideMenu side menu component
    */
-  public MenuNavigation(HeaderComponent header, SideMenuComponent sideMenu) {
+  public MenuNavigation(final HeaderComponent header, final SideMenuComponent sideMenu) {
     this.header = header;
     this.sideMenu = sideMenu;
   }
