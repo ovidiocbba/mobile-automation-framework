@@ -44,7 +44,9 @@ public class CommonHooks {
    * @param config config validator
    */
   public CommonHooks(
-      DriverContext driverContext, DriverFactory driverFactory, ConfigValidator config) {
+      final DriverContext driverContext,
+      final DriverFactory driverFactory,
+      final ConfigValidator config) {
     this.driverContext = driverContext;
     this.driverFactory = driverFactory;
     this.config = config;
@@ -72,8 +74,8 @@ public class CommonHooks {
    */
   @Before(order = 0)
   public void setUp() {
-    String platform = config.require(PLATFORM);
-    AppiumDriver driver =
+    final String platform = config.require(PLATFORM);
+    final AppiumDriver driver =
         driverFactory.createDriver(PlatformType.valueOf(platform.toUpperCase(ENGLISH)));
     driverContext.setDriver(driver);
   }
@@ -84,13 +86,13 @@ public class CommonHooks {
    * @param scenario executed scenario
    */
   @After
-  public void afterScenario(Scenario scenario) {
-    String testCaseId = getTestCaseId(scenario);
+  public void afterScenario(final Scenario scenario) {
+    final String testCaseId = getTestCaseId(scenario);
 
-    long durationMs = System.currentTimeMillis() - startTime;
-    double durationSec = durationMs / 1000.0;
+    final long durationMs = System.currentTimeMillis() - startTime;
+    final double durationSec = durationMs / 1000.0;
 
-    String formattedDuration = String.format("%.2f", durationSec);
+    final String formattedDuration = String.format("%.2f", durationSec);
 
     if (scenario.isFailed()) {
       LOGGER.error("RESULT: FAILED | Duration: {} s", formattedDuration);
@@ -108,9 +110,9 @@ public class CommonHooks {
    *
    * @param name screenshot name
    */
-  private void attachScreenshot(String name) {
+  private void attachScreenshot(final String name) {
     try {
-      byte[] screenshot =
+      final byte[] screenshot =
           ((TakesScreenshot) driverContext.getDriver()).getScreenshotAs(OutputType.BYTES);
 
       Allure.addAttachment(name, new ByteArrayInputStream(screenshot));
