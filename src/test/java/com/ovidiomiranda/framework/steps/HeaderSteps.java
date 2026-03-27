@@ -19,7 +19,7 @@ public class HeaderSteps {
    *
    * @param header header component instance
    */
-  public HeaderSteps(HeaderComponent header) {
+  public HeaderSteps(final HeaderComponent header) {
     this.header = header;
   }
 
