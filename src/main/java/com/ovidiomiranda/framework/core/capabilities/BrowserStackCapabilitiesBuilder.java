@@ -25,7 +25,7 @@ public class BrowserStackCapabilitiesBuilder {
    *
    * @param config configuration validator
    */
-  public BrowserStackCapabilitiesBuilder(ConfigValidator config) {
+  public BrowserStackCapabilitiesBuilder(final ConfigValidator config) {
     this.config = config;
   }
 
@@ -38,13 +38,13 @@ public class BrowserStackCapabilitiesBuilder {
    * @param options Appium options to enrich
    * @param sessionName name of the test session
    */
-  public void apply(BaseOptions<?> options, String sessionName) {
+  public void apply(final BaseOptions<?> options, final String sessionName) {
 
     // Set app uploaded to BrowserStack
     options.setCapability("appium:app", config.require(BS_APP));
 
     // Build BrowserStack options map
-    Map<String, Object> bstackOptions = new HashMap<>();
+    final Map<String, Object> bstackOptions = new HashMap<>();
     bstackOptions.put("userName", config.require(BS_USERNAME));
     bstackOptions.put("accessKey", config.require(BS_ACCESS_KEY));
     bstackOptions.put("projectName", PROJECT_NAME);
