@@ -19,7 +19,7 @@ public class ProductDetailSteps {
    *
    * @param productDetailPage product detail page object
    */
-  public ProductDetailSteps(ProductDetailPage productDetailPage) {
+  public ProductDetailSteps(final ProductDetailPage productDetailPage) {
     this.productDetailPage = productDetailPage;
   }
 
@@ -35,8 +35,8 @@ public class ProductDetailSteps {
    * @param expectedName expected product name
    */
   @Then("the product name should be {string}")
-  public void verifyProductName(String expectedName) {
-    String actual = productDetailPage.getProductNameLabel();
+  public void verifyProductName(final String expectedName) {
+    final String actual = productDetailPage.getProductNameLabel();
     Assert.assertEquals(actual, expectedName, "Product name mismatch");
   }
 
@@ -46,8 +46,8 @@ public class ProductDetailSteps {
    * @param expectedPrice expected product price
    */
   @Then("the product price should be {string}")
-  public void verifyProductPrice(String expectedPrice) {
-    String actual = productDetailPage.getProductPriceLabel();
+  public void verifyProductPrice(final String expectedPrice) {
+    final String actual = productDetailPage.getProductPriceLabel();
     Assert.assertEquals(actual, expectedPrice, "Product price mismatch");
   }
 }
