@@ -26,7 +26,8 @@ public abstract class BaseCapabilities {
    * @param options platform options
    * @param config configuration validator
    */
-  protected static void setCommonCapabilities(BaseOptions<?> options, ConfigValidator config) {
+  protected static void setCommonCapabilities(
+      final BaseOptions<?> options, final ConfigValidator config) {
     options.setCapability("deviceName", config.require(DEVICE_NAME));
     options.setCapability("platformVersion", config.require(PLATFORM_VERSION));
     options.setCapability("automationName", config.require(AUTOMATION_NAME));
