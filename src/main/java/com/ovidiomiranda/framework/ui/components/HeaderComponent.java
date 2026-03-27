@@ -13,12 +13,19 @@ import io.appium.java_client.AppiumBy;
  */
 public class HeaderComponent extends BaseComponent {
 
-  private final MobileLocator hamburgerButton =
-      new MobileLocator(AppiumBy.id("menuIV"), AppiumBy.accessibilityId("menu_button"));
+  private final MobileLocator menuButton =
+      new MobileLocator(
+          AppiumBy.xpath(
+              "//android.view.ViewGroup[@content-desc='test-Menu']"
+                  + "/android.view.ViewGroup"
+                  + "/android.widget.ImageView"),
+          AppiumBy.accessibilityId("menu_button"));
 
   private final MobileLocator cartBadge =
       new MobileLocator(
-          AppiumBy.id("cartTV"), AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
+          AppiumBy.xpath(
+              "//android.view.ViewGroup[@content-desc='test-Cart']//android.widget.TextView"),
+          AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
 
   /**
    * Constructor.
@@ -28,13 +35,15 @@ public class HeaderComponent extends BaseComponent {
    * @param actions mobile actions utility
    */
   public HeaderComponent(
-      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
+      final ConfigValidator config,
+      final DriverContext driverContext,
+      final MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 
   /** Opens the side menu. */
   public void openMenu() {
-    actions.tap(resolve(hamburgerButton));
+    actions.tap(resolve(menuButton));
   }
 
   /** Taps the 'Cart' badge. */
