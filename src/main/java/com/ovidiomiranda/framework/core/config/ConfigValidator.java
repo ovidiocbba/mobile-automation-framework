@@ -18,7 +18,7 @@ public class ConfigValidator {
    *
    * @param propertiesManager properties manager used to access configuration values
    */
-  public ConfigValidator(PropertiesManager propertiesManager) {
+  public ConfigValidator(final PropertiesManager propertiesManager) {
     this.propertiesManager = propertiesManager;
   }
 
@@ -30,7 +30,7 @@ public class ConfigValidator {
    * @throws IllegalArgumentException if the property is missing
    */
   public String require(final PropertiesInput key) {
-    String value = propertiesManager.getProperty(key);
+    final String value = propertiesManager.getProperty(key);
     if (value == null || value.isBlank()) {
       throw new IllegalArgumentException(
           "Required property is missing: " + key.getPropertiesName());
@@ -55,7 +55,7 @@ public class ConfigValidator {
    * @return integer value
    */
   public int requireInt(final PropertiesInput key) {
-    String value = require(key);
+    final String value = require(key);
     try {
       return Integer.parseInt(value);
     } catch (NumberFormatException e) {
@@ -72,7 +72,7 @@ public class ConfigValidator {
    * @return integer value
    */
   public int optionalInt(final PropertiesInput key, final int defaultValue) {
-    String value = optional(key);
+    final String value = optional(key);
     if (value == null || value.isBlank()) {
       return defaultValue;
     }
