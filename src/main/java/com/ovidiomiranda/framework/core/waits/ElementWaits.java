@@ -21,7 +21,7 @@ public class ElementWaits {
    *
    * @param waitManager wait manager providing WebDriverWait
    */
-  public ElementWaits(WaitManager waitManager) {
+  public ElementWaits(final WaitManager waitManager) {
     this.waitManager = waitManager;
   }
 
@@ -31,7 +31,7 @@ public class ElementWaits {
    * @param locator element locator
    * @return visible WebElement
    */
-  public WebElement waitForVisible(By locator) {
+  public WebElement waitForVisible(final By locator) {
     return waitManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
   }
 
@@ -41,7 +41,7 @@ public class ElementWaits {
    * @param locator element locator
    * @return clickable WebElement
    */
-  public WebElement waitForClickable(By locator) {
+  public WebElement waitForClickable(final By locator) {
     return waitManager.getWait().until(ExpectedConditions.elementToBeClickable(locator));
   }
 
@@ -51,7 +51,7 @@ public class ElementWaits {
    * @param locator element locator
    * @return true if element becomes invisible
    */
-  public boolean waitForInvisible(By locator) {
+  public boolean waitForInvisible(final By locator) {
     return waitManager.getWait().until(ExpectedConditions.invisibilityOfElementLocated(locator));
   }
 
@@ -61,7 +61,7 @@ public class ElementWaits {
    * @param locator element locator
    * @return located WebElement
    */
-  public WebElement waitForPresence(By locator) {
+  public WebElement waitForPresence(final By locator) {
     return waitManager.getWait().until(ExpectedConditions.presenceOfElementLocated(locator));
   }
 
@@ -71,7 +71,7 @@ public class ElementWaits {
    * @param locator elements locator
    * @return list of visible elements
    */
-  public List<WebElement> waitForAllVisible(By locator) {
+  public List<WebElement> waitForAllVisible(final By locator) {
     return waitManager
         .getWait()
         .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
@@ -83,7 +83,7 @@ public class ElementWaits {
    * @param locator elements locator
    * @return list of elements
    */
-  public List<WebElement> waitForAllPresence(By locator) {
+  public List<WebElement> waitForAllPresence(final By locator) {
     return waitManager.getWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
   }
 
@@ -94,7 +94,7 @@ public class ElementWaits {
    * @param text expected text
    * @return true if text is present in element
    */
-  public boolean waitForText(By locator, String text) {
+  public boolean waitForText(final By locator, final String text) {
     return waitManager
         .getWait()
         .until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
