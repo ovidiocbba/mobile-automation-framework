@@ -4,7 +4,6 @@ import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PASSWORD;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.USERNAME;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
-import com.ovidiomiranda.framework.ui.navigation.MenuNavigation;
 import com.ovidiomiranda.framework.ui.pages.LoginPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -19,7 +18,6 @@ import org.testng.Assert;
  */
 public class LoginSteps {
 
-  private final MenuNavigation menuNavigation;
   private final LoginPage loginPage;
   private final ConfigValidator config;
 
@@ -27,34 +25,11 @@ public class LoginSteps {
    * Constructor.
    *
    * @param config configuration validator
-   * @param menuNavigation menu navigation utility
    * @param loginPage login page object
    */
-  public LoginSteps(ConfigValidator config, MenuNavigation menuNavigation, LoginPage loginPage) {
+  public LoginSteps(final ConfigValidator config, final LoginPage loginPage) {
     this.config = config;
-    this.menuNavigation = menuNavigation;
     this.loginPage = loginPage;
-  }
-
-  /** Navigates to 'Login' screen. */
-  @Given("I navigate to the 'Login' screen")
-  public void navigateToLoginScreen() {
-    menuNavigation.goToLogin();
-  }
-
-  /** Logs in using valid credentials. */
-  @When("I log in with valid credentials")
-  public void loginWithValidCredentials() {
-    String username = config.require(USERNAME);
-    String password = config.require(PASSWORD);
-    loginPage.login(username, password);
-  }
-
-  /** Ensures the user is logged in. */
-  @Given("I am logged in")
-  public void ensureUserIsLoggedIn() {
-    navigateToLoginScreen();
-    loginWithValidCredentials();
   }
 
   /** Leaves the 'Username' field empty. */
@@ -83,26 +58,53 @@ public class LoginSteps {
     loginPage.enterPassword(password);
   }
 
+  /** Enters valid username and password without tapping the login button. */
+  @When("I enter valid credentials")
+  public void enterValidCredentials() {
+    final String username = config.require(USERNAME);
+    final String password = config.require(PASSWORD);
+    loginPage.enterCredentials(username, password);
+  }
+
   /** Taps the 'Login' button. */
   @And("I tap the 'Login' button")
   public void tapLoginButton() {
     loginPage.tapLoginButton();
   }
 
-  /** Verifies the username required message is displayed. */
-  @Then("the username required message should be displayed")
-  public void verifyUsernameRequiredMessage() {
-    Assert.assertTrue(
-        loginPage.isUsernameRequiredMessageDisplayed(),
-        "Username required message was not displayed");
+  /** Logs in using valid credentials. */
+  @When("I log in with valid credentials")
+  public void loginWithValidCredentials() {
+    final String username = config.require(USERNAME);
+    final String password = config.require(PASSWORD);
+    loginPage.login(username, password);
   }
 
-  /** Verifies the password required message is displayed. */
-  @Then("the password required message should be displayed")
-  public void verifyPasswordRequiredMessage() {
+  /** Ensures the user is logged in. */
+  @Given("I am logged in")
+  public void ensureUserIsLoggedIn() {
+    loginWithValidCredentials();
+  }
+
+  /** Verifies the Error message is displayed. */
+  @Then("the Error message should be displayed")
+  public void verifyUsernameRequiredMessage() {
     Assert.assertTrue(
-        loginPage.isPasswordRequiredMessageDisplayed(),
-        "Password required message was not displayed");
+        loginPage.isErrorMessageDisplayed(), "Username required message was not displayed");
+  }
+
+  /**
+   * Verifies that the expected error message is displayed..
+   *
+   * @param expectedMessage the expected error message text
+   */
+  @Then("the {string} error message should be displayed")
+  public void verifyErrorMessage(final String expectedMessage) {
+    final String actualMessage = loginPage.getErrorMessageText();
+
+    Assert.assertTrue(
+        actualMessage.contains(expectedMessage),
+        "Expected '" + expectedMessage + "' but got: " + actualMessage);
   }
 
   /** Verifies that the 'Login' screen is displayed. */
