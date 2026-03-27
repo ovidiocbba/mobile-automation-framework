@@ -25,7 +25,7 @@ public class WaitManager {
    * @param driverContext driver context holding AppiumDriver
    * @param config configuration validator
    */
-  public WaitManager(DriverContext driverContext, ConfigValidator config) {
+  public WaitManager(final DriverContext driverContext, final ConfigValidator config) {
     this.driverContext = driverContext;
     this.config = config;
   }
@@ -37,7 +37,7 @@ public class WaitManager {
    */
   public WebDriverWait getWait() {
     if (wait == null) {
-      int timeout = config.optionalInt(PropertiesInput.EXPLICIT_WAIT, 15);
+      final int timeout = config.optionalInt(PropertiesInput.EXPLICIT_WAIT, 15);
       wait = new WebDriverWait(driverContext.getDriver(), Duration.ofSeconds(timeout));
     }
     return wait;
