@@ -22,7 +22,9 @@ public abstract class BasePage extends BaseComponent {
    * @param actions mobile actions utility
    */
   protected BasePage(
-      ConfigValidator config, DriverContext driverContext, MobileElementActions actions) {
+      final ConfigValidator config,
+      final DriverContext driverContext,
+      final MobileElementActions actions) {
     super(config, driverContext, actions);
   }
 }
