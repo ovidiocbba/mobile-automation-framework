@@ -61,7 +61,28 @@ public enum PropertiesInput {
   BS_URL("bs.url"),
 
   /** Execution type (local, browserstack). */
-  EXECUTION("execution");
+  EXECUTION("execution"),
+
+  /** BrowserStack project name used for grouping test runs. */
+  BS_PROJECT_NAME("bs.projectName"),
+
+  /** BrowserStack build name associated with the execution. */
+  BS_BUILD_NAME("bs.buildName"),
+
+  /** Enables video recording for BrowserStack sessions. */
+  BS_VIDEO("bs.video"),
+
+  /** Enables device logs collection on BrowserStack. */
+  BS_DEVICE_LOGS("bs.deviceLogs"),
+
+  /** Enables Appium logs collection on BrowserStack. */
+  BS_APPIUM_LOGS("bs.appiumLogs"),
+
+  /** Enables network logs collection on BrowserStack. */
+  BS_NETWORK_LOGS("bs.networkLogs"),
+
+  /** Specifies the Appium version used in BrowserStack. */
+  BS_APPIUM_VERSION("bs.appiumVersion");
 
   private final String propertiesName;
 
