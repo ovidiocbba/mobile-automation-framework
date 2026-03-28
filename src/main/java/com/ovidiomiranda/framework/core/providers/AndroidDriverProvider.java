@@ -45,9 +45,9 @@ public class AndroidDriverProvider implements DriverProvider {
 
   /** {@inheritDoc} */
   @Override
-  public AppiumDriver getDriver() {
+  public AppiumDriver getDriver(final String sessionName) {
     try {
-      final UiAutomator2Options capabilities = androidCapabilities.getCapabilities();
+      final UiAutomator2Options capabilities = androidCapabilities.getCapabilities(sessionName);
       final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
       String url;
       switch (executionType) {
