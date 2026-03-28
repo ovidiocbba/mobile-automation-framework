@@ -94,15 +94,17 @@ public class CommonHooks {
 
     final String formattedDuration = String.format("%.2f", durationSec);
 
-    if (scenario.isFailed()) {
-      LOGGER.error("RESULT: FAILED | Duration: {} s", formattedDuration);
-      attachScreenshot(testCaseId);
-    } else {
-      LOGGER.info("RESULT: PASSED | Duration: {} s", formattedDuration);
+    try {
+      if (scenario.isFailed()) {
+        LOGGER.error("RESULT: FAILED | Duration: {} s", formattedDuration);
+        attachScreenshot(testCaseId);
+      } else {
+        LOGGER.info("RESULT: PASSED | Duration: {} s", formattedDuration);
+      }
+    } finally {
+      LOGGER.info(SEPARATOR);
+      driverContext.quitDriver();
     }
-
-    LOGGER.info(SEPARATOR);
-    driverContext.removeDriver();
   }
 
   /**
