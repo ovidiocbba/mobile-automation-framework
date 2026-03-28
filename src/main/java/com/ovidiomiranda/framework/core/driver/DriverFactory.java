@@ -39,14 +39,15 @@ public class DriverFactory {
    * Creates an AppiumDriver for the given platform.
    *
    * @param platformType platform to create driver for
+   * @param sessionName session name used to identify the test execution in BrowserStack
    * @return AppiumDriver instance
    * @throws IllegalArgumentException if platform type is not supported
    */
-  public AppiumDriver createDriver(final PlatformType platformType) {
+  public AppiumDriver createDriver(final PlatformType platformType, final String sessionName) {
     final DriverProvider provider = drivers.get(platformType);
     if (provider == null) {
       throw new IllegalArgumentException("Unsupported platform type: " + platformType);
     }
-    return provider.getDriver();
+    return provider.getDriver(sessionName);
   }
 }
