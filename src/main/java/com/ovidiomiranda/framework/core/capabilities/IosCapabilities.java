@@ -33,9 +33,10 @@ public class IosCapabilities {
    * <p>If the {@code app} property is provided, the framework installs the application. Otherwise,
    * the app is launched using the bundle id.
    *
+   * @param sessionName session name used to identify the test execution in BrowserStack
    * @return configured XCUITestOptions
    */
-  public XCUITestOptions getCapabilities() {
+  public XCUITestOptions getCapabilities(final String sessionName) {
     final XCUITestOptions options = new XCUITestOptions();
     options.setPlatformName("iOS");
     options.setAutoAcceptAlerts(true);
