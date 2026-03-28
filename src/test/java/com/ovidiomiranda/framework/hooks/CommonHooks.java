@@ -71,12 +71,15 @@ public class CommonHooks {
    * Initializes the driver based on configured platform.
    *
    * <p>Reads platform from configuration and starts Appium driver.
+   *
+   * @param scenario executed scenario
    */
   @Before(order = 0)
-  public void setUp() {
+  public void setUp(final Scenario scenario) {
     final String platform = config.require(PLATFORM);
     final AppiumDriver driver =
-        driverFactory.createDriver(PlatformType.valueOf(platform.toUpperCase(ENGLISH)));
+        driverFactory.createDriver(
+            PlatformType.valueOf(platform.toUpperCase(ENGLISH)), getTestCaseTitle(scenario));
     driverContext.setDriver(driver);
   }
 
