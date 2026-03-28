@@ -1,6 +1,8 @@
 package com.ovidiomiranda.framework.core.driver;
 
 import io.appium.java_client.AppiumDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Holds the AppiumDriver instance for the current scenario.
@@ -11,7 +13,8 @@ import io.appium.java_client.AppiumDriver;
  */
 public class DriverContext {
 
-  private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
+  private static final Logger LOGGER = LoggerFactory.getLogger(DriverContext.class);
+  private final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
 
   /**
    * Sets the driver instance for the current thread.
@@ -32,12 +35,19 @@ public class DriverContext {
   }
 
   /**
-   * Removes the driver instance from the current thread.
-   *
-   * <p>This method should be called after test execution to prevent memory leaks and ensure proper
-   * cleanup in parallel environments.
+   * Properly quits the driver session and cleans ThreadLocal storage.
    */
-  public void removeDriver() {
-    driver.remove();
+  public void quitDriver() {
+    final AppiumDriver currentDriver = driver.get();
+
+    if (currentDriver != null) {
+      try {
+        currentDriver.quit();
+      } catch (Exception e) {
+        LOGGER.error("Error while closing driver", e);
+      } finally {
+        driver.remove();
+      }
+    }
   }
 }
