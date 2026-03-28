@@ -14,7 +14,8 @@ public interface DriverProvider {
   /**
    * Creates and returns a mobile driver.
    *
+   * @param sessionName session name used to identify the test execution in BrowserStack
    * @return AppiumDriver instance
    */
-  AppiumDriver getDriver();
+  AppiumDriver getDriver(String sessionName);
 }
