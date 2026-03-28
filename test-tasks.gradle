@@ -62,7 +62,12 @@ def supportedProperties = [
     "bundleId",
     "appiumServerUrl",
     "explicitWait",
-    "threads"
+    "threads",
+    "execution",
+    "bs.username",
+    "bs.accessKey",
+    "bs.app",
+    "bs.url"
 ]
 
 // ========================================
