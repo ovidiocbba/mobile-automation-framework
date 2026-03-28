@@ -46,16 +46,17 @@ public class AndroidCapabilities {
    *   <li>BrowserStack execution (cloud app using bs://)
    * </ul>
    *
+   * @param sessionName session name used to identify the test execution in BrowserStack
    * @return configured UiAutomator2Options
    */
-  public UiAutomator2Options getCapabilities() {
+  public UiAutomator2Options getCapabilities(final String sessionName) {
     final UiAutomator2Options options = new UiAutomator2Options();
     options.setPlatformName("Android");
     setCommonCapabilities(options, config);
     final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
     switch (executionType) {
       case BROWSERSTACK:
-        bsBuilder.apply(options, "Android Test");
+        bsBuilder.apply(options, sessionName);
         break;
 
       case LOCAL:
