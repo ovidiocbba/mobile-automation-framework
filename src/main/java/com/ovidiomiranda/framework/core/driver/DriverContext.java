@@ -34,9 +34,7 @@ public class DriverContext {
     return driver.get();
   }
 
-  /**
-   * Properly quits the driver session and cleans ThreadLocal storage.
-   */
+  /** Properly quits the driver session and cleans ThreadLocal storage. */
   public void quitDriver() {
     final AppiumDriver currentDriver = driver.get();
 
