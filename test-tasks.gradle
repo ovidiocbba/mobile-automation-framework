@@ -67,7 +67,14 @@ def supportedProperties = [
     "bs.username",
     "bs.accessKey",
     "bs.app",
-    "bs.url"
+    "bs.url",
+    "bs.projectName",
+    "bs.buildName",
+    "bs.video",
+    "bs.deviceLogs",
+    "bs.appiumLogs",
+    "bs.networkLogs",
+    "bs.appiumVersion"
 ]
 
 // ========================================
