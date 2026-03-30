@@ -52,27 +52,28 @@ runs:
          exit 1
         fi
 
-        COMMON_PARAMS="\
-        -Dcucumber.filter.tags=${{ inputs.scenarioTag }} \
-        -Dusername=${USERNAME} \
-        -Dpassword=${PASSWORD} \
-        -Dexecution=browserstack \
-        -Dplatform=ANDROID \
-        -DdeviceName=\'${{ inputs.deviceName }}\' \
-        -DplatformVersion=${{ inputs.platformVersion }} \
-        -DautomationName=UiAutomator2 \
-        -Dbs.username=${BS_USERNAME} \
-        -Dbs.accessKey=${BS_ACCESS_KEY} \
-        -Dbs.url=https://hub.cloud.browserstack.com/wd/hub \
-        -Dbs.app=${BS_APP} \
-        -Dbs.projectName=Mobile-Automation-Framework \
-        -Dbs.buildName=GitHub-Build-${GITHUB_RUN_NUMBER} \
-        -Dbs.video=true \
-        -Dbs.deviceLogs=true \
-        -Dbs.appiumLogs=true \
-        -Dbs.networkLogs=true \
-        -Dbs.appiumVersion=2.0.1 \
-        -Dthreads=${{ inputs.threads }}"
+        COMMON_PARAMS=(
+        "-Dcucumber.filter.tags=${{ inputs.scenarioTag }}"
+        "-Dusername=${USERNAME}"
+        "-Dpassword=${PASSWORD}"
+        "-Dexecution=browserstack"
+        "-Dplatform=ANDROID"
+        "-DdeviceName=${{ inputs.deviceName }}"
+        "-DplatformVersion=${{ inputs.platformVersion }}"
+        "-DautomationName=UiAutomator2"
+        "-Dbs.username=${BS_USERNAME}"
+        "-Dbs.accessKey=${BS_ACCESS_KEY}"
+        "-Dbs.url=https://hub.cloud.browserstack.com/wd/hub"
+        "-Dbs.app=${BS_APP}"
+        "-Dbs.projectName=Mobile-Automation-Framework"
+        "-Dbs.buildName=GitHub-Build-${GITHUB_RUN_NUMBER}"
+        "-Dbs.video=true"
+        "-Dbs.deviceLogs=true"
+        "-Dbs.appiumLogs=true"
+        "-Dbs.networkLogs=true"
+        "-Dbs.appiumVersion=2.0.1"
+        "-Dthreads=${{ inputs.threads }}"
+        )
 
         # Gradle flags optimized for CI logs
         GRADLE_FLAGS="--no-daemon --console=plain --warning-mode summary"
@@ -80,7 +81,7 @@ runs:
         echo "Running tests..."
         ./gradlew clean executeFeatures \
           $GRADLE_FLAGS \
-          $COMMON_PARAMS
+          "${COMMON_PARAMS[@]}"
 
         STATUS=$?
 
@@ -89,7 +90,7 @@ runs:
           echo "Re-running failed tests..."
           ./gradlew reExecuteFeatures \
             $GRADLE_FLAGS \
-            $COMMON_PARAMS
+            "${COMMON_PARAMS[@]}"
         else
           echo "All tests passed. No retry needed."
         fi
