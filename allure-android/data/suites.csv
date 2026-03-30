@@ -1,2 +1,2 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","660","Successful login","","2026-03-30","broken","2026-03-30","","Login functionality","Successful login",""
+"","40398","Successful login","","2026-03-30","passed","2026-03-30","","Login functionality","Successful login",""
