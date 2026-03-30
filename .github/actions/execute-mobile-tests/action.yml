@@ -1,5 +1,6 @@
 name: Execute Mobile Tests
 description: Run mobile automation tests using BrowserStack
+author: Ovidio Miranda
 
 inputs:
   scenarioTag:

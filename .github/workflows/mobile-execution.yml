@@ -1,6 +1,4 @@
 name: Mobile Execution
-description: Run mobile automation tests using BrowserStack
-author: Ovidio Miranda
 
 on:
   workflow_dispatch:
