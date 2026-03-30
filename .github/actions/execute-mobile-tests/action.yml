@@ -58,7 +58,7 @@ runs:
         -Dpassword=${PASSWORD} \
         -Dexecution=browserstack \
         -Dplatform=ANDROID \
-        -DdeviceName="${{ inputs.deviceName }}" \
+        -DdeviceName=\"${{ inputs.deviceName }}\" \
         -DplatformVersion="${{ inputs.platformVersion }}" \
         -DautomationName=UiAutomator2 \
         -Dbs.username=${BS_USERNAME} \
