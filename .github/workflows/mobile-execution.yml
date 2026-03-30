@@ -55,6 +55,8 @@ jobs:
           scenarioTag: ${{ inputs.scenarioTag || '@regression' }}
           deviceName: ${{ inputs.deviceName }}
           platformVersion: ${{ inputs.platformVersion }}
+          platform: ANDROID
+          automationName: UiAutomator2
           threads: ${{ inputs.threads }}
 
   generate-and-deploy-report:
