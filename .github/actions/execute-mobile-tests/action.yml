@@ -46,11 +46,14 @@ runs:
         echo "================================="
 
         # Validate credentials
-        if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ] || \
-        [ -z "$BS_USERNAME" ] || [ -z "$BS_ACCESS_KEY" ] || [ -z "$BS_APP" ]; then
-         echo "Required credentials not found"
-         exit 1
-        fi
+        REQUIRED_VARS=("USERNAME" "PASSWORD" "BS_USERNAME" "BS_ACCESS_KEY" "BS_APP")
+
+        for var in "${REQUIRED_VARS[@]}"; do
+         if [ -z "${!var}" ]; then
+          echo "Missing required environment variable: $var"
+          exit 1
+         fi
+        done
 
         COMMON_PARAMS=(
         "-Dcucumber.filter.tags=${{ inputs.scenarioTag }}"
