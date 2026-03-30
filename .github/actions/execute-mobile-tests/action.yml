@@ -63,7 +63,7 @@ runs:
         "-DautomationName=UiAutomator2"
         "-Dbs.username=${BS_USERNAME}"
         "-Dbs.accessKey=${BS_ACCESS_KEY}"
-        "-Dbs.url=https://hub.cloud.browserstack.com/wd/hub"
+        "-Dbs.url=https://hub-cloud.browserstack.com/wd/hub"
         "-Dbs.app=${BS_APP}"
         "-Dbs.projectName=Mobile-Automation-Framework"
         "-Dbs.buildName=GitHub-Build-${GITHUB_RUN_NUMBER}"
