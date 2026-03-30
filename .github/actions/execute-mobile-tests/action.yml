@@ -17,6 +17,16 @@ inputs:
     required: false
     default: "13"
 
+  platform:
+    description: "Platform (ANDROID | IOS)"
+    required: false
+    default: "ANDROID"
+
+  automationName:
+    description: "Automation engine (UiAutomator2 | XCUITest)"
+    required: false
+    default: "UiAutomator2"
+
   threads:
     description: "Number of parallel threads"
     required: false
@@ -60,10 +70,10 @@ runs:
         "-Dusername=${USERNAME}"
         "-Dpassword=${PASSWORD}"
         "-Dexecution=browserstack"
-        "-Dplatform=ANDROID"
+        "-Dplatform=${{ inputs.platform }}"
         "-DdeviceName=${{ inputs.deviceName }}"
         "-DplatformVersion=${{ inputs.platformVersion }}"
-        "-DautomationName=UiAutomator2"
+        "-DautomationName=${{ inputs.automationName }}"
         "-Dbs.username=${BS_USERNAME}"
         "-Dbs.accessKey=${BS_ACCESS_KEY}"
         "-Dbs.url=https://hub-cloud.browserstack.com/wd/hub"
