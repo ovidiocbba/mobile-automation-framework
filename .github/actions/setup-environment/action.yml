@@ -6,23 +6,34 @@ inputs:
   java-ver:
     description: "Java Version"
     required: true
+    default: "17"
+
   java-distribution:
     description: "Java Distribution"
-    required: true
+    required: false
+    default: "temurin"
+
+  java-architecture:
+    description: "Java Architecture"
+    required: false
+    default: "x64"
 
 runs:
   using: "composite"
 
   steps:
-    - name: Set up JDK (ARM64)
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
         java-version: ${{ inputs.java-ver }}
         distribution: ${{ inputs.java-distribution }}
-        architecture: arm64
-        cache: gradle
+        architecture: ${{ inputs.java-architecture }}
+        cache: gradle # enable built-in Gradle caching to speed up CI executions
 
     - name: Verify Java
       shell: bash
       run: |
+        echo "================================="
+        echo "Java Version"
+        echo "================================="
         java -version
