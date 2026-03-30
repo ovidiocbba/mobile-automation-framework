@@ -7,117 +7,65 @@ on:
         description: "Tag to execute"
         required: false
         default: "@regression"
+
       deviceName:
         description: "Device name"
         required: false
-        default: "emulator-5554"
+        default: "Samsung Galaxy S23"
+
       platformVersion:
         description: "Android version"
         required: false
         default: "13"
-      apiLevel:
-        description: "Android API Level"
-        required: false
-        default: "33"
-      app:
-        description: "APK path"
-        required: false
-        default: "apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk"
+
       threads:
         description: "Parallel threads"
         required: false
         default: "1"
-      appiumServerUrl:
-        description: "Appium server URL"
-        required: false
-        default: "http://127.0.0.1:4723"
 
 jobs:
-  android-tests:
-    # Running on Apple Silicon (M1/M2) Hosted Runners
-    runs-on: macos-14
-    timeout-minutes: 45
+  execution:
+    runs-on: ubuntu-latest
+
+    env:
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+
+      BS_USERNAME: ${{ secrets.BS_USERNAME }}
+      BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
+      BS_APP: ${{ secrets.BS_APP }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup environment
-        uses: ./.github/actions/setup-environment
-        with:
-          java-ver: 17
-          java-distribution: temurin
-
-      - name: Run Emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ inputs.apiLevel }}
-          target: google_apis
-          arch: arm64-v8a
-          profile: pixel_5
-          force-avd-creation: true
-          disable-animations: true
-          disable-spellchecker: true
-
-          # STABILITY FIXES FOR APPLE SILICON HYPERVISOR
-          cores: "" # Prevents CPU over-allocation
-          ram-size: 2048M # Fixed RAM to avoid negotiation errors
-          heap-size: 512M # Internal JVM heap for the emulator
-          disk-size: 6000M # Ensures enough space for the AVD
-          disable-linux-hw-accel: true # Fixes 'Invalid argument' on macOS ARM64
-
-          emulator-options: >-
-            -no-window
-            -no-audio
-            -no-boot-anim
-            -no-metrics
-            -no-snapshot-load
-            -gpu swiftshader_indirect
-
-          emulator-boot-timeout: 600
-          script: |
-            echo "Waiting for device connection..."
-            adb wait-for-device
-
-            echo "Verifying full system boot..."
-            # Precise loop to ensure the Android OS is fully responsive
-            MAX_ATTEMPTS=30
-            COUNT=0
-            while [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
-              if [ $COUNT -ge $MAX_ATTEMPTS ]; then
-                echo "Error: Emulator took too long to boot."
-                exit 1
-              fi
-              echo "Booting... ($((COUNT*10))s elapsed)"
-              sleep 10
-              COUNT=$((COUNT+1))
-            done
-
-            echo "Emulator is fully ready!"
-            adb devices
-            adb shell input keyevent 82
-
-      - name: Execute Mobile Tests
+      - name: Run Mobile Tests
+        # Maximum time allowed for test execution.
+        timeout-minutes: 20
         uses: ./.github/actions/execute-mobile-tests
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
         with:
-          scenarioTag: ${{ inputs.scenarioTag }}
+          scenarioTag: ${{ inputs.scenarioTag || '@regression' }}
           deviceName: ${{ inputs.deviceName }}
           platformVersion: ${{ inputs.platformVersion }}
-          app: ${{ inputs.app }}
           threads: ${{ inputs.threads }}
-          appiumServerUrl: ${{ inputs.appiumServerUrl }}
 
-  report:
-    needs: android-tests
+  generate-and-deploy-report:
+    needs: execution
+    # Run report even if execution job fails
     if: always()
     runs-on: ubuntu-latest
+
+    # Prevents two workflows from deploying to 'gh-pages' at the same time.
+    concurrency:
+      group: deploy-gh-pages
+      cancel-in-progress: true
+
+    # These permissions are required to generate reports.
     permissions:
-      contents: write
+      contents: write # To push a branch (gh_pages).
+
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Generate and Deploy Allure Report
