@@ -17,12 +17,15 @@ Repository → Settings → Secrets and variables → Actions
 
 Click on **Secrets → New repository secret** and add the following:
 
-| Name       | Example Value   | Description                                |
-|------------|-----------------|--------------------------------------------|
-| `USERNAME` | `standard_user` | Username used during mobile test execution |
-| `PASSWORD` | `secret_sauce`  | Password used during mobile test execution |
+| Name            | Example Value                  | Description                                |
+|-----------------|--------------------------------|--------------------------------------------|
+| `USERNAME`      | `standard_user`                | Username used during mobile test execution |
+| `PASSWORD`      | `secret_sauce`                 | Password used during mobile test execution |
+| `BS_USERNAME`   | `your_browserstack_username`   | BrowserStack account username              |
+| `BS_ACCESS_KEY` | `your_browserstack_access_key` | BrowserStack access key                    |
+| `BS_APP`        | `bs://xxxxxxxxxxxxxxxx`        | BrowserStack uploaded app ID               |
 
-------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 
 ### 📘 USERNAME and PASSWORD
@@ -46,6 +49,35 @@ These variables are then passed to Gradle as system properties:
 ``` bash
 -Dusername=${USERNAME}
 -Dpassword=${PASSWORD}
+```
+------------------------------------------------------------------------
+
+# ☁️ BrowserStack Configuration
+
+To execute tests on **real devices in BrowserStack**, the following
+secrets must also be configured.
+
+| Secret        | Description                                |
+|---------------|--------------------------------------------|
+| BS_USERNAME   | BrowserStack username                      |
+| BS_ACCESS_KEY | BrowserStack access key                    |
+| BS_APP        | App uploaded to BrowserStack (bs://app-id) |
+
+Example configuration inside the workflow:
+
+``` yaml
+env:
+  BS_USERNAME: ${{ secrets.BS_USERNAME }}
+  BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
+  BS_APP: ${{ secrets.BS_APP }}
+```
+
+These values are passed to Gradle as system properties:
+
+``` bash
+-Dbs.username=${BS_USERNAME}
+-Dbs.accessKey=${BS_ACCESS_KEY}
+-Dbs.app=${BS_APP}
 ```
 
 ------------------------------------------------------------------------
