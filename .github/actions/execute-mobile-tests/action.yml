@@ -65,7 +65,7 @@ runs:
         -Dbs.accessKey=${BS_ACCESS_KEY} \
         -Dbs.url=https://hub.browserstack.com/wd/hub \
         -Dbs.app=${BS_APP} \
-        -Dbs.projectName="Mobile Automation Framework" \
+        -Dbs.projectName=\"Mobile Automation Framework\" \
         -Dbs.buildName="GitHub Build $GITHUB_RUN_NUMBER" \
         -Dbs.video=true \
         -Dbs.deviceLogs=true \
