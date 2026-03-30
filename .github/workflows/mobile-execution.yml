@@ -8,6 +8,11 @@ on:
         required: false
         default: "@regression"
 
+      device:
+        description: "Device (ALL | Samsung Galaxy S23 | Google Pixel 7 )"
+        required: true
+        default: ALL
+
       deviceName:
         description: "Device name"
         required: false
@@ -26,6 +31,14 @@ on:
 jobs:
   execution:
     runs-on: ubuntu-latest
+
+    strategy:
+      # Allow all executions even if one device fails
+      fail-fast: false
+      matrix:
+        # Browser list comes from repository variable SUPPORTED_BROWSERS(vars.SUPPORTED_BROWSERS).
+        # To update it go to: Settings → Secrets and variables → Actions → Variables
+        device: ${{ inputs.device == 'ALL' && fromJson(vars.SUPPORTED_DEVICES) || fromJson(format('[{"deviceName":"{0}"}]', inputs.device)) }}
 
     env:
       USERNAME: ${{ secrets.USERNAME }}
@@ -51,10 +64,10 @@ jobs:
           BS_APP: ${{ secrets.BS_APP }}
         with:
           scenarioTag: ${{ inputs.scenarioTag || '@regression' }}
-          deviceName: ${{ inputs.deviceName }}
-          platformVersion: ${{ inputs.platformVersion }}
-          platform: ANDROID
-          automationName: UiAutomator2
+          deviceName: ${{ matrix.device.deviceName }}
+          platformVersion: ${{ matrix.device.platformVersion }}
+          platform: ${{ matrix.device.platform }}
+          automationName: ${{ matrix.device.automationName }}
           threads: ${{ inputs.threads }}
 
   generate-and-deploy-report:
