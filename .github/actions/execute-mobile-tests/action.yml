@@ -72,7 +72,7 @@ runs:
         -Dbs.appiumLogs=true \
         -Dbs.networkLogs=true \
         -Dbs.appiumVersion=2.0.1 \
-        -Dthreads=${{ inputs.threads }}
+        -Dthreads=${{ inputs.threads }}"
 
         # Gradle flags optimized for CI logs
         GRADLE_FLAGS="--no-daemon --console=plain --warning-mode summary"
