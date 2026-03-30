@@ -1,4 +1,6 @@
 name: Mobile Execution
+description: Run mobile automation tests using BrowserStack
+author: Ovidio Miranda
 
 on:
   workflow_dispatch:
@@ -41,7 +43,7 @@ jobs:
 
       - name: Run Mobile Tests
         # Maximum time allowed for test execution.
-        timeout-minutes: 20
+        timeout-minutes: 35
         uses: ./.github/actions/execute-mobile-tests
         env:
           USERNAME: ${{ secrets.USERNAME }}
