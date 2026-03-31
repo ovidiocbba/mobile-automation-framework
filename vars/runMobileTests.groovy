@@ -28,6 +28,7 @@ def call(devices, params, gradleFlags) {
                 "-Dusername=${env.USERNAME}",
                 "-Dpassword=${env.PASSWORD}",
                 "-Dthreads=${params.THREADS}",
+                "-DexplicitWait=${params.EXPLICIT_WAIT}",
                 "-Dbranch=${branch}",
                 "-Dcommit=${commit}"
         ]
