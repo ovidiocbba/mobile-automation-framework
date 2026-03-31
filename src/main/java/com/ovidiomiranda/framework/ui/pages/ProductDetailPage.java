@@ -54,6 +54,7 @@ public class ProductDetailPage extends BasePage {
    * @return product price displayed on the product detail page
    */
   public String getProductPriceLabel() {
+    actions.scrollToElement(productPriceLabel);
     return actions.getText(productPriceLabel);
   }
 }
