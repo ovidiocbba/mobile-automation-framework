@@ -121,7 +121,7 @@ runs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: mobile-logs-${{ steps.normalize.outputs.device_id }}
+        name: logs-${{ steps.normalize.outputs.device_id }}
         path: build/logs
         retention-days: 5
 
