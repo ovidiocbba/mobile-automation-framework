@@ -80,7 +80,7 @@ jobs:
           choiceParam(
             'DEVICE',
             ['ALL', DEFAULT_DEVICE_1, DEFAULT_DEVICE_2],
-            'Mobile device'
+            'Device to execute (ALL | Samsung Galaxy S23 | Google Pixel 7)'
           )
 
           stringParam(
