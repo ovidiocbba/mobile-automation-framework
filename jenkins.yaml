@@ -1,0 +1,143 @@
+jenkins:
+  systemMessage: "Jenkins configured automatically via JCasC"
+
+  # Authentication configuration
+  # Defines how users log in to Jenkins
+  securityRealm:
+    local:
+      # Disable public user registration
+      allowsSignup: false
+      users:
+        - id: "${JENKINS_ADMIN_ID}"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+
+  # Authorization strategy (permissions model)
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      # Prevent anonymous users from accessing Jenkins
+      allowAnonymousRead: false
+
+  # Enable CSRF protection (Cross-Site Request Forgery)
+  # Stops malicious websites from sending requests to Jenkins using a logged-in user session.
+  # excludeClientIPFromCrumb avoids problems when Jenkins runs in Docker or behind a proxy.
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+
+# Global Libraries Configuration for Pipeline
+unclassified:
+  globalLibraries:
+    libraries:
+      - name: "shared-pipeline-steps"
+        defaultVersion: "main"
+        allowVersionOverride: true
+        includeInChangesets: true
+        # BUG: JCasC fails with libraryPath. Jenkins will look for 'vars/' in repo root by default.
+        # The path is set because pipeline libraries (like 'vars/' or 'src/') are inside the 'jenkins/' folder in the repository.
+        # libraryPath: "jenkins/"
+        retriever:
+          modernSCM:
+            scm:
+              gitSource:
+                remote: "https://github.com/ovidiocbba/mobile-automation-framework"
+                traits:
+                  - gitBranchDiscovery
+
+# Job DSL: Automatically creates the Pipeline job at startup
+jobs:
+  - script: |
+      def JOB_NAME        = 'mobile-ci'
+      def JOB_DESCRIPTION = 'Mobile Automation CI - BrowserStack Execution'
+
+      def REPO_URL    = 'https://github.com/ovidiocbba/mobile-automation-framework'
+      def REPO_BRANCH = '*/main'
+
+      def DEFAULT_DEVICE_1 = 'Samsung Galaxy S23'
+      def DEFAULT_DEVICE_2 = 'Google Pixel 7'
+
+      pipelineJob(JOB_NAME) {
+
+        description(JOB_DESCRIPTION)
+
+        /*
+        Parameters are defined here so Jenkins shows "Build with Parameters" immediately.
+        Otherwise Jenkins only detects Jenkinsfile parameters after the first build (common with Docker restarts).
+        */
+        parameters {
+
+          stringParam(
+            'BRANCH',
+            'main',
+            'Git branch to build (example: main, develop, feature/login)'
+          )
+
+          choiceParam(
+            'EXECUTION',
+            ['browserstack','local'],
+            'Execution type'
+          )
+
+          choiceParam(
+            'DEVICE',
+            ['ALL', DEFAULT_DEVICE_1, DEFAULT_DEVICE_2],
+            'Mobile device'
+          )
+
+          stringParam(
+            'SCENARIO_TAG',
+            '@regression',
+            'Scenario tag to execute (e.g. "@TC-00001")'
+          )
+
+          stringParam(
+            'EXPLICIT_WAIT',
+            '30',
+            'Explicit wait timeout in seconds (e.g. "30")'
+          )
+
+          stringParam(
+            'THREADS',
+            '1',
+            'Number of parallel threads for test execution (e.g. "2")'
+          )
+        }
+
+        // Load Pipeline script from Git (Pipeline as Code)
+        definition {
+          // cpsScm = CPS (Continuation Passing Style) + SCM (Source Code Management):
+          // executes a Pipeline using a Jenkinsfile stored in a Git repository.
+          cpsScm {
+            // scm = SCM (Source Code Management):
+            // defines which repository and branch Jenkins must clone.
+            scm {
+              git {
+                remote {
+                  url(REPO_URL)
+                }
+                branch(REPO_BRANCH)
+              }
+            }
+            // Path to Jenkinsfile inside the repository
+            scriptPath('Jenkinsfile')
+          }
+        }
+      }
+
+# Global Tool Configuration
+tool:
+  git:
+    installations:
+      - name: "Default"
+        home: "/usr/bin/git"
+
+  jdk:
+    installations:
+      - name: "jdk17"
+        # Path inside Docker container
+        home: "/opt/java/openjdk"
+
+  allure:
+    installations:
+      - name: "allure"
+        # Allure CLI path installed in Docker image
+        home: "/usr/bin/allure"
