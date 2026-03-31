@@ -60,11 +60,12 @@ runs:
 
           if [ -d "$path" ]; then
 
-            # Extract target name
-            TARGET=$(basename "$path" | sed 's/allure-results-//' | sed 's/-.*//')
+            # Extract full device name (fix: do NOT cut with sed -.*)
+            TARGET=$(basename "$path")
+            TARGET=${TARGET#allure-results-}
 
-            # Normalize name (lowercase)
-            LOWER=$(echo "$TARGET" | tr '[:upper:]' '[:lower:]' | sed 's/_headless//')
+            # Normalize name (lowercase + replace spaces)
+            LOWER=$(echo "$TARGET" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | sed 's/_headless//')
 
             echo ""
             echo "-----------------------------------------"
