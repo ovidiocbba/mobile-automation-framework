@@ -13,16 +13,6 @@ on:
         required: true
         default: ALL
 
-      deviceName:
-        description: "Device name"
-        required: false
-        default: "Samsung Galaxy S23"
-
-      platformVersion:
-        description: "Android version"
-        required: false
-        default: "13"
-
       threads:
         description: "Parallel threads"
         required: false
@@ -36,7 +26,7 @@ jobs:
       # Allow all executions even if one device fails
       fail-fast: false
       matrix:
-        # Browser list comes from repository variable SUPPORTED_BROWSERS(vars.SUPPORTED_BROWSERS).
+        # Device list comes from repository variable SUPPORTED_DEVICES (vars.SUPPORTED_DEVICES)
         # To update it go to: Settings → Secrets and variables → Actions → Variables
         device: ${{ inputs.device == 'ALL' && fromJson(vars.SUPPORTED_DEVICES) || fromJson(format('[{"deviceName":"{0}"}]', inputs.device)) }}
 
