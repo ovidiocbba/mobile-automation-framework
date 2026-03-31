@@ -2,6 +2,7 @@
 [allure_report]: https://ovidiocbba.github.io/mobile-automation-framework/
 
 [![Mobile Execution](https://github.com/ovidiocbba/mobile-automation-framework/actions/workflows/mobile-execution.yml/badge.svg)](https://github.com/ovidiocbba/mobile-automation-framework/actions/workflows/mobile-execution.yml)
+
 [:bar_chart: View Allure Report][allure_report]
 
 Automation framework for mobile testing using **Appium**, **Cucumber**, **TestNG**, and **Allure**.
