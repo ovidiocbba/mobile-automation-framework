@@ -121,7 +121,7 @@ runs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: mobile-logs-${{ github.run_id }}
+        name: mobile-logs-${{ steps.normalize.outputs.device_id }}
         path: build/logs
         retention-days: 5
 
@@ -129,6 +129,6 @@ runs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: allure-results-${{ steps.normalize.outputs.device_id }}-${{ github.run_id }}
+        name: allure-results-${{ steps.normalize.outputs.device_id }}
         path: build/allure-results
         retention-days: 5
