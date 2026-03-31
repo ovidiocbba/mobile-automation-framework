@@ -47,6 +47,13 @@ runs:
       shell: bash
       run: chmod +x gradlew
 
+    - name: Normalize device name
+      id: normalize
+      shell: bash
+      run: |
+        DEVICE_ID=$(echo "${{ inputs.deviceName }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9-')
+        echo "device_id=$DEVICE_ID" >> "$GITHUB_OUTPUT"
+
     - name: Run Android Tests (BrowserStack)
       shell: bash
       run: |
@@ -54,6 +61,7 @@ runs:
 
         echo "================================="
         echo "Running mobile tests"
+        echo "Device: ${{ inputs.deviceName }}"
         echo "================================="
 
         # Validate credentials
@@ -80,7 +88,7 @@ runs:
         "-Dbs.url=https://hub-cloud.browserstack.com/wd/hub"
         "-Dbs.app=${BS_APP}"
         "-Dbs.projectName=Mobile-Automation-Framework"
-        "-Dbs.buildName=GitHub-Build-${GITHUB_RUN_NUMBER}"
+        "-Dbs.buildName=GH-${GITHUB_RUN_NUMBER}-${{ steps.normalize.outputs.device_id }}"
         "-Dbs.video=true"
         "-Dbs.deviceLogs=true"
         "-Dbs.appiumLogs=true"
@@ -117,10 +125,10 @@ runs:
         path: build/logs
         retention-days: 5
 
-    - name: Upload Allure Results
+    - name: Upload Allure Results (per device)
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: allure-results-android-${{ github.run_id }}
+        name: allure-results-${{ steps.normalize.outputs.device_id }}-${{ github.run_id }}
         path: build/allure-results
         retention-days: 5
