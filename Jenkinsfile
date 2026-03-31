@@ -64,7 +64,7 @@ pipeline {
         string(
             name: 'THREADS',
             defaultValue: '1',
-            description: 'Parallel threads'
+            description: 'Number of parallel threads for test execution (e.g. "2")'
         )
     }
 
