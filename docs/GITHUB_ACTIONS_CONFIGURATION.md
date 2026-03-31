@@ -82,6 +82,78 @@ These values are passed to Gradle as system properties:
 
 ------------------------------------------------------------------------
 
+## 🔹 Repository Variables
+
+The workflow now supports **dynamic device execution** using a
+repository variable.
+
+Go to:
+
+Repository → Settings → Secrets and variables → Actions → Variables
+
+Create a new variable:
+
+    SUPPORTED_DEVICES
+
+### Example value
+
+``` json
+[
+  {
+    "deviceName": "Samsung Galaxy S23",
+    "platformVersion": "13",
+    "platform": "ANDROID",
+    "automationName": "UiAutomator2"
+  },
+  {
+    "deviceName": "Google Pixel 7",
+    "platformVersion": "13",
+    "platform": "ANDROID",
+    "automationName": "UiAutomator2"
+  },
+  {
+    "deviceName": "iPhone 14",
+    "platformVersion": "16",
+    "platform": "IOS",
+    "automationName": "XCUITest"
+  }
+]
+```
+
+This allows the workflow to run:
+
+-   All devices at the same time
+-   One specific device
+-   Multiple platforms (Android + iOS)
+
+without modifying the workflow file.
+
+------------------------------------------------------------------------
+
+## 📱 How Device Selection Works
+
+When running the workflow manually, you will see this input:
+
+    device = ALL
+
+### If you use
+
+    device = ALL
+
+the workflow executes **all devices defined in `SUPPORTED_DEVICES`**.
+
+### If you want to run only one device
+
+You must type the exact device name defined in the JSON.
+
+Example:
+
+    device = Samsung Galaxy S23
+
+This will execute only that device.
+
+------------------------------------------------------------------------
+
 ## Why This Is Required
 
 The credentials are required because the mobile tests include an
@@ -98,17 +170,20 @@ allowing the tests to execute correctly in CI.
 
 ## How It Works
 
-1.  The user triggers the workflow manually (`workflow_dispatch`).
+1.  The user triggers the workflow manually (`workflow_dispatch`)
 
 2.  GitHub Actions loads the secrets:
 
     USERNAME\
-    PASSWORD
+    PASSWORD\
+    BS_USERNAME\
+    BS_ACCESS_KEY\
+    BS_APP
 
-3.  The workflow passes them to the mobile execution action.
+3.  The workflow reads the `SUPPORTED_DEVICES` variable
 
-4.  The framework receives them as system properties and uses them
-    during the login step of the mobile test.
+4.  The framework receives all values as system properties and executes
+    the tests
 
 ------------------------------------------------------------------------
 
@@ -155,8 +230,10 @@ No additional repository variables are required for mobile execution.
 This project supports the following execution strategies:
 
 -   Manual execution (`workflow_dispatch`)
--   CI execution using Android Emulator in GitHub Actions
+-   Execution on multiple real devices (BrowserStack)
+-   Dynamic device selection (ALL or specific device)
 -   Allure report generation and deployment to `gh-pages`
+
 
 ------------------------------------------------------------------------
 
