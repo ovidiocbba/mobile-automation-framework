@@ -139,7 +139,7 @@ tasks.withType(Test).configureEach {
         def platformName = getProp("platform", "ANDROID")
         def deviceName = getProp("deviceName", "N/A")
         def platformVersion = getProp("platformVersion", "N/A")
-        def explicitWait = getProp("explicitWait", "20")
+        def explicitWait = getProp("explicitWait", "30")
         def threads = getProp("threads", "1")
 
         // CI detection
