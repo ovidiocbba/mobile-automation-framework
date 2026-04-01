@@ -23,16 +23,26 @@ def call(String device) {
     }
 
     // PARSE JSON
-    def allDevices
+    def rawDevices
 
     try {
-        allDevices = new JsonSlurper().parseText(env.SUPPORTED_DEVICES)
+        rawDevices = new JsonSlurper().parseText(env.SUPPORTED_DEVICES)
     } catch (Exception e) {
         error "Invalid JSON in SUPPORTED_DEVICES: ${e.message}"
     }
 
-    if (!allDevices || allDevices.isEmpty()) {
+    if (!rawDevices || rawDevices.isEmpty()) {
         error "SUPPORTED_DEVICES is empty."
+    }
+
+    // LazyMap -> HashMap (serializable)
+    def allDevices = rawDevices.collect { d ->
+        [
+                deviceName: d.deviceName,
+                platformVersion: d.platformVersion,
+                platform: d.platform,
+                automationName: d.automationName
+        ]
     }
 
     allDevices.each { d ->
