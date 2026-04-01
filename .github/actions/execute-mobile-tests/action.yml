@@ -43,10 +43,6 @@ runs:
         java-distribution: "temurin"
         java-architecture: "x64"
 
-    - name: Grant Gradle permissions
-      shell: bash
-      run: chmod +x gradlew
-
     - name: Normalize device name
       id: normalize
       shell: bash
