@@ -33,7 +33,15 @@ def call(String execution) {
 
         Missing credentials in Jenkins:
 
-        Required:
+        Add them here:
+
+        Manage Jenkins
+         → Credentials
+         → System
+         → Global
+         → Add Credentials
+
+        Required credentials:
         - USERNAME
         - PASSWORD
 
