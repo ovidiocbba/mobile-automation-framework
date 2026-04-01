@@ -22,6 +22,7 @@ def call(devices, params, gradleFlags) {
                 .replaceAll("[^a-z0-9-]", "")
 
         def buildDir = "build-${deviceId}"
+
         def coreParamsList = [
                 "-Dexecution=${params.EXECUTION}",
                 "-Dcucumber.filter.tags=${params.SCENARIO_TAG}",
