@@ -84,7 +84,7 @@ docker run -d \
   -e JENKINS_ADMIN_ID=admin \
   -e JENKINS_ADMIN_PASSWORD=SuperSecurePass2026! \
   -e GIT_REPO=https://github.com/ovidiocbba/mobile-automation-framework \
-  -e GIT_BRANCH="main" \
+  -e GIT_BRANCH="*/main" \
   -e SUPPORTED_DEVICES='[
     {
       "deviceName": "Samsung Galaxy S23",
