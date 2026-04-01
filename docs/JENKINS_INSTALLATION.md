@@ -10,6 +10,7 @@ This guide explains how to build and run a fully configured **Jenkins UI Automat
 * [:floppy_disk: 2. Create Persistent Volume](#floppy_disk-2-create-persistent-volume)
 * [:rocket: 3. Run Jenkins Container](#rocket-3-run-jenkins-container)
 * [:gear: 4. Initial Jenkins Setup](#gear-4-initial-jenkins-setup)
+* [:lock: 4.3 Configure Credentials](#lock-43-configure-credentials)
 * [:wastebasket: 5. Clean Setup (Optional)](#wastebasket-5-clean-setup-optional)
 * [:memo: 6. Notes](#memo-6-notes)
 
@@ -215,6 +216,60 @@ Start using Jenkins
 ![05-jenkins-is-now-ready-to-use.png](images/jenkins/05-jenkins-is-now-ready-to-use.png)
 
 ![06-jenkins-is-now-ready-to-use.png](images/jenkins/06-jenkins-is-now-ready-to-use.png)
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## :lock: 4.3 Configure Credentials
+
+Before running the pipeline, you must configure credentials manually in Jenkins.
+
+### Steps:
+
+1. Go to:
+   ```
+   Manage Jenkins → Credentials
+   ```
+
+2. Select:
+   ```
+   (global) → Add Credentials
+   ```
+
+3. Add the following credentials:
+
+#### 🔹 Application Credentials
+
+| ID         | Type                | Description            |
+|------------|---------------------|------------------------|
+| USERNAME   | Username/Password   | App login username     |
+| PASSWORD   | Username/Password   | App login password     |
+
+#### 🔹 BrowserStack Credentials
+
+| ID             | Type     | Description                  |
+|----------------|----------|------------------------------|
+| BS_USERNAME    | Secret   | BrowserStack username        |
+| BS_ACCESS_KEY  | Secret   | BrowserStack access key      |
+| BS_APP         | Secret   | BrowserStack app URL/id      |
+
+### Important
+
+These IDs must match exactly with the pipeline:
+
+```groovy
+USERNAME = credentials('USERNAME')
+PASSWORD = credentials('PASSWORD')
+
+BS_USERNAME = credentials('BS_USERNAME')
+BS_ACCESS_KEY = credentials('BS_ACCESS_KEY')
+BS_APP = credentials('BS_APP')
+```
 
 <div align="right">
   <strong>
