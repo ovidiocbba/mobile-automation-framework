@@ -61,15 +61,13 @@ def call(devices, params, gradleFlags) {
                 "-Dorg.gradle.project.buildDir=${buildDir}"
         ]
 
-        def allParams = (
-                coreParamsList +
-                        browserStackParamsList +
-                        deviceParamsList
-        ).join(" ")
-
         parallelStages[deviceId] = {
 
             stage("Run ${currentDevice.deviceName}") {
+
+                def allParams = (coreParamsList + browserStackParamsList + deviceParamsList)
+                        .collect { "\"${it}\"" }
+                        .join(" ")
 
                 try {
 
@@ -83,21 +81,11 @@ def call(devices, params, gradleFlags) {
 
                     echo "Retry failed scenarios for ${deviceId}"
 
-                    try {
-
-                        sh """
-                        ./gradlew reExecuteFeatures \
-                        ${gradleFlags} \
-                        ${allParams}
-                        """
-
-                        echo "Retry succeeded for ${deviceId}"
-
-                    } catch (retryErr) {
-
-                        echo "Retry failed for ${deviceId}"
-                        throw retryErr
-                    }
+                    sh """
+                    ./gradlew reExecuteFeatures \
+                    ${gradleFlags} \
+                    ${allParams}
+                    """
                 }
 
                 archiveArtifacts artifacts: "${buildDir}/allure-results/**", allowEmptyArchive: true
