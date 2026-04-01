@@ -35,6 +35,16 @@ def call(String device) {
         error "SUPPORTED_DEVICES is empty."
     }
 
+    allDevices.each { d ->
+        if (!d.deviceName?.trim() ||
+                !d.platform?.trim() ||
+                !d.platformVersion?.trim() ||
+                !d.automationName?.trim()) {
+
+            error "Invalid device config detected: ${d}"
+        }
+    }
+
     echo "Devices loaded: ${allDevices*.deviceName}"
 
     // FILTER LOGIC
