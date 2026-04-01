@@ -1,6 +1,6 @@
 # 🚀 Jenkins Setup with Docker
 
-This guide explains how to build and run a fully configured **Jenkins UI Automation Server** using Docker with persistent storage and browser support.
+This guide explains how to build and run a fully configured **Jenkins Mobile Automation Server** using Docker with persistent storage and browser support.
 
 ---
 
