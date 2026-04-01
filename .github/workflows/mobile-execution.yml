@@ -18,6 +18,11 @@ on:
         required: false
         default: "1"
 
+      explicitWait:
+        description: 'Explicit wait timeout in seconds (e.g. "30")'
+        required: false
+        default: "30"
+
 jobs:
   execution:
     runs-on: ubuntu-latest
@@ -43,8 +48,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Mobile Tests
-        # Maximum time allowed for test execution.
-        timeout-minutes: 35
+        timeout-minutes: ${{ inputs.device == 'ALL' && 60 || 35 }}
         uses: ./.github/actions/execute-mobile-tests
         env:
           USERNAME: ${{ secrets.USERNAME }}
@@ -59,6 +63,7 @@ jobs:
           platform: ${{ matrix.device.platform }}
           automationName: ${{ matrix.device.automationName }}
           threads: ${{ inputs.threads }}
+          explicitWait: ${{ inputs.explicitWait }}
 
   generate-and-deploy-report:
     needs: execution
