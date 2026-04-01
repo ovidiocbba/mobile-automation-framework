@@ -66,7 +66,7 @@ def call(devices, params, gradleFlags) {
             stage("Run ${currentDevice.deviceName}") {
 
                 def allParams = (coreParamsList + browserStackParamsList + deviceParamsList)
-                        .collect { "\"${it}\"" }
+                        .collect { it.contains(" ") ? "\"${it}\"" : it }
                         .join(" ")
 
                 try {
