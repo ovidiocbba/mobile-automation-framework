@@ -1,6 +1,6 @@
 @Library('shared-pipeline-steps') _
 
-def REPO_URL = 'https://github.com/ovidiocbba/mobile-automation-framework'
+def REPO_URL = env.GIT_REPO
 def devices = []
 
 pipeline {
@@ -41,6 +41,11 @@ pipeline {
             name: 'BRANCH',
             defaultValue: 'main',
             description: 'Git branch to build (example: main, develop, feature/login)'
+        )
+
+        choice(
+            name: 'EXECUTION',
+            choices: ['browserstack','local']
         )
 
         choice(
