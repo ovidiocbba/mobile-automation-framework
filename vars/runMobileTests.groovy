@@ -65,27 +65,27 @@ def call(devices, params, gradleFlags) {
 
             stage("Run ${currentDevice.deviceName}") {
 
-                def allParams = (coreParamsList + browserStackParamsList + deviceParamsList)
+                def gradleOpts = (coreParamsList + browserStackParamsList + deviceParamsList)
                         .collect { it.contains(" ") ? "\"${it}\"" : it }
                         .join(" ")
 
                 try {
 
-                    sh """
-                    ./gradlew clean executeFeatures \
-                    ${gradleFlags} \
-                    ${allParams}
-                    """
+                    withEnv(["GRADLE_OPTS=${gradleOpts}"]) {
+                        sh '''
+                        ./gradlew clean executeFeatures $GRADLE_FLAGS
+                        '''
+                    }
 
                 } catch (err) {
 
                     echo "Retry failed scenarios for ${deviceId}"
 
-                    sh """
-                    ./gradlew reExecuteFeatures \
-                    ${gradleFlags} \
-                    ${allParams}
-                    """
+                    withEnv(["GRADLE_OPTS=${gradleOpts}"]) {
+                        sh '''
+                        ./gradlew reExecuteFeatures $GRADLE_FLAGS
+                        '''
+                    }
                 }
 
                 archiveArtifacts artifacts: "${buildDir}/allure-results/**", allowEmptyArchive: true
