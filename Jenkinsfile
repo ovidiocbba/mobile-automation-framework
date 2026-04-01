@@ -91,14 +91,6 @@ pipeline {
         // --console=plain: better log formatting for CI
         // --warning-mode summary: show warning summary only
         GRADLE_FLAGS = "--no-daemon --console=plain --warning-mode summary"
-
-        // Credentials (configure in Jenkins)
-        USERNAME = credentials('USERNAME')
-        PASSWORD = credentials('PASSWORD')
-
-        BS_USERNAME = credentials('BS_USERNAME')
-        BS_ACCESS_KEY = credentials('BS_ACCESS_KEY')
-        BS_APP = credentials('BS_APP')
     }
 
     stages {
@@ -116,36 +108,7 @@ pipeline {
         stage('Validate Credentials') {
             steps {
                 script {
-                    try {
-                        def creds = [
-                            usernamePassword(credentialsId: 'USERNAME', usernameVariable: 'U', passwordVariable: 'P')
-                        ]
-
-                        if (params.EXECUTION == 'browserstack') {
-                            creds += [
-                                string(credentialsId: 'BS_USERNAME', variable: 'B1'),
-                                string(credentialsId: 'BS_ACCESS_KEY', variable: 'B2'),
-                                string(credentialsId: 'BS_APP', variable: 'B3')
-                            ]
-                        }
-
-                        withCredentials(creds) {
-                            echo "Credentials exist"
-                        }
-                        def missing = ['USERNAME','PASSWORD'].findAll { !env[it]?.trim() }
-
-                        if (params.EXECUTION == 'browserstack') {
-                            missing += ['BS_USERNAME','BS_ACCESS_KEY','BS_APP']
-                                .findAll { !env[it]?.trim() }
-                        }
-
-                        if (missing) {
-                            error "Missing credentials: ${missing.join(', ')}"
-                        }
-
-                    } catch (err) {
-                        error "Credentials not configured in Jenkins: ${err.message}"
-                    }
+                    validateCredentials(params.EXECUTION)
                 }
             }
         }
