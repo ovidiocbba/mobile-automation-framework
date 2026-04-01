@@ -53,7 +53,7 @@ runs:
     - name: Run Android Tests (BrowserStack)
       shell: bash
       run: |
-        set -euo pipefail
+        set +e
 
         echo "================================="
         echo "Running mobile tests"
@@ -64,7 +64,7 @@ runs:
         REQUIRED_VARS=("USERNAME" "PASSWORD" "BS_USERNAME" "BS_ACCESS_KEY" "BS_APP")
 
         for var in "${REQUIRED_VARS[@]}"; do
-         if [ -z "${!var}" ]; then
+         if [ -z "${!var:-}" ]; then
           echo "::error::Missing required environment variable: $var"
           exit 1
          fi
@@ -105,13 +105,19 @@ runs:
 
         # Retry failed scenarios
         if [ "$STATUS" -ne 0 ]; then
-          echo "Re-running failed tests..."
+          echo "Tests failed. Re-running failed scenarios..."
+          sleep 5
           ./gradlew reExecuteFeatures \
             $GRADLE_FLAGS \
             "${COMMON_PARAMS[@]}"
+
+          STATUS=$?
         else
           echo "All tests passed. No retry needed."
         fi
+
+        echo "Final status: $STATUS"
+        exit $STATUS
 
     - name: Upload logs
       if: always()
