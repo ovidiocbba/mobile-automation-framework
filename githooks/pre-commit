@@ -2,12 +2,12 @@
 
 echo "==> Running pre-commit checks..."
 
-./gradlew spotlessApply spotlessCheck
-
+./gradlew spotlessCheck
 RESULT=$?
 
 if [ $RESULT -ne 0 ]; then
-  echo "[ERROR] Pre-commit checks failed. Commit aborted."
+  echo "[ERROR] Code is not formatted."
+  echo "Run: ./gradlew spotlessApply"
   exit 1
 fi
 
