@@ -28,6 +28,11 @@ inputs:
     required: false
     default: "UiAutomator2"
 
+  explicitWait:
+    description: 'Explicit wait timeout in seconds (e.g. "30")'
+    required: true
+    default: '30'
+
   threads:
     description: "Number of parallel threads"
     required: false
@@ -70,27 +75,43 @@ runs:
          fi
         done
 
-        COMMON_PARAMS=(
+        DEVICE_ID="${{ steps.normalize.outputs.device_id }}"
+        BUILD_NAME="GH-${GITHUB_RUN_NUMBER}-${DEVICE_ID}"
+
+        CORE_PARAMS=(
+        "-Dexecution=browserstack"
         "-Dcucumber.filter.tags=${{ inputs.scenarioTag }}"
         "-Dusername=${USERNAME}"
         "-Dpassword=${PASSWORD}"
-        "-Dexecution=browserstack"
-        "-Dplatform=${{ inputs.platform }}"
-        "-DdeviceName=${{ inputs.deviceName }}"
-        "-DplatformVersion=${{ inputs.platformVersion }}"
-        "-DautomationName=${{ inputs.automationName }}"
+        "-DexplicitWait=${{ inputs.explicitWait }}"
+        "-Dthreads=${{ inputs.threads }}"
+        )
+
+        BS_PARAMS=(
         "-Dbs.username=${BS_USERNAME}"
         "-Dbs.accessKey=${BS_ACCESS_KEY}"
         "-Dbs.url=https://hub-cloud.browserstack.com/wd/hub"
         "-Dbs.app=${BS_APP}"
         "-Dbs.projectName=Mobile-Automation-Framework"
-        "-Dbs.buildName=GH-${GITHUB_RUN_NUMBER}-${{ steps.normalize.outputs.device_id }}"
+        "-Dbs.buildName=${BUILD_NAME}"
         "-Dbs.video=true"
         "-Dbs.deviceLogs=true"
         "-Dbs.appiumLogs=true"
         "-Dbs.networkLogs=true"
         "-Dbs.appiumVersion=2.0.1"
-        "-Dthreads=${{ inputs.threads }}"
+        )
+
+        DEVICE_PARAMS=(
+        "-Dplatform=${{ inputs.platform }}"
+        "-DdeviceName=${{ inputs.deviceName }}"
+        "-DplatformVersion=${{ inputs.platformVersion }}"
+        "-DautomationName=${{ inputs.automationName }}"
+        )
+
+        ALL_PARAMS=(
+        "${CORE_PARAMS[@]}"
+        "${BS_PARAMS[@]}"
+        "${DEVICE_PARAMS[@]}"
         )
 
         # Gradle flags optimized for CI logs
@@ -99,7 +120,7 @@ runs:
         echo "Running tests..."
         ./gradlew clean executeFeatures \
           $GRADLE_FLAGS \
-          "${COMMON_PARAMS[@]}"
+          "${ALL_PARAMS[@]}"
 
         STATUS=$?
 
@@ -109,7 +130,7 @@ runs:
           sleep 5
           ./gradlew reExecuteFeatures \
             $GRADLE_FLAGS \
-            "${COMMON_PARAMS[@]}"
+            "${ALL_PARAMS[@]}"
 
           STATUS=$?
         else
