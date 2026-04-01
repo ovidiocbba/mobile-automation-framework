@@ -43,10 +43,11 @@ ENV LC_ALL=en_US.UTF-8
 
 RUN echo "===== JAVA VERSION =====" && java -version && \
     echo "===== GIT VERSION =====" && git --version && \
-    echo "===== LOCALE =====" && locale \
+    echo "===== LOCALE =====" && locale
 
 # Install Node (for Allure optional tools)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get update && \
     apt-get install -y nodejs
 
 # Install Allure CLI
