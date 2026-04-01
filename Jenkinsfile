@@ -151,8 +151,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script {
                         withCredentials([
-                            string(credentialsId: 'USERNAME', variable: 'USERNAME'),
-                            string(credentialsId: 'PASSWORD', variable: 'PASSWORD'),
+                            usernamePassword(
+                                credentialsId: 'USERNAME',
+                                usernameVariable: 'APP_USERNAME',
+                                passwordVariable: 'APP_PASSWORD'
+                            ),
                             string(credentialsId: 'BS_USERNAME', variable: 'BS_USERNAME'),
                             string(credentialsId: 'BS_ACCESS_KEY', variable: 'BS_ACCESS_KEY'),
                             string(credentialsId: 'BS_APP', variable: 'BS_APP')
