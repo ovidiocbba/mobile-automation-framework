@@ -243,33 +243,52 @@ Before running the pipeline, you must configure credentials manually in Jenkins.
 
 3. Add the following credentials:
 
-#### 🔹 Application Credentials
+When adding credentials, Jenkins will ask you to **Select a type of credential**.
 
-| ID         | Type                | Description            |
-|------------|---------------------|------------------------|
-| USERNAME   | Username/Password   | App login username     |
-| PASSWORD   | Username/Password   | App login password     |
+Use the following types so the pipeline can read them correctly.
 
-#### 🔹 BrowserStack Credentials
+#### Application Credentials
 
-| ID             | Type     | Description                  |
-|----------------|----------|------------------------------|
-| BS_USERNAME    | Secret   | BrowserStack username        |
-| BS_ACCESS_KEY  | Secret   | BrowserStack access key      |
-| BS_APP         | Secret   | BrowserStack app URL/id      |
+Select:
 
-### Important
+    Username with password
 
-These IDs must match exactly with the pipeline:
+Configuration:
 
-```groovy
-USERNAME = credentials('USERNAME')
-PASSWORD = credentials('PASSWORD')
+**Scope:** Global
+**Treat username as secret:** disabled
 
-BS_USERNAME = credentials('BS_USERNAME')
-BS_ACCESS_KEY = credentials('BS_ACCESS_KEY')
-BS_APP = credentials('BS_APP')
-```
+| Field       | Value                      |
+|-------------|----------------------------|
+| Username    | Application login username |
+| Password    | Application login password |
+| ID          | USERNAME                   |
+| Description | App login credentials      |
+
+------------------------------------------------------------------------
+
+#### BrowserStack Credentials
+
+For BrowserStack values, select:
+
+    Secret text
+
+Create three credentials:
+
+**Scope:** Global
+
+| Credential Type | ID            | Value                                                 |
+|-----------------|---------------|-------------------------------------------------------|
+| Secret text     | BS_USERNAME   | Your BrowserStack username                            |
+| Secret text     | BS_ACCESS_KEY | Your BrowserStack access key                          |
+| Secret text     | BS_APP        | BrowserStack uploaded app id (example:'bs://xxxxxxx') |
+
+These credentials are required when running tests using:
+
+    EXECUTION=browserstack
+
+If any credential is missing, the Jenkins pipeline will fail with a
+validation error before starting the tests.
 
 <div align="right">
   <strong>
