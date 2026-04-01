@@ -113,6 +113,43 @@ pipeline {
             }
         }
 
+        stage('Validate Credentials') {
+            steps {
+                script {
+                    try {
+                        def creds = [
+                            usernamePassword(credentialsId: 'USERNAME', usernameVariable: 'U', passwordVariable: 'P')
+                        ]
+
+                        if (params.EXECUTION == 'browserstack') {
+                            creds += [
+                                string(credentialsId: 'BS_USERNAME', variable: 'B1'),
+                                string(credentialsId: 'BS_ACCESS_KEY', variable: 'B2'),
+                                string(credentialsId: 'BS_APP', variable: 'B3')
+                            ]
+                        }
+
+                        withCredentials(creds) {
+                            echo "Credentials exist"
+                        }
+                        def missing = ['USERNAME','PASSWORD'].findAll { !env[it]?.trim() }
+
+                        if (params.EXECUTION == 'browserstack') {
+                            missing += ['BS_USERNAME','BS_ACCESS_KEY','BS_APP']
+                                .findAll { !env[it]?.trim() }
+                        }
+
+                        if (missing) {
+                            error "Missing credentials: ${missing.join(', ')}"
+                        }
+
+                    } catch (err) {
+                        error "Credentials not configured in Jenkins: ${err.message}"
+                    }
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 // Clone repository from Git (retry helps avoid temporary network errors)
