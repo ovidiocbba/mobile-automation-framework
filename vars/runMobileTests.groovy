@@ -26,8 +26,8 @@ def call(devices, params, gradleFlags) {
         def coreParamsList = [
                 "-Dexecution=${params.EXECUTION}",
                 "-Dcucumber.filter.tags=${params.SCENARIO_TAG}",
-                "-Dusername=${env.APP_USERNAME}",
-                "-Dpassword=${env.APP_PASSWORD}",
+                "-Dusername=$APP_USERNAME",
+                "-Dpassword=$APP_PASSWORD",
                 "-Dthreads=${params.THREADS}",
                 "-DexplicitWait=${params.EXPLICIT_WAIT}",
                 "-Dbranch=${branch}",
@@ -38,12 +38,12 @@ def call(devices, params, gradleFlags) {
 
         if (params.EXECUTION == "browserstack") {
             browserStackParamsList = [
-                    "-Dbs.username=${env.BS_USERNAME}",
-                    "-Dbs.accessKey=${env.BS_ACCESS_KEY}",
+                    "-Dbs.username=$BS_USERNAME",
+                    "-Dbs.accessKey=$BS_ACCESS_KEY",
                     "-Dbs.url=https://hub-cloud.browserstack.com/wd/hub",
-                    "-Dbs.app=${env.BS_APP}",
+                    "-Dbs.app=$BS_APP",
                     "-Dbs.projectName=Mobile-Automation-Framework",
-                    "-Dbs.buildName=Jenkins-${env.BUILD_NUMBER}-${deviceId}",
+                    "-Dbs.buildName=Jenkins-$BUILD_NUMBER-${deviceId}",
                     "-Dbs.video=true",
                     "-Dbs.deviceLogs=true",
                     "-Dbs.appiumLogs=true",
@@ -65,13 +65,14 @@ def call(devices, params, gradleFlags) {
 
             stage("Run ${currentDevice.deviceName}") {
 
+                // Build GRADLE_OPTS to avoid Jenkins insecure interpolation warning with secrets in `sh`
                 def gradleOpts = (coreParamsList + browserStackParamsList + deviceParamsList)
                         .collect { it.contains(" ") ? "\"${it}\"" : it }
                         .join(" ")
 
                 try {
 
-                    withEnv(["GRADLE_OPTS=${gradleOpts}"]) {
+                    withEnv(["GRADLE_OPTS=" + gradleOpts]) {
                         sh '''
                         ./gradlew clean executeFeatures $GRADLE_FLAGS
                         '''
@@ -81,7 +82,7 @@ def call(devices, params, gradleFlags) {
 
                     echo "Retry failed scenarios for ${deviceId}"
 
-                    withEnv(["GRADLE_OPTS=${gradleOpts}"]) {
+                    withEnv(["GRADLE_OPTS=" + gradleOpts]) {
                         sh '''
                         ./gradlew reExecuteFeatures $GRADLE_FLAGS
                         '''
