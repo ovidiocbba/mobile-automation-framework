@@ -150,7 +150,15 @@ pipeline {
                 // Added to allow pipeline continuation even if tests fail
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script {
-                        runMobileTests(devices, params, env.GRADLE_FLAGS)
+                        withCredentials([
+                            string(credentialsId: 'USERNAME', variable: 'USERNAME'),
+                            string(credentialsId: 'PASSWORD', variable: 'PASSWORD'),
+                            string(credentialsId: 'BS_USERNAME', variable: 'BS_USERNAME'),
+                            string(credentialsId: 'BS_ACCESS_KEY', variable: 'BS_ACCESS_KEY'),
+                            string(credentialsId: 'BS_APP', variable: 'BS_APP')
+                        ]) {
+                            runMobileTests(devices, params, env.GRADLE_FLAGS)
+                        }
                     }
                 }
             }
