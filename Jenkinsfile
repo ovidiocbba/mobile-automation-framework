@@ -49,12 +49,6 @@ pipeline {
             choices: ['browserstack','local']
         )
 
-        choice(
-            name: 'DEVICE',
-            choices: ['ALL', 'Samsung Galaxy S23', 'Google Pixel 7'],
-            description: 'Device to execute (ALL | Samsung Galaxy S23 | Google Pixel 7)'
-        )
-
         string(
             name: 'SCENARIO_TAG',
             defaultValue: '@regression',
