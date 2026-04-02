@@ -36,6 +36,13 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+ENV JAVA_17_HOME=/opt/java/openjdk17
+
+RUN mkdir -p $JAVA_17_HOME && \
+    curl -L https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz | tar -xzC $JAVA_17_HOME --strip-components=1 && \
+    mkdir -p /usr/lib/jvm && \
+    ln -s /opt/java/openjdk17 /usr/lib/jvm/java-17-openjdk-amd64
+
 # Set system language and encoding to English and UTF-8
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
@@ -73,7 +80,6 @@ RUN jenkins-plugin-cli --plugins \
     timestamper \
     ws-cleanup \
     htmlpublisher \
-    jdk-tool \
     sse-gateway
 
 # Enable Jenkins Configuration as Code (JCasC)
