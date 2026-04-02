@@ -132,13 +132,16 @@ jobs:
 
 # Global Tool Configuration
 tool:
-  git:
-    installations:
-      - name: "Default"
-        home: "/usr/bin/git"
-
   jdk:
     installations:
+      - name: "jdk17"
+        properties:
+          - installSource:
+              installers:
+                - jdkInstaller:
+                    id: "jdk-17.0.10+7"
+                    acceptLicense: true
+
       - name: "jdk21"
         # Path inside Docker container
         home: "/opt/java/openjdk"
