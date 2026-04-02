@@ -8,6 +8,7 @@ pipeline {
     agent any
 
     tools {
+        jdk 'jdk17'
         git "Default" // Use the Git installation named "Default" (as configured in jenkins.yaml)
     }
 
@@ -77,11 +78,6 @@ pipeline {
 
         // Export branch so tests and Allure can read it
         BRANCH = "${params.BRANCH}"
-
-        // Use JDK configured in Jenkins Global Tool Configuration
-        JAVA_HOME = tool name: 'jdk21'
-        // Add selected JDK to system PATH
-        PATH = "${JAVA_HOME}/bin:${env.PATH}"
 
         // Shared Gradle cache to make builds faster (improves CI performance)
         GRADLE_USER_HOME = "/var/jenkins_home/.gradle"
