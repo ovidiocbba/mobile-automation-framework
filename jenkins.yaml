@@ -34,14 +34,6 @@ jenkins:
     standard:
       excludeClientIPFromCrumb: true
 
-# Script Approval (avoids manual approval in Jenkins UI)
-# Needed for Active Choices Groovy scripts
-security:
-  scriptApproval:
-    approvedSignatures:
-      - "method java.lang.System getenv java.lang.String"
-      - "new groovy.json.JsonSlurper"
-
 # Global Libraries Configuration for Pipeline
 unclassified:
   globalLibraries:
@@ -70,6 +62,19 @@ jobs:
       def REPO_URL    = System.getenv("GIT_REPO")
       def REPO_BRANCH = System.getenv("GIT_BRANCH")
 
+      def devicesJson = System.getenv("SUPPORTED_DEVICES")
+      def deviceNames = ["ALL"]
+
+      if (devicesJson) {
+          try {
+              new groovy.json.JsonSlurper().parseText(devicesJson).each {
+                  deviceNames << it.deviceName
+              }
+          } catch (Exception e) {
+              println("Invalid SUPPORTED_DEVICES JSON: ${e.message}")
+          }
+      }
+
       pipelineJob(JOB_NAME) {
 
         description(JOB_DESCRIPTION)
@@ -92,30 +97,11 @@ jobs:
             'Execution type'
           )
 
-          /*
-           Dynamic device list using Active Choices Plugin.
-           Reads SUPPORTED_DEVICES JSON from Docker environment.
-          */
-          activeChoiceParam('DEVICE') {
-              description('Device to execute')
-              choiceType('SINGLE_SELECT')
-
-              groovyScript {
-                  script("""
-                      def json = System.getenv("SUPPORTED_DEVICES")
-                      def devices = ['ALL']
-
-                      if (json) {
-                          new groovy.json.JsonSlurper().parseText(json).each {
-                              devices << it.deviceName
-                          }
-                      }
-
-                      return devices
-                  """)
-                  fallbackScript("return ['ALL']")
-              }
-          }
+          choiceParam(
+            'DEVICE',
+            deviceNames,
+            'Device to execute'
+          )
 
           stringParam(
             'SCENARIO_TAG',
