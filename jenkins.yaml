@@ -84,11 +84,30 @@ jobs:
             'Execution type'
           )
 
-          choiceParam(
-            'DEVICE',
-            ['ALL','Samsung Galaxy S23','Google Pixel 7'],
-            'Device to execute (ALL | Samsung Galaxy S23 | Google Pixel 7)'
-          )
+          /*
+           Dynamic device list using Active Choices Plugin.
+           Reads SUPPORTED_DEVICES JSON from Docker environment.
+          */
+          activeChoiceParam('DEVICE') {
+              description('Device to execute')
+              choiceType('SINGLE_SELECT')
+
+              groovyScript {
+                  script("""
+                      def json = System.getenv("SUPPORTED_DEVICES")
+                      def devices = ['ALL']
+
+                      if (json) {
+                          new groovy.json.JsonSlurper().parseText(json).each {
+                              devices << it.deviceName
+                          }
+                      }
+
+                      return devices
+                  """)
+                  fallbackScript("return ['ALL']")
+              }
+          }
 
           stringParam(
             'SCENARIO_TAG',
