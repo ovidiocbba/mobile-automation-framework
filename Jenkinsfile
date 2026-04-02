@@ -79,7 +79,7 @@ pipeline {
         BRANCH = "${params.BRANCH}"
 
         // Use JDK configured in Jenkins Global Tool Configuration
-        JAVA_HOME = tool name: 'jdk17'
+        JAVA_HOME = tool name: 'jdk21'
         // Add selected JDK to system PATH
         PATH = "${JAVA_HOME}/bin:${env.PATH}"
 
