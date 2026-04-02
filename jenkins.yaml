@@ -34,6 +34,14 @@ jenkins:
     standard:
       excludeClientIPFromCrumb: true
 
+# Script Approval (avoids manual approval in Jenkins UI)
+# Needed for Active Choices Groovy scripts
+security:
+  scriptApproval:
+    approvedSignatures:
+      - "method java.lang.System getenv java.lang.String"
+      - "new groovy.json.JsonSlurper"
+
 # Global Libraries Configuration for Pipeline
 unclassified:
   globalLibraries:
