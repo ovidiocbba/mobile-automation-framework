@@ -255,15 +255,15 @@ Select:
 
 Configuration:
 
-**Scope:** Global
+**Scope:** Global (Jenkins, nodes, items, all child items, etc)
 **Treat username as secret:** disabled
 
-| Field       | Value                      |
-|-------------|----------------------------|
-| Username    | Application login username |
-| Password    | Application login password |
-| ID          | USERNAME                   |
-| Description | App login credentials      |
+| Field       | Value                 |
+|-------------|-----------------------|
+| Username    | standard_user         |
+| Password    | secret_sauce          |
+| ID          | USERNAME              |
+| Description | App login credentials |
 
 ------------------------------------------------------------------------
 
@@ -275,13 +275,13 @@ For BrowserStack values, select:
 
 Create three credentials:
 
-**Scope:** Global
+**Scope:** Global (Jenkins, nodes, items, all child items, etc)
 
-| Credential Type | ID            | Value                                                 |
-|-----------------|---------------|-------------------------------------------------------|
-| Secret text     | BS_USERNAME   | Your BrowserStack username                            |
-| Secret text     | BS_ACCESS_KEY | Your BrowserStack access key                          |
-| Secret text     | BS_APP        | BrowserStack uploaded app id (example:'bs://xxxxxxx') |
+| Secret                                        | ID            | Description                  |
+|-----------------------------------------------|---------------|------------------------------|
+| simonmiranda_tsOpzO                           | BS_USERNAME   | Your BrowserStack username   |
+| SSp4FZ9m6qiUs3EfqHpZ                          | BS_ACCESS_KEY | Your BrowserStack access key |
+| bs://f98f7ad57f8224befe17f9140eaa703eba420458 | BS_APP        | BrowserStack uploaded app id |
 
 These credentials are required when running tests using:
 
