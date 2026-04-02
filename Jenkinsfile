@@ -140,16 +140,23 @@ pipeline {
                 // Added to allow pipeline continuation even if tests fail
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script {
-                        withCredentials([
+                        def credentialsList   = [
                             usernamePassword(
                                 credentialsId: 'USERNAME',
                                 usernameVariable: 'APP_USERNAME',
                                 passwordVariable: 'APP_PASSWORD'
-                            ),
-                            string(credentialsId: 'BS_USERNAME', variable: 'BS_USERNAME'),
-                            string(credentialsId: 'BS_ACCESS_KEY', variable: 'BS_ACCESS_KEY'),
-                            string(credentialsId: 'BS_APP', variable: 'BS_APP')
-                        ]) {
+                            )
+                        ]
+
+                        if (params.EXECUTION == "browserstack") {
+                            credentialsList  += [
+                                string(credentialsId: 'BS_USERNAME', variable: 'BS_USERNAME'),
+                                string(credentialsId: 'BS_ACCESS_KEY', variable: 'BS_ACCESS_KEY'),
+                                string(credentialsId: 'BS_APP', variable: 'BS_APP')
+                            ]
+                        }
+
+                        withCredentials(credentialsList) {
                             runMobileTests(devices, params, env.GRADLE_FLAGS)
                         }
                     }
