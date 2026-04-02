@@ -139,7 +139,7 @@ tool:
 
   jdk:
     installations:
-      - name: "jdk17"
+      - name: "jdk21"
         # Path inside Docker container
         home: "/opt/java/openjdk"
 
