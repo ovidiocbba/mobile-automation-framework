@@ -93,7 +93,7 @@ RUN mkdir -p /var/jenkins_home/casc_configs && \
 COPY jenkins.yaml /var/jenkins_home/casc_configs/jenkins.yaml
 
 # Set Java encoding to UTF-8 for Jenkins logs and disable Jenkins Content Security Policy so HTML reports like Allure can load JS/CSS
-ENV JAVA_OPTS="-Dfile.encoding=UTF-8 -Dhudson.model.DirectoryBrowserSupport.CSP=sandbox\ allow-scripts\ allow-same-origin\;\ default-src\ 'self'\;\ img-src\ 'self'\ data:\ blob:\;\ style-src\ 'self'\ 'unsafe-inline'\;\ script-src\ 'self'\ 'unsafe-inline'\ 'unsafe-eval'\ blob:"
+ENV JAVA_OPTS="-Dfile.encoding=UTF-8 -Dhudson.model.DirectoryBrowserSupport.CSP="
 
 # Switch back to secure Jenkins user
 USER jenkins
