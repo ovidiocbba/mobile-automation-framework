@@ -135,15 +135,9 @@ tool:
   jdk:
     installations:
       - name: "jdk17"
-        properties:
-          - installSource:
-              installers:
-                - jdkInstaller:
-                    id: "jdk-17.0.10+7"
-                    acceptLicense: true
+        home: "/usr/lib/jvm/java-17-openjdk-amd64"
 
       - name: "jdk21"
-        # Path inside Docker container
         home: "/opt/java/openjdk"
 
   allure:
