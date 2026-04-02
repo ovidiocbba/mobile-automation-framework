@@ -80,7 +80,8 @@ RUN jenkins-plugin-cli --plugins \
     timestamper \
     ws-cleanup \
     htmlpublisher \
-    sse-gateway
+    sse-gateway \
+    active-choices
 
 # Enable Jenkins Configuration as Code (JCasC)
 ENV CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs
