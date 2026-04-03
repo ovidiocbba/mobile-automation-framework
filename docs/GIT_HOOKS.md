@@ -36,7 +36,7 @@ They help:
 - Runs code formatting and validation
 - Command:
 ```
-./gradlew spotlessApply spotlessCheck
+./gradlew spotlessCheck
 ```
 
 ### Pre-push
@@ -59,7 +59,7 @@ They help:
 To install the hooks, just run:
 
 ```
-scripts/setup-hooks.sh
+githooks/scripts/setup-hooks.sh
 ```
 
 This script will:
