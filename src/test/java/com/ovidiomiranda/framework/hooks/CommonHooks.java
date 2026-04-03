@@ -63,11 +63,9 @@ public class CommonHooks {
   @Before(order = -1)
   public void beforeScenario(final Scenario scenario) {
     startTime = System.currentTimeMillis();
-    if (LOGGER.isInfoEnabled()) {
-      LOGGER.info(SEPARATOR);
-      LOGGER.info(">>> STARTING SCENARIO | {}", getTestCaseTitle(scenario));
-      LOGGER.info(SEPARATOR);
-    }
+    LOGGER.info(SEPARATOR);
+    LOGGER.info(">>> STARTING SCENARIO | {}", getTestCaseTitle(scenario));
+    LOGGER.info(SEPARATOR);
   }
 
   /**
