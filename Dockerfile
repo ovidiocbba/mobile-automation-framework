@@ -36,6 +36,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# --------------------------------------------------
+# Java 17 (for Gradle compatibility)
+# --------------------------------------------------
 ENV JAVA_17_HOME=/opt/java/openjdk17
 
 RUN mkdir -p $JAVA_17_HOME && \
@@ -43,7 +46,9 @@ RUN mkdir -p $JAVA_17_HOME && \
     mkdir -p /usr/lib/jvm && \
     ln -s /opt/java/openjdk17 /usr/lib/jvm/java-17-openjdk-amd64
 
+# --------------------------------------------------
 # Set system language and encoding to English and UTF-8
+# --------------------------------------------------
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
@@ -52,7 +57,9 @@ RUN echo "===== JAVA VERSION =====" && java -version && \
     echo "===== GIT VERSION =====" && git --version && \
     echo "===== LOCALE =====" && locale
 
+# --------------------------------------------------
 # Install Allure CLI
+# --------------------------------------------------
 ENV ALLURE_VERSION=2.25.0
 
 RUN curl -fsSL https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz -o allure.tgz && \
@@ -61,23 +68,27 @@ RUN curl -fsSL https://github.com/allure-framework/allure2/releases/download/${A
     rm allure.tgz && \
     echo "===== ALLURE VERSION =====" && allure --version
 
-# Copy plugins list (managed separately)
-COPY jenkins/plugins.txt /usr/share/jenkins/ref/plugins.txt
+# --------------------------------------------------
+# Jenkins Plugins
+# --------------------------------------------------
+COPY jenkins/plugins/plugins.txt /usr/share/jenkins/ref/plugins.txt
 
 # Install plugins using plugin file
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
+# --------------------------------------------------
 # Enable Jenkins Configuration as Code (JCasC)
-ENV CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs
+# --------------------------------------------------
+ENV CASC_JENKINS_CONFIG=/var/jenkins_home/casc
 
-# Create configuration folder and copy JCasC configuration file
-RUN mkdir -p /var/jenkins_home/casc_configs && \
-    chown -R jenkins:jenkins /var/jenkins_home/casc_configs
+COPY jenkins/ /var/jenkins_home/
 
-# Copy JCasC configuration file
-COPY jenkins/jenkins.yaml /var/jenkins_home/casc_configs/jenkins.yaml
+# Fix permissions
+RUN chown -R jenkins:jenkins /var/jenkins_home
 
-# Set Java encoding to UTF-8 for Jenkins logs and disable Jenkins Content Security Policy so HTML reports like Allure can load JS/CSS
+# --------------------------------------------------
+# Jenkins Runtime Config
+# --------------------------------------------------
 ENV JAVA_OPTS="-Dfile.encoding=UTF-8 -Dhudson.model.DirectoryBrowserSupport.CSP="
 
 # Switch back to secure Jenkins user
