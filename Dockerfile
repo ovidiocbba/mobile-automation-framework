@@ -66,21 +66,13 @@ RUN curl -fsSL https://github.com/allure-framework/allure2/releases/download/${A
     rm allure.tgz && \
     echo "===== ALLURE VERSION =====" && allure --version
 
-# Install Jenkins plugins
-RUN jenkins-plugin-cli --plugins \
-    workflow-aggregator \
-    pipeline-stage-view \
-    git \
-    credentials-binding \
-    allure-jenkins-plugin \
-    configuration-as-code \
-    job-dsl \
-    blueocean \
-    ansicolor \
-    timestamper \
-    ws-cleanup \
-    htmlpublisher \
-    sse-gateway
+# Copy plugins list (managed separately)
+COPY jenkins/plugins.txt /usr/share/jenkins/ref/plugins.txt
+
+# Install plugins using plugin file
+RUN jenkins-plugin-cli \
+    --plugin-file /usr/share/jenkins/ref/plugins.txt \
+    --latest false
 
 # Enable Jenkins Configuration as Code (JCasC)
 ENV CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs
@@ -90,7 +82,7 @@ RUN mkdir -p /var/jenkins_home/casc_configs && \
     chown -R jenkins:jenkins /var/jenkins_home/casc_configs
 
 # Copy JCasC configuration file
-COPY jenkins.yaml /var/jenkins_home/casc_configs/jenkins.yaml
+COPY jenkins/jenkins.yaml /var/jenkins_home/casc_configs/jenkins.yaml
 
 # Set Java encoding to UTF-8 for Jenkins logs and disable Jenkins Content Security Policy so HTML reports like Allure can load JS/CSS
 ENV JAVA_OPTS="-Dfile.encoding=UTF-8 -Dhudson.model.DirectoryBrowserSupport.CSP="
