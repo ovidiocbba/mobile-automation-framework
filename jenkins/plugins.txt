@@ -7,55 +7,53 @@
 # --------------------------------------------------
 # workflow-aggregator → Enables Pipeline (Jenkinsfile support)
 # pipeline-stage-view → Visual stage view in UI
-workflow-aggregator:596.v8c21c963d92d
-pipeline-stage-view:2.34
+workflow-aggregator
+pipeline-stage-view
 
 # --------------------------------------------------
 # SCM (Source Control)
 # --------------------------------------------------
 # git → Allows Jenkins to clone repositories
-git:5.2.1
+git
 
 # --------------------------------------------------
 # Security / Credentials
 # --------------------------------------------------
 # credentials-binding → Secure usage of secrets in pipelines
-credentials-binding:642.v737c34dea_6c2
+credentials-binding
 
 # --------------------------------------------------
 # Test Reports
 # --------------------------------------------------
 # allure-jenkins-plugin → Integrates Allure test reports
 # htmlpublisher → Publishes HTML reports in Jenkins (used for Allure report UI)
-allure-jenkins-plugin:2.32.0
-htmlpublisher:1.32
+allure-jenkins-plugin
+htmlpublisher
 
 # --------------------------------------------------
 # Infrastructure as Code / Job Management
 # --------------------------------------------------
 # configuration-as-code → Enables Jenkins configuration via YAML (JCasC), eliminating manual UI setup
 # job-dsl → Enables creation of Jenkins jobs via code (Job DSL)
-configuration-as-code:1810.v9b_c30a_249a_4c
-job-dsl:1.87
+configuration-as-code
+job-dsl
 
 # --------------------------------------------------
 # UI / Visualization
 # --------------------------------------------------
 # blueocean → Provides a modern, user-friendly UI for Jenkins with enhanced pipeline visualization
-# sse-gateway → Enables server-sent events for real-time Jenkins updates (required by Blue Ocean and modern UI features)
-blueocean:1.27.10
-sse-gateway:1.27
+blueocean
 
 # --------------------------------------------------
 # Logging
 # --------------------------------------------------
 # ansicolor → Enables ANSI color support in Jenkins console logs
 # timestamper → Adds timestamps to each line of the Jenkins console output
-ansicolor:1.0.2
-timestamper:1.26
+ansicolor
+timestamper
 
 # --------------------------------------------------
 # Workspace / Utilities
 # --------------------------------------------------
 # ws-cleanup → Allows cleaning the workspace in pipelines using cleanWs()
-ws-cleanup:0.46
+ws-cleanup
