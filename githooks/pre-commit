@@ -3,17 +3,17 @@
 echo "==> Running pre-commit checks..."
 
 if ! ./gradlew spotlessCheck; then
-echo ""
-read -p "Format code with spotlessApply? [y/N]: " -n 1 -r < /dev/tty
-echo ""
+    read -p $'\nCode is not formatted. Auto-fix with spotlessApply? [y/n]: ' -n 1 -r < /dev/tty
+    echo
 
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-./gradlew spotlessApply && echo "[OK] Code formatted. Re-add and commit again."
-else
-echo "[ERROR] Commit aborted."
-fi
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        ./gradlew spotlessApply && \
+        echo $'\n[OK] Code formatted successfully. Please review, stage changes, and commit again.'
+    else
+        echo $'\nNo changes were applied. Please format the code manually before committing.'
+    fi
 
-exit 1
+    exit 1
 fi
 
 echo "[OK] Pre-commit checks passed."
