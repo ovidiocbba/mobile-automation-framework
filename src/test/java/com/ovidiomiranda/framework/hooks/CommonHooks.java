@@ -9,6 +9,7 @@ import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.driver.DriverFactory;
 import com.ovidiomiranda.framework.core.enums.PlatformType;
+import com.ovidiomiranda.framework.utils.BrowserStackUtils;
 import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -81,6 +82,11 @@ public class CommonHooks {
         driverFactory.createDriver(
             PlatformType.valueOf(platform.toUpperCase(ENGLISH)), getTestCaseTitle(scenario));
     driverContext.setDriver(driver);
+
+    // Attach BrowserStack session to Allure
+    BrowserStackUtils.attachSession(driver);
+    Allure.addAttachment("Platform", platform);
+    Allure.addAttachment("Test Name", getTestCaseTitle(scenario));
   }
 
   /**
