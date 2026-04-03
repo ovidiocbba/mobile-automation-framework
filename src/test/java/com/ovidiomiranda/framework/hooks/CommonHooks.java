@@ -80,6 +80,8 @@ public class CommonHooks {
   @Before(order = 0)
   public void setUp(final Scenario scenario) {
     final String platform = config.require(PLATFORM);
+    Allure.parameter("Platform", platform);
+
     final AppiumDriver driver =
         driverFactory.createDriver(
             PlatformType.valueOf(platform.toUpperCase(ENGLISH)), getTestCaseTitle(scenario));
@@ -91,8 +93,6 @@ public class CommonHooks {
       // Attach BrowserStack session to Allure
       BrowserStackUtils.attachSession(driver);
     }
-    Allure.addAttachment("Platform", platform);
-    Allure.addAttachment("Test Name", getTestCaseTitle(scenario));
   }
 
   /**
