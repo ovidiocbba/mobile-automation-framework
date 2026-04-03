@@ -1,58 +1,30 @@
 def call(String execution) {
 
-    try {
+    validate(env.APP_USERNAME, "USERNAME")
+    validate(env.APP_PASSWORD, "USERNAME")
 
-        def creds = [
-                usernamePassword(
-                        credentialsId: 'USERNAME',
-                        usernameVariable: 'USERNAME',
-                        passwordVariable: 'PASSWORD'
-                )
-        ]
+    if (execution == "browserstack") {
+        validate(env.BS_USERNAME, "BS_USERNAME")
+        validate(env.BS_ACCESS_KEY, "BS_ACCESS_KEY")
+        validate(env.BS_APP, "BS_APP")
+    }
 
-        if (execution == "browserstack") {
+    echo "Credentials validated"
+}
 
-            creds += [
-                    string(credentialsId: 'BS_USERNAME', variable: 'BS_USERNAME'),
-                    string(credentialsId: 'BS_ACCESS_KEY', variable: 'BS_ACCESS_KEY'),
-                    string(credentialsId: 'BS_APP', variable: 'BS_APP')
-            ]
+def validate(value, id) {
 
-        }
-
-        withCredentials(creds) {
-
-            echo "Credentials validated successfully"
-
-        }
-
-    } catch (err) {
-
+    if (!value || value == "replace-me") {
         error """
-        Jenkins Credentials validation failed.
+Credential '${id}' is not configured.
 
-        Missing credentials in Jenkins:
+Go to:
+Manage Jenkins → Credentials → Global
+"""
+    }
 
-        Add them here:
-
-        Manage Jenkins
-         → Credentials
-         → System
-         → Global
-         → Add Credentials
-
-        Required credentials:
-        - USERNAME
-        - PASSWORD
-
-        BrowserStack required when EXECUTION=browserstack:
-        - BS_USERNAME
-        - BS_ACCESS_KEY
-        - BS_APP
-
-        Error: ${err.message}
-        """
-
+    if (value.trim() != value) {
+        error "Credential '${id}' contains leading or trailing spaces"
     }
 
 }
