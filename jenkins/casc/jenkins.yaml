@@ -1,0 +1,74 @@
+jenkins:
+  systemMessage: "Jenkins configured automatically via JCasC"
+
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: "SUPPORTED_DEVICES"
+            value: ${SUPPORTED_DEVICES}
+          - key: "GIT_REPO"
+            value: ${GIT_REPO}
+          - key: "GIT_BRANCH"
+            value: ${GIT_BRANCH}
+
+  # Authentication configuration
+  # Defines how users log in to Jenkins
+  securityRealm:
+    local:
+      # Disable public user registration
+      allowsSignup: false
+      users:
+        - id: "${JENKINS_ADMIN_ID}"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+
+  # Authorization strategy (permissions model)
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      # Prevent anonymous users from accessing Jenkins
+      allowAnonymousRead: false
+
+  # Enable CSRF protection (Cross-Site Request Forgery)
+  # Stops malicious websites from sending requests to Jenkins using a logged-in user session.
+  # excludeClientIPFromCrumb avoids problems when Jenkins runs in Docker or behind a proxy.
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+
+# Global Libraries Configuration for Pipeline
+unclassified:
+  globalLibraries:
+    libraries:
+      - name: "shared-pipeline-steps"
+        defaultVersion: "main"
+        allowVersionOverride: true
+        includeInChangesets: true
+        # BUG: JCasC fails with libraryPath. Jenkins will look for 'vars/' in repo root by default.
+        # The path is set because pipeline libraries (like 'vars/' or 'src/') are inside the 'jenkins/' folder in the repository.
+        # libraryPath: "jenkins/"
+        retriever:
+          modernSCM:
+            scm:
+              gitSource:
+                remote: "${GIT_REPO}"
+                traits:
+                  - gitBranchDiscovery
+
+# Job DSL: Automatically creates the Pipeline job at startup
+jobs:
+  - file: /var/jenkins_home/jobs/mobile-ci.groovy
+
+# Global Tool Configuration
+tool:
+  jdk:
+    installations:
+      - name: "jdk17"
+        home: "/usr/lib/jvm/java-17-openjdk-amd64"
+
+      - name: "jdk21"
+        home: "/opt/java/openjdk"
+
+  allure:
+    installations:
+      - name: "allure"
+        # Allure CLI path installed in Docker image
+        home: "/usr/bin/allure"
