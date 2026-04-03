@@ -25,7 +25,8 @@ public final class BrowserStackUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BrowserStackUtils.class);
 
-  private static final String BROWSERSTACK_URL = "https://app.browserstack.com/automate/sessions/";
+  private static final String BROWSERSTACK_URL =
+      "https://app-automate.browserstack.com/dashboard/v2/sessions/";
 
   private BrowserStackUtils() {
     // Private constructor to avoid instantiation
@@ -54,13 +55,10 @@ public final class BrowserStackUtils {
       }
 
       final String sessionId = driver.getSessionId().toString();
-      final String sessionUrl = BROWSERSTACK_URL + sessionId + ".json";
+      final String sessionUrl = BROWSERSTACK_URL + sessionId;
 
       // Clickable link
       Allure.link(" BrowserStack Video", sessionUrl);
-      // Attachment
-      Allure.addAttachment("BrowserStack Session URL", sessionUrl);
-
     } catch (Exception e) {
       LOGGER.error("Failed to attach BrowserStack session", e);
     }
