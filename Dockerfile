@@ -70,9 +70,7 @@ RUN curl -fsSL https://github.com/allure-framework/allure2/releases/download/${A
 COPY jenkins/plugins.txt /usr/share/jenkins/ref/plugins.txt
 
 # Install plugins using plugin file
-RUN jenkins-plugin-cli \
-    --plugin-file /usr/share/jenkins/ref/plugins.txt \
-    --latest false
+RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
 # Enable Jenkins Configuration as Code (JCasC)
 ENV CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs
