@@ -116,8 +116,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Clean workspace and compile project, skipping tests.
+                // Compile project, skipping tests.
                 sh "./gradlew clean assemble ${env.GRADLE_FLAGS}"
+            }
+            post {
+                failure {
+                    error "Build failed. Stopping pipeline."
+                }
             }
         }
 
