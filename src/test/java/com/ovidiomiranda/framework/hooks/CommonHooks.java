@@ -80,8 +80,6 @@ public class CommonHooks {
   @Before(order = 0)
   public void setUp(final Scenario scenario) {
     final String platform = config.require(PLATFORM);
-    Allure.parameter("Platform", platform);
-
     final AppiumDriver driver =
         driverFactory.createDriver(
             PlatformType.valueOf(platform.toUpperCase(ENGLISH)), getTestCaseTitle(scenario));
