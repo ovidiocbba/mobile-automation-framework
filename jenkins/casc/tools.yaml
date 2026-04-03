@@ -1,0 +1,15 @@
+# Global Tool Configuration
+tool:
+  jdk:
+    installations:
+      - name: "jdk17"
+        home: "/usr/lib/jvm/java-17-openjdk-amd64"
+
+      - name: "jdk21"
+        home: "/opt/java/openjdk"
+
+  allure:
+    installations:
+      - name: "allure"
+        # Allure CLI path installed in Docker image
+        home: "/usr/bin/allure"
