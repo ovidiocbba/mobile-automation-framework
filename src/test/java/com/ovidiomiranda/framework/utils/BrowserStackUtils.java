@@ -57,8 +57,7 @@ public final class BrowserStackUtils {
       final String sessionId = driver.getSessionId().toString();
       final String sessionUrl = BROWSERSTACK_URL + sessionId;
 
-      // Clickable link
-      Allure.link(" BrowserStack Video", sessionUrl);
+      Allure.addAttachment(" BrowserStack Video", sessionUrl);
     } catch (Exception e) {
       LOGGER.error("Failed to attach BrowserStack session", e);
     }
