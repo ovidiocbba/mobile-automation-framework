@@ -1,5 +1,6 @@
 package com.ovidiomiranda.framework.hooks;
 
+import static com.ovidiomiranda.framework.core.enums.ExecutionType.BROWSERSTACK;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM;
 import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseId;
 import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseTitle;
@@ -85,7 +86,7 @@ public class CommonHooks {
 
     final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
 
-    if (executionType == ExecutionType.BROWSERSTACK) {
+    if (executionType == BROWSERSTACK) {
       // Attach BrowserStack session to Allure
       BrowserStackUtils.attachSession(driver);
     }
