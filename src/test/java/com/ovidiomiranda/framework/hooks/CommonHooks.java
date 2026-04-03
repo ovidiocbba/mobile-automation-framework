@@ -2,6 +2,7 @@ package com.ovidiomiranda.framework.hooks;
 
 import static com.ovidiomiranda.framework.core.enums.ExecutionType.BROWSERSTACK;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM;
+import static com.ovidiomiranda.framework.core.utils.ExecutionUtils.getExecutionType;
 import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseId;
 import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseTitle;
 import static java.util.Locale.ENGLISH;
@@ -11,7 +12,6 @@ import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.driver.DriverFactory;
 import com.ovidiomiranda.framework.core.enums.ExecutionType;
 import com.ovidiomiranda.framework.core.enums.PlatformType;
-import com.ovidiomiranda.framework.core.utils.ExecutionUtils;
 import com.ovidiomiranda.framework.utils.BrowserStackUtils;
 import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.After;
@@ -83,12 +83,15 @@ public class CommonHooks {
         driverFactory.createDriver(
             PlatformType.valueOf(platform.toUpperCase(ENGLISH)), getTestCaseTitle(scenario));
     driverContext.setDriver(driver);
+  }
 
-    final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
+  /** Attaches the BrowserStack session link to the Allure report. */
+  @After(order = 1)
+  public void attachBrowserLink() {
+    final ExecutionType executionType = getExecutionType(config);
 
     if (executionType == BROWSERSTACK) {
-      // Attach BrowserStack session to Allure
-      BrowserStackUtils.attachSession(driver);
+      BrowserStackUtils.attachSession(driverContext.getDriver());
     }
   }
 
@@ -97,7 +100,7 @@ public class CommonHooks {
    *
    * @param scenario executed scenario
    */
-  @After
+  @After(order = 0)
   public void afterScenario(final Scenario scenario) {
     final String testCaseId = getTestCaseId(scenario);
 
