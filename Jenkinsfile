@@ -95,14 +95,6 @@ pipeline {
             }
         }
 
-        stage('Validate Credentials') {
-            steps {
-                script {
-                    validateCredentials(params.EXECUTION)
-                }
-            }
-        }
-
         stage('Checkout') {
             steps {
                 // Clone repository from Git (retry helps avoid temporary network errors)
@@ -157,6 +149,7 @@ pipeline {
                         }
 
                         withCredentials(credentialsList) {
+                            validateCredentials(params.EXECUTION)
                             runMobileTests(devices, params, env.GRADLE_FLAGS)
                         }
                     }
