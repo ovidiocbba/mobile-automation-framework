@@ -74,6 +74,9 @@ This volume stores:
 
 ## :rocket: 3. Run Jenkins Container
 
+You can run the Jenkins container using **two different approaches** depending on your needs.
+
+### Option 1: Inline environment variables (Quick Start)
 ```bash
 docker run -d \
   --name jenkins-mobile-automation \
@@ -84,7 +87,12 @@ docker run -d \
   -e JENKINS_ADMIN_ID=admin \
   -e JENKINS_ADMIN_PASSWORD=SuperSecurePass2026! \
   -e GIT_REPO=https://github.com/ovidiocbba/mobile-automation-framework \
-  -e GIT_BRANCH="*/main" \
+  -e GIT_BRANCH=main \
+  -e APP_USERNAME=standard_user \
+  -e APP_PASSWORD=secret_sauce \
+  -e BS_USERNAME=your_browserstack_username \
+  -e BS_ACCESS_KEY=your_browserstack_access_key \
+  -e BS_APP=bs://your_uploaded_app_id \
   -e SUPPORTED_DEVICES='[
     {
       "deviceName": "Samsung Galaxy S23",
@@ -107,17 +115,35 @@ docker run -d \
 Be sure to change the default password `SuperSecurePass2026!` to a password you choose. This will help keep your Jenkins secure before using it.
 The password you set here will be used for the Jenkins admin login during the first setup.
 
+### Option 2: Using `.env` file (Recommended)
+
+Instead of passing all environment variables manually, you can use an .env file.
+
+File location:
+```
+jenkins/.env
+```
+
+```bash
+docker run -d \
+  --name jenkins-mobile-automation \
+  --restart unless-stopped \
+  -p 8081:8080 \
+  -p 50001:50000 \
+  -v jenkins_mobile_ci:/var/jenkins_home \
+  --env-file jenkins/env/.env.qa \
+  jenkins-mobile-ci:1.0.0
+```
+
 ### 🔎 What each option does:
 
-| Option                                       | Description                                      |
-|----------------------------------------------|--------------------------------------------------|
-| `--restart unless-stopped`                   | Automatically restarts the container if it stops |
-| `-p 8081:8080`                               | Exposes Jenkins web interface (UI)               |
-| `-p 50001:50000`                             | Agent communication port for Jenkins nodes       |
+| Option                                   | Description                                      |
+|------------------------------------------|--------------------------------------------------|
+| `--restart unless-stopped`               | Automatically restarts the container if it stops |
+| `-p 8081:8080`                           | Exposes Jenkins web interface (UI)               |
+| `-p 50001:50000`                         | Agent communication port for Jenkins nodes       |
 | `-v jenkins_mobile_ci:/var/jenkins_home` | Persists Jenkins data between container restarts |
-| `-e JENKINS_ADMIN_ID`                        | Sets the Jenkins admin username                  |
-| `-e JENKINS_ADMIN_PASSWORD`                  | Sets the Jenkins admin password                  |
-
+| `--env-file .env`                        | Load variables from file                         |
 
 <div align="right">
   <strong>
