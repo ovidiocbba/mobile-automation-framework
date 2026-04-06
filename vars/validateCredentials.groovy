@@ -1,7 +1,7 @@
 def call(String execution) {
 
-    validate(env.APP_USERNAME, "USERNAME")
-    validate(env.APP_PASSWORD, "USERNAME")
+    validate(env.APP_USERNAME, "APP_USERNAME")
+    validate(env.APP_PASSWORD, "APP_PASSWORD")
 
     if (execution == "browserstack") {
         validate(env.BS_USERNAME, "BS_USERNAME")
@@ -14,13 +14,8 @@ def call(String execution) {
 
 def validate(value, id) {
 
-    if (!value || value == "replace-me") {
-        error """
-Credential '${id}' is not configured.
-
-Go to:
-Manage Jenkins → Credentials → Global
-"""
+    if (!value?.trim()) {
+        error "Environment variable '${id}' is not defined or empty"
     }
 
     if (value.trim() != value) {
