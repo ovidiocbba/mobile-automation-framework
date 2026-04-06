@@ -10,7 +10,6 @@ This guide explains how to build and run a fully configured **Jenkins Mobile Aut
 * [:floppy_disk: 2. Create Persistent Volume](#floppy_disk-2-create-persistent-volume)
 * [:rocket: 3. Run Jenkins Container](#rocket-3-run-jenkins-container)
 * [:gear: 4. Initial Jenkins Setup](#gear-4-initial-jenkins-setup)
-* [:lock: 4.3 Configure Credentials](#lock-43-configure-credentials)
 * [:wastebasket: 5. Clean Setup (Optional)](#wastebasket-5-clean-setup-optional)
 * [:memo: 6. Notes](#memo-6-notes)
 
@@ -121,7 +120,7 @@ Instead of passing all environment variables manually, you can use an .env file.
 
 File location:
 ```
-jenkins/.env
+jenkins/env/.env.qa
 ```
 
 ```bash
@@ -242,79 +241,6 @@ Start using Jenkins
 ![05-jenkins-is-now-ready-to-use.png](images/jenkins/05-jenkins-is-now-ready-to-use.png)
 
 ![06-jenkins-is-now-ready-to-use.png](images/jenkins/06-jenkins-is-now-ready-to-use.png)
-
-<div align="right">
-  <strong>
-    <a href="#table-of-contents">↥ Back to top</a>
-  </strong>
-</div>
-
----
-
-## :lock: 4.3 Configure Credentials
-
-Before running the pipeline, you must configure credentials manually in Jenkins.
-
-### Steps:
-
-1. Go to:
-   ```
-   Manage Jenkins → Credentials
-   ```
-
-2. Select:
-   ```
-   (global) → Add Credentials
-   ```
-
-3. Add the following credentials:
-
-When adding credentials, Jenkins will ask you to **Select a type of credential**.
-
-Use the following types so the pipeline can read them correctly.
-
-#### Application Credentials
-
-Select:
-
-    Username with password
-
-Configuration:
-
-**Scope:** Global (Jenkins, nodes, items, all child items, etc)
-**Treat username as secret:** disabled
-
-| Field       | Value                 |
-|-------------|-----------------------|
-| Username    | standard_user         |
-| Password    | secret_sauce          |
-| ID          | USERNAME              |
-| Description | App login credentials |
-
-------------------------------------------------------------------------
-
-#### BrowserStack Credentials
-
-For BrowserStack values, select:
-
-    Secret text
-
-Create three credentials:
-
-**Scope:** Global (Jenkins, nodes, items, all child items, etc)
-
-| Secret                                        | ID            | Description                  |
-|-----------------------------------------------|---------------|------------------------------|
-| simonmiranda_tsOpzO                           | BS_USERNAME   | Your BrowserStack username   |
-| SSp4FZ9m6qiUs3EfqHpZ                          | BS_ACCESS_KEY | Your BrowserStack access key |
-| bs://f98f7ad57f8224befe17f9140eaa703eba420458 | BS_APP        | BrowserStack uploaded app id |
-
-These credentials are required when running tests using:
-
-    EXECUTION=browserstack
-
-If any credential is missing, the Jenkins pipeline will fail with a
-validation error before starting the tests.
 
 <div align="right">
   <strong>
