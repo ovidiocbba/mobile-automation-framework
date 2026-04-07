@@ -131,6 +131,7 @@ docker run -d \
   -p 50001:50000 \
   -v jenkins_mobile_ci:/var/jenkins_home \
   --env-file jenkins/env/.env.qa \
+  --add-host=host.docker.internal:host-gateway \
   jenkins-mobile-ci:1.0.0
 ```
 
