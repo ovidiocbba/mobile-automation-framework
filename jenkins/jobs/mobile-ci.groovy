@@ -4,18 +4,7 @@ def JOB_DESCRIPTION = 'Mobile Automation CI - Dynamic Devices'
 def REPO_URL    = System.getenv("GIT_REPO")
 def REPO_BRANCH = System.getenv("GIT_BRANCH")
 
-def devicesJson = System.getenv("SUPPORTED_DEVICES")
-def deviceNames = ["ALL"]
-
-if (devicesJson) {
-    try {
-        new groovy.json.JsonSlurper().parseText(devicesJson).each {
-            deviceNames << it.deviceName
-        }
-    } catch (Exception e) {
-        println("Invalid SUPPORTED_DEVICES JSON: ${e.message}")
-    }
-}
+def DEVICES_ROOT = "/var/jenkins_home/resources/devices/devices.json"
 
 pipelineJob(JOB_NAME) {
 
@@ -39,11 +28,28 @@ pipelineJob(JOB_NAME) {
                 'Execution type'
         )
 
-        choiceParam(
-                'DEVICE',
-                deviceNames,
-                'Device to execute'
-        )
+        activeChoiceReactiveParam('DEVICE') {
+            choiceType('SINGLE_SELECT')
+            groovyScript {
+                script("""
+                    import groovy.json.JsonSlurper
+
+                    def router = new JsonSlurper().parse(
+                        new File("${DEVICES_ROOT}")
+                    )
+
+                    def devices = new JsonSlurper().parse(
+                        new File(router[EXECUTION])
+                    )
+
+                    def list = ["ALL"]
+                    devices.each { list << it.deviceName }
+
+                    return list
+                """)
+            }
+            referencedParameter('EXECUTION')
+        }
 
         stringParam(
                 'SCENARIO_TAG',
