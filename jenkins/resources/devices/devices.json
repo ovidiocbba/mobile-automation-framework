@@ -1,0 +1,4 @@
+{
+  "local": "/var/jenkins_home/resources/devices/localDevices.json",
+  "browserstack": "/var/jenkins_home/resources/devices/browserstack.json"
+}
