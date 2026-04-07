@@ -136,8 +136,12 @@ In **SDK Tools** tab:
 
 * Install:
 
-    * Android SDK Platform-Tools (ADB)
+    * Android SDK Build-Tools (ADB)
+    * Android SDK Command-line Tools (latest)
     * Android Emulator
+    * Android Emulator hypervisor driver
+    * Android SDK Platform-Tools
+
 ![3-Install-SDK-components.png](docs/images/android-studio/3-install-sdk-components.png)
 
 > :warning: This step will download required components.
@@ -190,12 +194,13 @@ C:\Users\ovidio.miranda\AppData\Local\Android\Sdk
 
 ### Step 3: Update PATH
 
-1. In **System variables**, select Path
+1. In **System variables**, select **Path**
 2. Click **Edit**
 3. Click **New** and add:
 ```
 %ANDROID_HOME%\platform-tools
 %ANDROID_HOME%\emulator
+%ANDROID_HOME%\cmdline-tools\latest\bin
 ```
 
 ![7-environment-variable-2.png](docs/images/android-studio/7-environment-variable-2.png)
@@ -217,6 +222,7 @@ Run:
 adb version
 emulator -version
 emulator -list-avds
+avdmanager.bat list avd
 ```
 ---
 
@@ -262,6 +268,7 @@ Medium_Phone_API_36.1
 
 - adb command works
 - emulator command works
+- avdmanager works
 - At least one AVD is listed
 
 ---
