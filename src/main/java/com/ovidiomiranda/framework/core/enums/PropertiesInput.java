@@ -24,6 +24,7 @@ public enum PropertiesInput {
   /** Mobile platform version. */
   PLATFORM_VERSION("platformVersion"),
 
+  /** Unique Device Identifier for mobile execution. */
   UDID("udid"),
 
   /** Automation engine used by Appium. */
