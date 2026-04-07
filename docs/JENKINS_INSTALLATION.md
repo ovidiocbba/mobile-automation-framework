@@ -12,7 +12,7 @@ This guide explains how to build and run a fully configured **Jenkins Mobile Aut
 * [:gear: 4. Initial Jenkins Setup](#gear-4-initial-jenkins-setup)
 * [:wastebasket: 5. Clean Setup (Optional)](#wastebasket-5-clean-setup-optional)
 * [:memo: 6. Notes](#memo-6-notes)
-
+* [:iphone: 7. Local Android Emulators](#iphone-7-local-android-emulators)
 ---
 
 ## :whale: 1. Build Docker Image
@@ -284,6 +284,169 @@ docker volume rm jenkins_mobile_ci
   - Parallel execution
   - Allure reports
   - Dynamic device selection
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+# :iphone: 7. Local Android Emulators
+
+This framework also supports **running tests on local Android emulators
+using Appium**.
+
+This is useful for:
+
+-   Local development
+-   Debugging tests faster
+-   Running tests without BrowserStack
+-   Parallel execution using multiple emulators
+
+------------------------------------------------------------------------
+
+## 7.1 Start Android Emulators
+
+Example:
+
+``` bash
+emulator -avd Pixel_7_API34 -port 5554
+emulator -avd Pixel_8_API_35 -port 5556
+```
+
+Verify:
+
+``` bash
+adb devices
+```
+
+Example output:
+
+``` bash
+List of devices attached
+emulator-5554   device
+emulator-5556   device
+```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## 7.2 Start Appium Server
+
+Run:
+
+``` bash
+appium
+```
+
+Default URL:
+```
+http://localhost:4723
+```
+
+Inside Docker the container accesses it using:
+```
+http://host.docker.internal:4723
+```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## 7.3 Local Emulator Configuration
+
+Example configuration for `SUPPORTED_DEVICES`:
+
+``` json
+[
+  {
+    "type": "local",
+    "deviceName": "Pixel_7_API34",
+    "platformVersion": "14",
+    "platform": "ANDROID",
+    "automationName": "UiAutomator2",
+    "udid": "emulator-5554",
+    "appiumServerUrl": "http://host.docker.internal:4723"
+  },
+  {
+    "type": "local",
+    "deviceName": "Pixel_8_API_35",
+    "platformVersion": "15",
+    "platform": "ANDROID",
+    "automationName": "UiAutomator2",
+    "udid": "emulator-5556",
+    "appiumServerUrl": "http://host.docker.internal:4723"
+  }
+]
+```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## 7.4 If You Changed `localDevices.json`
+
+If Jenkins is already running and you updated the device configuration
+file (`localDevices.json`), you need to copy the new file into the
+container.
+
+1. Copy the updated file to the Jenkins container
+
+``` bash
+docker cp jenkins/resources/devices/localDevices.json jenkins-mobile-automation:/var/jenkins_home/resources/devices/localDevices.json
+```
+
+2. Restart the Jenkins container
+
+``` bash
+docker restart jenkins-mobile-automation
+```
+
+3. Verify the file inside the container
+
+``` bash
+docker exec -it jenkins-mobile-automation bash
+```
+
+Then run:
+
+``` bash
+cat /var/jenkins_home/resources/devices/localDevices.json
+```
+You should see the updated device configuration.
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## 7.5 Parallel Execution
+
+When two emulators are running:
+
+```
+emulator-5554
+emulator-5556
+```
+
+The framework can distribute tests between both devices.
 
 <div align="right">
   <strong>
