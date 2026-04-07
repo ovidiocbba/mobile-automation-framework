@@ -1,0 +1,20 @@
+[
+  {
+    "type": "local",
+    "deviceName": "Pixel 7 Emulator 1",
+    "platformVersion": "14",
+    "platform": "ANDROID",
+    "automationName": "UiAutomator2",
+    "udid": "emulator-5554",
+    "appiumServerUrl": "http://host.docker.internal:4723"
+  },
+  {
+    "type": "local",
+    "deviceName": "Pixel 7 Emulator 2",
+    "platformVersion": "14",
+    "platform": "ANDROID",
+    "automationName": "UiAutomator2",
+    "udid": "emulator-5556",
+    "appiumServerUrl": "http://host.docker.internal:4723"
+  }
+]
