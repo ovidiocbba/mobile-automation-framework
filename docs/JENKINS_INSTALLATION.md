@@ -311,7 +311,10 @@ This is useful for:
 Example:
 
 ``` bash
-emulator -avd Pixel_7_API34 -port 5554
+emulator -avd Pixel_7_API_34 -port 5554
+```
+
+``` bash
 emulator -avd Pixel_8_API_35 -port 5556
 ```
 
@@ -371,7 +374,7 @@ Example configuration for `SUPPORTED_DEVICES`:
 [
   {
     "type": "local",
-    "deviceName": "Pixel_7_API34",
+    "deviceName": "Pixel 7 API 34",
     "platformVersion": "14",
     "platform": "ANDROID",
     "automationName": "UiAutomator2",
@@ -380,7 +383,7 @@ Example configuration for `SUPPORTED_DEVICES`:
   },
   {
     "type": "local",
-    "deviceName": "Pixel_8_API_35",
+    "deviceName": "Pixel 8 API 35",
     "platformVersion": "15",
     "platform": "ANDROID",
     "automationName": "UiAutomator2",
