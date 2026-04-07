@@ -1,0 +1,23 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<!--
+Pre-approve Jenkins Active Choices (uno-choice) plugin scripts.
+
+This allows the Groovy script (File + JsonSlurper) to read local JSON files
+and populate the DEVICE dropdown without requiring manual Script Approval.
+
+Kept in version control to avoid manual setup.
+DO NOT DELETE.
+-->
+<scriptApproval plugin="script-security@1399.ve6a_66547f6e1">
+    <approvedScriptHashes>
+        <string>SHA512:1130aedd72860950539099c4da781ca700d4a76ac9fd15920c6fe2bbaf1b09d8786ef2b141c1cac5e50c4e8376c687ec6413e6f80c14edec2943d4629f59c1ea</string>
+        <string>SHA512:3f205299bef2fe3329258a42f2c60d332cc35ccb41a3ca0512d7869c6aff4561ff708c48123b4f7c3dec33ccca30d54fb8b9b51b5bc7070f96236d11a3f0bdcb</string>
+    </approvedScriptHashes>
+    <approvedSignatures/>
+    <aclApprovedSignatures/>
+    <approvedClasspathEntries/>
+    <forceSandbox>false</forceSandbox>
+    <pendingScripts/>
+    <pendingSignatures/>
+    <pendingClasspathEntries/>
+</scriptApproval>
