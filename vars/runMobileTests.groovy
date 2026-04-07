@@ -24,7 +24,7 @@ def call(devices, params, gradleFlags) {
         def buildDir = "build-${deviceId}"
 
         def coreParamsList = [
-                "-Dexecution=${params.EXECUTION}",
+                "-Dexecution=${currentDevice.type}",
                 "-Dcucumber.filter.tags=${params.SCENARIO_TAG}",
                 "-Dusername=$APP_USERNAME",
                 "-Dpassword=$APP_PASSWORD",
@@ -36,7 +36,7 @@ def call(devices, params, gradleFlags) {
 
         def browserStackParamsList = []
 
-        if (params.EXECUTION == "browserstack") {
+        if (currentDevice.type == "browserstack") {
             browserStackParamsList = [
                     "-Dbs.username=$BS_USERNAME",
                     "-Dbs.accessKey=$BS_ACCESS_KEY",
@@ -60,6 +60,13 @@ def call(devices, params, gradleFlags) {
                 "-Dallure.results.directory=${buildDir}/allure-results",
                 "-Dorg.gradle.project.buildDir=${buildDir}"
         ]
+
+        if (currentDevice.type == "local") {
+            deviceParamsList += [
+                    "-Dudid=${currentDevice.udid}",
+                    "-DappiumServerUrl=${currentDevice.appiumServerUrl}"
+            ]
+        }
 
         parallelStages[deviceId] = {
 
