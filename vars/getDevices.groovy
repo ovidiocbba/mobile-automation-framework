@@ -1,15 +1,14 @@
-import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
+import groovy.json.JsonSlurperClassic
 
 def call(String device, String execution) {
 
     def routerPath = "/var/jenkins_home/resources/devices/devices.json"
 
-    def router = new JsonSlurper().parse(new File(routerPath))
-    router = new JsonSlurper().parseText(JsonOutput.toJson(router))
+    def router = new JsonSlurperClassic().parse(new File(routerPath))
+    def devicesRaw = new JsonSlurperClassic().parse(new File(router[execution]))
 
-    def devices = new JsonSlurper().parse(new File(router[execution]))
-    devices = new JsonSlurper().parseText(JsonOutput.toJson(devices))
+    // Convert LazyMap -> HashMap
+    def devices = devicesRaw.collect { new HashMap(it) }
 
     if (device == "ALL") {
         return devices
