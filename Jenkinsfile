@@ -50,6 +50,11 @@ pipeline {
         )
 
         string(
+            name: 'DEVICE',
+            defaultValue: 'ALL'
+        )
+
+        string(
             name: 'SCENARIO_TAG',
             defaultValue: '@regression',
             description: 'Scenario tag to execute (e.g. "@TC-00001")'
@@ -90,7 +95,7 @@ pipeline {
             steps {
                 cleanWs()
                 script {
-                    devices = getDevices(params.DEVICE)
+                    devices = getDevices(params.DEVICE, params.EXECUTION)
                 }
             }
         }
@@ -145,7 +150,7 @@ pipeline {
                             )
                         ]
 
-                        if (params.EXECUTION == "browserstack") {
+                        if (devices.any { it.type == "browserstack" }) {
                             credentialsList  += [
                                 string(credentialsId: 'BS_USERNAME', variable: 'BS_USERNAME'),
                                 string(credentialsId: 'BS_ACCESS_KEY', variable: 'BS_ACCESS_KEY'),
