@@ -35,8 +35,10 @@ htmlpublisher
 # --------------------------------------------------
 # configuration-as-code → Enables Jenkins configuration via YAML (JCasC), eliminating manual UI setup
 # job-dsl → Enables creation of Jenkins jobs via code (Job DSL)
+# uno-choice → Enables dynamic parameters (Active Choices) used for DEVICE combo
 configuration-as-code
 job-dsl
+uno-choice
 
 # --------------------------------------------------
 # UI / Visualization
