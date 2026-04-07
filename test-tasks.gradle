@@ -55,6 +55,7 @@ def supportedProperties = [
     "platform",
     "deviceName",
     "platformVersion",
+    "udid",
     "automationName",
     "app",
     "appPackage",
