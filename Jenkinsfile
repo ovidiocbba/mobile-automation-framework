@@ -50,11 +50,6 @@ pipeline {
         )
 
         string(
-            name: 'DEVICE',
-            defaultValue: 'ALL'
-        )
-
-        string(
             name: 'SCENARIO_TAG',
             defaultValue: '@regression',
             description: 'Scenario tag to execute (e.g. "@TC-00001")'
