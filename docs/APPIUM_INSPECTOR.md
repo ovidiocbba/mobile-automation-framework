@@ -75,7 +75,7 @@ emulator -list-avds
 
 **Example output**
 ```
-Pixel7_API34
+Pixel_7_API_34
 Pixel_8_API_35
 ```
 
@@ -105,7 +105,7 @@ Use the following capabilities:
 ```json
 {
   "platformName": "Android",
-  "appium:deviceName": "Pixel7_API34",
+  "appium:deviceName": "Pixel_7_API_34",
   "appium:automationName": "UiAutomator2",
   "appium:app": "C:/Users/ovidio.miranda/Documents/Projects/mobile-automation-framework/apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk",
   "appium:autoGrantPermissions": true,
