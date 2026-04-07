@@ -3,6 +3,7 @@ package com.ovidiomiranda.framework.core.capabilities;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.AUTOMATION_NAME;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.DEVICE_NAME;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM_VERSION;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.UDID;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import io.appium.java_client.remote.options.BaseOptions;
@@ -31,6 +32,7 @@ public abstract class BaseCapabilities {
     options.setCapability("deviceName", config.require(DEVICE_NAME));
     options.setCapability("platformVersion", config.require(PLATFORM_VERSION));
     options.setCapability("automationName", config.require(AUTOMATION_NAME));
+    options.setCapability("udid", config.optional(UDID));
     options.setCapability("noReset", false);
     options.setCapability("newCommandTimeout", NEW_COMMAND_TIMEOUT.getSeconds());
   }
