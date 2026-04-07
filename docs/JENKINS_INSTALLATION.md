@@ -368,13 +368,14 @@ http://host.docker.internal:4723
 
 ## 7.3 Local Emulator Configuration
 
-Example configuration for `SUPPORTED_DEVICES`:
+Example configuration for devices:
 
 ``` json
 [
   {
     "type": "local",
     "deviceName": "Pixel 7 API 34",
+    "avd": "Pixel_7_API_34",
     "platformVersion": "14",
     "platform": "ANDROID",
     "automationName": "UiAutomator2",
@@ -384,6 +385,7 @@ Example configuration for `SUPPORTED_DEVICES`:
   {
     "type": "local",
     "deviceName": "Pixel 8 API 35",
+    "avd": "Pixel_8_API_35",
     "platformVersion": "15",
     "platform": "ANDROID",
     "automationName": "UiAutomator2",
