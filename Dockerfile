@@ -77,6 +77,13 @@ COPY jenkins/plugins/plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
 # --------------------------------------------------
+# Pre-approve Active Choices Groovy scripts
+# --------------------------------------------------
+# Required so DEVICE dropdown works without manual
+# Manage Jenkins → In-process Script Approval
+COPY jenkins/security/scriptApproval.xml /usr/share/jenkins/ref/scriptApproval.xml
+
+# --------------------------------------------------
 # Enable Jenkins Configuration as Code (JCasC)
 # --------------------------------------------------
 ENV CASC_JENKINS_CONFIG=/var/jenkins_home/casc
