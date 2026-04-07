@@ -80,9 +80,9 @@ def call(devices, params, gradleFlags) {
                 try {
 
                     withEnv(["GRADLE_OPTS=" + gradleOpts]) {
-                        sh '''
-                        ./gradlew clean executeFeatures $GRADLE_FLAGS
-                        '''
+                        sh """
+                        ./gradlew executeFeatures ${gradleFlags}
+                        """
                     }
 
                 } catch (err) {
@@ -90,9 +90,9 @@ def call(devices, params, gradleFlags) {
                     echo "Retry failed scenarios for ${deviceId}"
 
                     withEnv(["GRADLE_OPTS=" + gradleOpts]) {
-                        sh '''
-                        ./gradlew reExecuteFeatures $GRADLE_FLAGS
-                        '''
+                        sh """
+                        ./gradlew reExecuteFeatures ${gradleFlags}
+                        """
                     }
                 }
 
