@@ -305,17 +305,90 @@ This is useful for:
 -   Parallel execution using multiple emulators
 
 ------------------------------------------------------------------------
+## 7.0 Install Android System Images
 
-## 7.1 Start Android Emulators
+If you have **low RAM**, use images **without Play Store (google_apis)**:
+
+```bash
+sdkmanager.bat "system-images;android-35;google_apis;x86_64"
+```
+
+```bash
+sdkmanager.bat "system-images;android-34;google_apis;x86_64"
+```
+
+These images:
+- Use less RAM
+- Start faster
+- Are better for CI and local testing
+
+If you have **high RAM**, you can use images **with Play Store**:
+
+Change:
+```
+google_apis → google_apis_playstore
+```
 
 Example:
+```bash
+sdkmanager.bat "system-images;android-35;google_apis_playstore;x86_64"
+```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## 7.1 Create Android Emulators
+
+Create the emulators:
+
+```bash
+avdmanager.bat create avd \
+  -n Pixel_7_API_34 \
+  -k "system-images;android-34;google_apis;x86_64" \
+  --device "pixel_7"
+```
+
+```bash
+avdmanager.bat create avd \
+  -n Pixel_8_API_35 \
+  -k "system-images;android-35;google_apis;x86_64" \
+  --device "pixel_8"
+```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+
+## 7.2 Start Android Emulators
+
+Run the emulators:
 
 ``` bash
-emulator -avd Pixel_7_API_34 -port 5554
+emulator -avd Pixel_7_API_34 \
+  -port 5554 \
+  -no-audio \
+  -no-boot-anim \
+  -gpu host \
+  -accel on
 ```
 
 ``` bash
-emulator -avd Pixel_8_API_35 -port 5556
+emulator -avd Pixel_8_API_35 \
+  -port 5556 \
+  -no-audio \
+  -no-boot-anim \
+  -gpu host \
+  -accel on
 ```
 
 Verify:
@@ -340,7 +413,7 @@ emulator-5556   device
 
 ---
 
-## 7.2 Start Appium Server
+## 7.3 Start Appium Server
 
 Run:
 
