@@ -2,7 +2,6 @@
   {
     "type": "local",
     "deviceName": "Pixel 7 API 34",
-    "avd": "Pixel_7_API_34",
     "platformVersion": "14",
     "platform": "ANDROID",
     "automationName": "UiAutomator2",
@@ -12,7 +11,6 @@
   {
     "type": "local",
     "deviceName": "Pixel 8 API 35",
-    "avd": "Pixel_8_API_35",
     "platformVersion": "15",
     "platform": "ANDROID",
     "automationName": "UiAutomator2",
