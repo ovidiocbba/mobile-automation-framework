@@ -75,8 +75,8 @@ emulator -list-avds
 
 **Example output**
 ```
-Medium_Phone_API_36.1
-Pixel_7
+Pixel7_API34
+Pixel_8_API_35
 ```
 
 ### Step 2: Start emulator
@@ -87,7 +87,7 @@ emulator -avd <AVD_NAME>
 
 **Example**
 ```bash
-emulator -avd Pixel_7
+emulator -avd Pixel7_API34
 ```
 
 <div align="right">
@@ -105,7 +105,7 @@ Use the following capabilities:
 ```json
 {
   "platformName": "Android",
-  "appium:deviceName": "Pixel_7",
+  "appium:deviceName": "Pixel7_API34",
   "appium:automationName": "UiAutomator2",
   "appium:app": "C:/Users/ovidio.miranda/Documents/Projects/mobile-automation-framework/apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk",
   "appium:autoGrantPermissions": true,
