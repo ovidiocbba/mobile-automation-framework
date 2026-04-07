@@ -77,10 +77,11 @@ pipeline {
         GRADLE_USER_HOME = "/var/jenkins_home/.gradle"
 
         // Gradle flags optimized for CI logs
-        // --no-daemon: do not start Gradle daemon in CI
         // --console=plain: better log formatting for CI
         // --warning-mode summary: show warning summary only
-        GRADLE_FLAGS = "--no-daemon --console=plain --warning-mode summary"
+        // Note: We do NOT use --no-daemon in Jenkins because the agent container is persistent.
+        // The Gradle daemon can be reused between builds, improving performance.
+        GRADLE_FLAGS = "--console=plain --warning-mode summary"
     }
 
     stages {
@@ -117,7 +118,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Compile project, skipping tests.
-                sh "./gradlew clean assemble ${env.GRADLE_FLAGS}"
+                sh "./gradlew assemble ${env.GRADLE_FLAGS} --build-cache"
             }
             post {
                 failure {
