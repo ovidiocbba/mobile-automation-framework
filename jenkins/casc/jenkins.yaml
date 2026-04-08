@@ -4,8 +4,6 @@ jenkins:
   globalNodeProperties:
     - envVars:
         env:
-          - key: "SUPPORTED_DEVICES"
-            value: ${SUPPORTED_DEVICES}
           - key: "GIT_REPO"
             value: ${GIT_REPO}
           - key: "GIT_BRANCH"
