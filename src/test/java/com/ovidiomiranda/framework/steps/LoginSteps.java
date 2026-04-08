@@ -94,7 +94,7 @@ public class LoginSteps {
   }
 
   /**
-   * Verifies that the expected error message is displayed..
+   * Verifies that the expected error message is displayed.
    *
    * @param expectedMessage the expected error message text
    */
