@@ -87,7 +87,7 @@ public class CommonHooks {
 
   /** Attaches the BrowserStack session link to the Allure report. */
   @After(order = 1)
-  public void attachBrowserLink() {
+  public void attachBrowserStackSessionLink() {
     final ExecutionType executionType = getExecutionType(config);
 
     if (executionType == BROWSERSTACK) {
