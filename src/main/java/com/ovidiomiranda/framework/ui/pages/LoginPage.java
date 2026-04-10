@@ -16,20 +16,23 @@ public class LoginPage extends BasePage {
 
   private final MobileLocator usernameInput =
       new MobileLocator(
-          AppiumBy.accessibilityId("test-Username"), AppiumBy.accessibilityId("username"));
+          AppiumBy.accessibilityId("test-Username"), AppiumBy.accessibilityId("test-Username"));
 
   private final MobileLocator passwordInput =
       new MobileLocator(
-          AppiumBy.accessibilityId("test-Password"), AppiumBy.accessibilityId("password"));
+          AppiumBy.accessibilityId("test-Password"), AppiumBy.accessibilityId("test-Password"));
 
   private final MobileLocator loginButton =
       new MobileLocator(
-          AppiumBy.accessibilityId("test-LOGIN"), AppiumBy.accessibilityId("login_button"));
+          AppiumBy.accessibilityId("test-LOGIN"), AppiumBy.accessibilityId("test-LOGIN"));
 
   private final By errorMessage = AppiumBy.accessibilityId("test-Error message");
 
-  private final By errorTextMessage =
-      AppiumBy.xpath("//*[@content-desc='test-Error message']//android.widget.TextView");
+  private final MobileLocator errorTextMessage =
+      new MobileLocator(
+          AppiumBy.xpath("//*[@content-desc='test-Error message']//android.widget.TextView"),
+          AppiumBy.xpath(
+              "//XCUIElementTypeOther[@name='test-Error message']/XCUIElementTypeStaticText"));
 
   /**
    * Constructor.
@@ -105,7 +108,7 @@ public class LoginPage extends BasePage {
    * @return error message text
    */
   public String getErrorMessageText() {
-    return actions.getText(errorTextMessage);
+    return actions.getText(resolve(errorTextMessage));
   }
 
   /**
