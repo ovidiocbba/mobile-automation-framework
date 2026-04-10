@@ -50,13 +50,11 @@ public class IosDriverProvider implements DriverProvider {
         case BROWSERSTACK:
           final String baseUrl = config.require(BS_URL);
           url =
-              baseUrl.replace(
-                  "https://",
-                  "https://"
-                      + config.require(BS_USERNAME)
-                      + ":"
-                      + config.require(BS_ACCESS_KEY)
-                      + "@");
+              String.format(
+                  "https://%s:%s@%s",
+                  config.require(BS_USERNAME),
+                  config.require(BS_ACCESS_KEY),
+                  baseUrl.replace("https://", ""));
           break;
         case LOCAL:
         default:
