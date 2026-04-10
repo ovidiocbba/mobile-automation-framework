@@ -6,7 +6,21 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Loads and provides configuration values from config.properties.
+ * Loads and provides configuration values from multiple property files.
+ *
+ * <p>This class supports layered configuration used in automation frameworks. Properties are loaded
+ * in the following order:
+ *
+ * <pre>
+ *
+ * base.properties
+ * platform specific (android.properties or ios.properties)
+ * execution specific (local.properties or browserstack.properties)
+ * system properties (-D) override all values
+ * </pre>
+ *
+ * <p>This allows flexible configuration for different platforms, environments, and CI pipelines
+ * without modifying source code.
  *
  * @author Ovidio Miranda
  */
@@ -20,21 +34,64 @@ public class PropertiesManager {
   }
 
   /**
-   * Loads configuration properties from the classpath.
+   * Loads configuration properties from multiple configuration layers.
+   *
+   * <p>Loading order:
+   *
+   * <ul>
+   *   <li>base configuration
+   *   <li>platform configuration
+   *   <li>execution environment configuration
+   * </ul>
    *
    * @return loaded Properties object
    */
   private Properties loadProperties() {
     final Properties props = new Properties();
-    try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-      if (input == null) {
-        throw new RuntimeException("config.properties not found");
-      }
-      props.load(input);
-    } catch (IOException e) {
-      throw new RuntimeException("Failed to load properties", e);
+
+    // Load base configuration
+    loadFile(props, "config/base.properties");
+
+    // Determine platform (default ANDROID)
+    final String platform = System.getProperty("platform", "ANDROID");
+
+    if ("ANDROID".equalsIgnoreCase(platform)) {
+      loadFile(props, "config/android.properties");
+    } else if ("IOS".equalsIgnoreCase(platform)) {
+      loadFile(props, "config/ios.properties");
     }
+
+    // Determine execution environment (default local)
+    final String execution = System.getProperty("execution", "local");
+
+    if ("browserstack".equalsIgnoreCase(execution)) {
+      loadFile(props, "config/browserstack.properties");
+    } else {
+      loadFile(props, "config/local.properties");
+    }
+
     return props;
+  }
+
+  /**
+   * Loads a property file into the given Properties object.
+   *
+   * @param props properties container
+   * @param fileName file name located in resources
+   */
+  private void loadFile(final Properties props, final String fileName) {
+    try (InputStream input = getClass().getClassLoader().getResourceAsStream(fileName)) {
+
+      if (input == null) {
+        throw new RuntimeException("Configuration file not found: " + fileName);
+      }
+
+      props.load(input);
+
+    } catch (IOException e) {
+
+      throw new RuntimeException("Failed to load configuration file: " + fileName, e);
+    }
   }
 
   /**
