@@ -3,8 +3,8 @@ package com.ovidiomiranda.framework.ui.pages;
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
+import com.ovidiomiranda.framework.core.locators.MobileLocator;
 import io.appium.java_client.AppiumBy;
-import org.openqa.selenium.By;
 
 /**
  * Represents the 'Cart' page and its components.
@@ -34,9 +34,10 @@ public class CartPage extends BasePage {
    * @return true if displayed
    */
   public boolean isProductDisplayed(final String productName) {
-    final By locator =
-        AppiumBy.androidUIAutomator("new UiSelector().text(\"" + productName + "\")");
-
-    return actions.isDisplayed(locator);
+    final MobileLocator productsTitle =
+        new MobileLocator(
+            AppiumBy.androidUIAutomator("new UiSelector().text(\"" + productName + "\")"),
+            AppiumBy.accessibilityId(productName));
+    return actions.isDisplayed(resolve(productsTitle));
   }
 }
