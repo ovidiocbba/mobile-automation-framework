@@ -32,7 +32,10 @@ public abstract class BaseCapabilities {
     options.setCapability("deviceName", config.require(DEVICE_NAME));
     options.setCapability("platformVersion", config.require(PLATFORM_VERSION));
     options.setCapability("automationName", config.require(AUTOMATION_NAME));
-    options.setCapability("udid", config.optional(UDID));
+    final String udid = config.optional(UDID);
+    if (udid != null && !udid.isBlank()) {
+      options.setCapability("udid", udid);
+    }
     options.setCapability("noReset", false);
     options.setCapability("newCommandTimeout", NEW_COMMAND_TIMEOUT.getSeconds());
   }
