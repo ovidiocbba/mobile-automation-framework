@@ -1,5 +1,7 @@
 package com.ovidiomiranda.framework.core.locators;
 
+import static com.ovidiomiranda.framework.core.enums.PlatformType.ANDROID;
+
 import com.ovidiomiranda.framework.core.enums.PlatformType;
 import org.openqa.selenium.By;
 
@@ -34,7 +36,7 @@ public class MobileLocator {
    * @return locator for the given platform
    */
   public By get(final PlatformType platform) {
-    if (platform == PlatformType.ANDROID) {
+    if (platform == ANDROID) {
       return android;
     }
     return ios;
