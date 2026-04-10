@@ -3,6 +3,7 @@ package com.ovidiomiranda.framework.core.config;
 import com.ovidiomiranda.framework.core.enums.PropertiesInput;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -12,7 +13,6 @@ import java.util.Properties;
  * in the following order:
  *
  * <pre>
- *
  * base.properties
  * platform specific (android.properties or ios.properties)
  * execution specific (local.properties or browserstack.properties)
@@ -26,11 +26,29 @@ import java.util.Properties;
  */
 public class PropertiesManager {
 
+  // Default mobile platform when running on macOS
+  // Used when executing scenarios directly from IntelliJ IDEA
+  // Supported values: IOS or ANDROID
+  private static final String DEFAULT_MOBILE_PLATFORM_ON_MAC = "IOS";
+
   private final Properties properties;
 
   /** Constructor for PropertiesManager. */
   public PropertiesManager() {
     this.properties = loadProperties();
+  }
+
+  /**
+   * Determines default platform for execution based on OS.
+   *
+   * <p>Used when no -Dplatform is provided (e.g. running directly from IntelliJ by scenario).
+   * Allows IDE execution without manual configuration. This behavior can be modified if needed.
+   *
+   * @return default platform for execution (IOS or ANDROID)
+   */
+  private String getDefaultPlatformForExecution() {
+    final String os = System.getProperty("os.name").toLowerCase(Locale.ENGLISH);
+    return os.contains("mac") ? DEFAULT_MOBILE_PLATFORM_ON_MAC : "ANDROID";
   }
 
   /**
@@ -52,8 +70,11 @@ public class PropertiesManager {
     // Load base configuration
     loadFile(props, "config/base.properties");
 
-    // Determine platform (default ANDROID)
-    final String platform = System.getProperty("platform", "ANDROID");
+    // Determine platform (System property has priority)
+    final String platform =
+        System.getProperty("platform") != null
+            ? System.getProperty("platform")
+            : getDefaultPlatformForExecution();
 
     if ("ANDROID".equalsIgnoreCase(platform)) {
       loadFile(props, "config/android.properties");
