@@ -34,7 +34,7 @@ public class SideMenuComponent extends BaseComponent {
     MENU_OPTIONS.put(
         LOGOUT,
         new MobileLocator(
-            AppiumBy.accessibilityId("test-LOGOUT"), AppiumBy.accessibilityId("logout_menu_item")));
+            AppiumBy.accessibilityId("test-LOGOUT"), AppiumBy.accessibilityId("test-LOGOUT")));
   }
 
   /**

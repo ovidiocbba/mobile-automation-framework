@@ -19,13 +19,13 @@ public class HeaderComponent extends BaseComponent {
               "//android.view.ViewGroup[@content-desc='test-Menu']"
                   + "/android.view.ViewGroup"
                   + "/android.widget.ImageView"),
-          AppiumBy.accessibilityId("menu_button"));
+          AppiumBy.accessibilityId("test-Menu"));
 
   private final MobileLocator cartBadge =
       new MobileLocator(
           AppiumBy.xpath(
               "//android.view.ViewGroup[@content-desc='test-Cart']//android.widget.TextView"),
-          AppiumBy.xpath("//XCUIElementTypeStaticText[@name='cart_badge']"));
+          AppiumBy.accessibilityId("test-Cart"));
 
   /**
    * Constructor.
@@ -41,9 +41,16 @@ public class HeaderComponent extends BaseComponent {
     super(config, driverContext, actions);
   }
 
-  /** Opens the side menu. */
+  /**
+   * Opens the side navigation menu.
+   *
+   * <p>Note: On iOS, we use a precision tap at 80% of the element's height. This is because the top
+   * area of the menu button in this app is often unresponsive due to overlapping UI layers or Safe
+   * Area restrictions.
+   */
   public void openMenu() {
-    actions.tap(resolve(menuButton));
+    // 0.8 (80%) ensures we hit the active area at the bottom of the button
+    actions.tapWithPrecision(resolve(menuButton), 0.8);
   }
 
   /** Taps the 'Cart' badge. */
