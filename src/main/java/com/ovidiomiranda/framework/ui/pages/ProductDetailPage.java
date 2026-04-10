@@ -3,8 +3,8 @@ package com.ovidiomiranda.framework.ui.pages;
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.interactions.MobileElementActions;
+import com.ovidiomiranda.framework.core.locators.MobileLocator;
 import io.appium.java_client.AppiumBy;
-import org.openqa.selenium.By;
 
 /**
  * Represents the 'Product Detail' page and its components.
@@ -13,12 +13,23 @@ import org.openqa.selenium.By;
  */
 public class ProductDetailPage extends BasePage {
 
-  private final By addToCartButton = AppiumBy.accessibilityId("test-ADD TO CART");
-  private final By productNameLabel =
-      AppiumBy.xpath(
-          "(//android.view.ViewGroup[@content-desc='test-Description']"
-              + "/android.widget.TextView)[1]");
-  private final By productPriceLabel = AppiumBy.accessibilityId("test-Price");
+  private final MobileLocator addToCartButton =
+      new MobileLocator(
+          AppiumBy.accessibilityId("test-ADD TO CART"),
+          AppiumBy.accessibilityId("test-ADD TO CART"));
+
+  private final MobileLocator productNameLabel =
+      new MobileLocator(
+          AppiumBy.xpath(
+              "(//android.view.ViewGroup[@content-desc='test-Description']"
+                  + "/android.widget.TextView)[1]"),
+          AppiumBy.iOSClassChain(
+              "**/XCUIElementTypeOther[`name == 'test-Description'`]"
+                  + "/XCUIElementTypeStaticText[1]"));
+
+  private final MobileLocator productPriceLabel =
+      new MobileLocator(
+          AppiumBy.accessibilityId("test-Price"), AppiumBy.accessibilityId("test-Price"));
 
   /**
    * Constructor.
@@ -36,7 +47,7 @@ public class ProductDetailPage extends BasePage {
 
   /** Taps the 'Add to Cart' button. */
   public void tapAddToCartButton() {
-    actions.scrollAndTap(addToCartButton);
+    actions.scrollAndTap(resolve(addToCartButton));
   }
 
   /**
@@ -45,7 +56,7 @@ public class ProductDetailPage extends BasePage {
    * @return product name displayed on the product detail page
    */
   public String getProductNameLabel() {
-    return actions.getText(productNameLabel);
+    return actions.getText(resolve(productNameLabel));
   }
 
   /**
@@ -54,7 +65,7 @@ public class ProductDetailPage extends BasePage {
    * @return product price displayed on the product detail page
    */
   public String getProductPriceLabel() {
-    actions.scrollToElement(productPriceLabel);
-    return actions.getText(productPriceLabel);
+    actions.scrollToElement(resolve(productPriceLabel));
+    return actions.getText(resolve(productPriceLabel));
   }
 }
