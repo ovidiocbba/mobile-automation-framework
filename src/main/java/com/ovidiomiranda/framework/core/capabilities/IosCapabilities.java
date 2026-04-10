@@ -40,6 +40,12 @@ public class IosCapabilities {
     final XCUITestOptions options = new XCUITestOptions();
     options.setPlatformName("iOS");
     options.setAutoAcceptAlerts(true);
+    options.setCapability("autoDismissAlerts", true);
+    options.setCapability("shouldTerminateApp", true);
+    options.setCapability("connectHardwareKeyboard", false);
+    options.setCapability("usePrebuiltWDA", true);
+    options.setCapability("appium:maxTypingFrequency", 15);
+    options.setCapability("appium:sendKeyStrategy", "oneByOne");
     setCommonCapabilities(options, config);
     final String app = config.optional(APP);
     if (app != null && !app.isBlank()) {
