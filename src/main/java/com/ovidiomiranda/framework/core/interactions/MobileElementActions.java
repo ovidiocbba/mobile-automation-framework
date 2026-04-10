@@ -38,6 +38,7 @@ public class MobileElementActions {
    * Constructor.
    *
    * @param waits utility for explicit waits
+   * @param config configuration validator
    * @param driverContext driver provider
    */
   public MobileElementActions(
