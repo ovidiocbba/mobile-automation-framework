@@ -2,47 +2,39 @@
  =====================================================
  EXECUTION GUIDE
  =====================================================
- Run all tests (default: 1 thread):
- ./gradlew clean executeFeatures
- Run with parallel threads (only if multiple devices are available):
- ./gradlew clean executeFeatures -Dthreads=2
+ Run iOS locally:
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local
+
+ Run on BrowserStack:
+ ./gradlew clean executeFeatures -Dplatform=ANDROID -Dexecution=browserstack
+
  Run by tag:
- ./gradlew clean executeFeatures -Dcucumber.filter.tags='@regression'
- ./gradlew clean executeFeatures -Dcucumber.filter.tags='@smoke'
- ./gradlew clean executeFeatures -Dcucumber.filter.tags='@TC-00001'
- Override default configuration (from config.properties):
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local -Dcucumber.filter.tags='@regression'
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local -Dcucumber.filter.tags='@smoke'
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local -Dcucumber.filter.tags='@TC-00001'
+
+ Override any configuration:
  ./gradlew clean executeFeatures -Dusername=standard_user -Dpassword=secret_sauce -Dplatform=ANDROID -DdeviceName=emulator-5554 -DplatformVersion=14 -DautomationName=UiAutomator2 -Dapp=apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk -DappiumServerUrl=http://127.0.0.1:4723
+
  Re-run only failed scenarios:
  ./gradlew reExecuteFeatures
+
  -----------------------------------------------------
  ALLURE REPORT
  -----------------------------------------------------
+
  Generate and open report automatically in browser:
  ./gradlew allureServe
  =====================================================
  */
 
 // ========================================
-// Load config.properties (Test configuration)
-// ========================================
-def configFile = file("$rootDir/src/test/resources/config.properties")
-def configProps = new Properties()
-
-if (!configFile.exists()) {
-    throw new GradleException("config.properties not found at: $configFile")
-}
-
-// Load properties into memory
-configFile.withInputStream { stream ->
-    configProps.load(stream)
-}
-
-// ========================================
-// Helper function to resolve properties
-// Priority: Command Line > config.properties > default value
+// Helper function to resolve runtime properties
+// Priority: Command Line > default value
 // ========================================
 def getProp = { key, defaultValue = null ->
-    System.getProperty(key) ?: configProps.getProperty(key) ?: defaultValue
+    def value = System.getProperty(key)
+    return value ? value.trim() : defaultValue
 }
 
 // ========================================
