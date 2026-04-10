@@ -14,8 +14,10 @@ import java.time.Duration;
 /**
  * Builds Android capabilities for Appium sessions.
  *
- * <p>The configuration values are loaded from {@code config.properties}. The app can be launched
- * using the APK path or using the installed app package and activity.
+ * <p>Configuration is loaded using layered files: base, android, local/browserstack, and system
+ * properties (-D).
+ *
+ * <p>Supports local execution (APK or appPackage/appActivity) and BrowserStack execution.
  *
  * @author Ovidio Miranda
  */
