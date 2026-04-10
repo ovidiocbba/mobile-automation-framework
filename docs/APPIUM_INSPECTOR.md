@@ -102,6 +102,8 @@ emulator -avd Pixel7_API34
 
 Use the following capabilities:
 
+**Android**
+
 ```json
 {
   "platformName": "Android",
@@ -112,6 +114,20 @@ Use the following capabilities:
   "appium:appPackage": "com.swaglabsmobileapp",
   "appium:appActivity": "com.swaglabsmobileapp.MainActivity",
   "appium:appWaitActivity": "*"
+}
+```
+
+**IOS**
+
+```json
+{
+  "platformName": "iOS",
+  "appium:deviceName": "iPhone 17",
+  "appium:platformVersion": "26.4",
+  "appium:automationName": "XCUITest",
+  "appium:app": "/Users/ovidio/workspace/mobile-automation-framework/apps/ios/iOS.Simulator.SauceLabs.Mobile.Sample.app.2.7.1.app",
+  "appium:shouldTerminateApp": true,
+  "appium:connectHardwareKeyboard": true
 }
 ```
 
