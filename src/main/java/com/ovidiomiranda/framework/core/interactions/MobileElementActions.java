@@ -1,5 +1,9 @@
 package com.ovidiomiranda.framework.core.interactions;
 
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM;
+import static java.util.Locale.ENGLISH;
+
+import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
 import com.ovidiomiranda.framework.core.waits.ElementWaits;
 import io.appium.java_client.AppiumBy;
@@ -11,6 +15,7 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +30,7 @@ public class MobileElementActions {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MobileElementActions.class);
   private final ElementWaits waits;
+  private final ConfigValidator config;
   private final DriverContext driverContext;
   private static final int MAX_SCROLL_ATTEMPTS = 6;
 
@@ -34,8 +40,10 @@ public class MobileElementActions {
    * @param waits utility for explicit waits
    * @param driverContext driver provider
    */
-  public MobileElementActions(final ElementWaits waits, final DriverContext driverContext) {
+  public MobileElementActions(
+      final ElementWaits waits, final ConfigValidator config, final DriverContext driverContext) {
     this.waits = waits;
+    this.config = config;
     this.driverContext = driverContext;
   }
 
@@ -46,8 +54,38 @@ public class MobileElementActions {
    */
   public void tap(final By locator) {
     waits.waitForClickable(locator).click();
-    if (LOGGER.isInfoEnabled()) {
-      LOGGER.info("Tapped on element ({})", locator);
+
+    LOGGER.info("Tapped on element ({})", locator);
+  }
+
+  /**
+   * Taps on an element using a specific position. Useful for iOS elements with "dead zones" where
+   * center tap fails.
+   *
+   * @param locator the element locator
+   * @param ypercent the height percentage (0.5 = center, 0.8 = bottom)
+   */
+  public void tapWithPrecision(final By locator, final double ypercent) {
+    final WebElement element = waits.waitForClickable(locator);
+    final String platform = config.require(PLATFORM).toUpperCase(ENGLISH);
+
+    if ("IOS".equals(platform)) {
+      // Native iOS tap at a specific point
+      driverContext
+          .getDriver()
+          .executeScript(
+              "mobile: tap",
+              Map.of(
+                  "elementId",
+                  ((RemoteWebElement) element).getId(),
+                  "x",
+                  element.getSize().getWidth() / 2,
+                  "y",
+                  (int) (element.getSize().getHeight() * ypercent)));
+      LOGGER.info("Tapped with precision at {}% height on element ({})", ypercent * 100, locator);
+    } else {
+      // For Android, just use the standard tap
+      tap(locator);
     }
   }
 
