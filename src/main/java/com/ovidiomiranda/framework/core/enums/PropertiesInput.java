@@ -1,9 +1,12 @@
 package com.ovidiomiranda.framework.core.enums;
 
 /**
- * Enum containing all configuration keys supported by the framework.
+ * Enum with all configuration keys used in the framework.
  *
- * <p>Each value maps to a property name in {@code config.properties}.
+ * <p>Keys are loaded from layered configuration: base, platform, execution, and system properties
+ * (-D).
+ *
+ * <p>Used to access properties in a consistent way.
  *
  * @author Ovidio Miranda
  */
