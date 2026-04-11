@@ -29,18 +29,12 @@ import org.slf4j.LoggerFactory;
 public class MobileElementActions {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MobileElementActions.class);
+  private static final int MAX_SCROLL_ATTEMPTS = 6;
+
   private final ElementWaits waits;
   private final ConfigValidator config;
   private final DriverContext driverContext;
-  private static final int MAX_SCROLL_ATTEMPTS = 6;
 
-  /**
-   * Constructor.
-   *
-   * @param waits utility for explicit waits
-   * @param config configuration validator
-   * @param driverContext driver provider
-   */
   public MobileElementActions(
       final ElementWaits waits, final ConfigValidator config, final DriverContext driverContext) {
     this.waits = waits;
@@ -55,7 +49,6 @@ public class MobileElementActions {
    */
   public void tap(final By locator) {
     waits.waitForClickable(locator).click();
-
     LOGGER.info("Tapped on element ({})", locator);
   }
 
@@ -85,7 +78,6 @@ public class MobileElementActions {
                   (int) (element.getSize().getHeight() * ypercent)));
       LOGGER.info("Tapped with precision at {}% height on element ({})", ypercent * 100, locator);
     } else {
-      // For Android, just use the standard tap
       tap(locator);
     }
   }
@@ -158,8 +150,14 @@ public class MobileElementActions {
    */
   public void scrollToElement(final By locator) {
     final AppiumDriver driver = driverContext.getDriver();
+    final String platform = config.require(PLATFORM).toUpperCase(ENGLISH);
+
     LOGGER.info("Attempting to scroll to element: {}", locator);
-    if (driver instanceof AndroidDriver && locator.toString().contains("accessibilityId")) {
+
+    if ("ANDROID".equals(platform)
+        && driver instanceof AndroidDriver
+        && locator.toString().contains("accessibilityId")) {
+
       try {
         final String value = locator.toString().split(":")[1].trim();
         driver.findElement(
@@ -170,9 +168,9 @@ public class MobileElementActions {
                     + "\"));"));
 
         LOGGER.info("UiScrollable executed successfully");
-
+        return;
       } catch (Exception e) {
-        LOGGER.warn("UiScrollable failed: {}", e.getMessage());
+        LOGGER.warn("UiScrollable failed, fallback to swipe: {}", e.getMessage());
       }
     }
     swipeUntilVisible(locator);
@@ -192,39 +190,66 @@ public class MobileElementActions {
         LOGGER.info("Element visible after {} swipes: {}", attempts, locator);
         return;
       }
-
+      LOGGER.debug("Swipe attempt {} for element {}", attempts + 1, locator);
       swipeDown();
       attempts++;
     }
 
-    throw new RuntimeException("Element not found after scrolling: " + locator);
+    throw new RuntimeException(
+        "Element not found after " + MAX_SCROLL_ATTEMPTS + " scroll attempts: " + locator);
   }
 
-  /** Performs realistic swipe gesture. */
+  /** Performs platform-specific swipe gesture. */
   private void swipeDown() {
     final AppiumDriver driver = driverContext.getDriver();
+    final String platform = config.require(PLATFORM).toUpperCase(ENGLISH);
     final Dimension size = driver.manage().window().getSize();
 
-    final int startY = (int) (size.height * 0.75);
-    final int endY = (int) (size.height * 0.30);
+    try {
 
-    driver.executeScript(
-        "mobile: swipeGesture",
-        Map.of(
-            "left",
-            0,
-            "top",
-            endY,
-            "width",
-            size.width,
-            "height",
-            startY - endY,
-            "direction",
-            "up",
-            "percent",
-            0.7));
+      if ("IOS".equals(platform)) {
 
-    LOGGER.debug("Swipe performed");
+        int startX = size.width / 2;
+        int startY = (int) (size.height * 0.75);
+        int endY = (int) (size.height * 0.30);
+
+        driver.executeScript(
+            "mobile: dragFromToForDuration",
+            Map.of(
+                "duration", 0.5,
+                "fromX", startX,
+                "fromY", startY,
+                "toX", startX,
+                "toY", endY));
+
+        LOGGER.debug("iOS swipe DOWN performed");
+
+      } else {
+
+        driver.executeScript(
+            "mobile: swipeGesture",
+            Map.of(
+                "left",
+                0,
+                "top",
+                (int) (size.height * 0.30),
+                "width",
+                size.width,
+                "height",
+                (int) (size.height * 0.45),
+                "direction",
+                "up",
+                "percent",
+                0.7));
+
+        LOGGER.debug("Android swipe performed");
+      }
+
+      Thread.sleep(400);
+
+    } catch (Exception e) {
+      LOGGER.warn("Swipe failed: {}", e.getMessage());
+    }
   }
 
   /**
@@ -234,7 +259,8 @@ public class MobileElementActions {
    */
   private boolean isVisibleFast(final By locator) {
     try {
-      return !driverContext.getDriver().findElements(locator).isEmpty();
+      List<WebElement> elements = driverContext.getDriver().findElements(locator);
+      return elements.stream().anyMatch(WebElement::isDisplayed);
     } catch (Exception e) {
       return false;
     }
