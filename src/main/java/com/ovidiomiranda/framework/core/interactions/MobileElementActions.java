@@ -35,6 +35,13 @@ public class MobileElementActions {
   private final ConfigValidator config;
   private final DriverContext driverContext;
 
+  /**
+   * Constructor.
+   *
+   * @param waits utility for explicit waits
+   * @param config configuration validator
+   * @param driverContext driver provider
+   */
   public MobileElementActions(
       final ElementWaits waits, final ConfigValidator config, final DriverContext driverContext) {
     this.waits = waits;
@@ -209,9 +216,9 @@ public class MobileElementActions {
 
       if ("IOS".equals(platform)) {
 
-        int startX = size.width / 2;
-        int startY = (int) (size.height * 0.75);
-        int endY = (int) (size.height * 0.30);
+        final int startX = size.width / 2;
+        final int startY = (int) (size.height * 0.75);
+        final int endY = (int) (size.height * 0.30);
 
         driver.executeScript(
             "mobile: dragFromToForDuration",
@@ -259,7 +266,7 @@ public class MobileElementActions {
    */
   private boolean isVisibleFast(final By locator) {
     try {
-      List<WebElement> elements = driverContext.getDriver().findElements(locator);
+      final List<WebElement> elements = driverContext.getDriver().findElements(locator);
       return elements.stream().anyMatch(WebElement::isDisplayed);
     } catch (Exception e) {
       return false;
