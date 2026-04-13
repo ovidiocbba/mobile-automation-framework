@@ -33,7 +33,7 @@ jobs:
       matrix:
         # Device list comes from repository variable SUPPORTED_DEVICES (vars.SUPPORTED_DEVICES)
         # To update it go to: Settings → Secrets and variables → Actions → Variables
-        device: ${{ inputs.device == 'ALL' && fromJson(vars.SUPPORTED_DEVICES) || fromJson('[{"deviceName":"' + inputs.device + '"}]') }}
+        device: ${{ inputs.device == 'ALL' && fromJson(vars.SUPPORTED_DEVICES) || fromJson(format('[{{"deviceName":"{0}"}}]', inputs.device)) }}
 
     env:
       USERNAME: ${{ secrets.USERNAME }}
