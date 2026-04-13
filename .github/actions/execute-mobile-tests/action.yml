@@ -55,7 +55,7 @@ runs:
         DEVICE_ID=$(echo "${{ inputs.deviceName }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9-')
         echo "device_id=$DEVICE_ID" >> "$GITHUB_OUTPUT"
 
-    - name: Run Android Tests (BrowserStack)
+    - name: Run Mobile Tests (BrowserStack)
       shell: bash
       run: |
         set +e
