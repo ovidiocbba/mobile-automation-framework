@@ -10,6 +10,7 @@ Step-by-step guide to run mobile automation tests using BrowserStack.
 * [:key: 2. Get Credentials](#key-2-get-credentials)
 * [:arrow_up: 3. Upload App](#arrow_up-3-upload-app)
 * [:gear: 4. Configure Project](#gear-4-configure-project)
+* [:iphone: 4.1 Validate Available Devices](#iphone-41-validate-available-devices)
 * [:rocket: 5. Run Tests](#rocket-5-run-tests)
 * [:mag: 6. Verify Execution](#mag-6-verify-execution)
 
@@ -165,6 +166,31 @@ bs.accessKey=YOUR_ACCESS_KEY
 bs.app=bs://123abc456
 bs.url=https://hub-cloud.browserstack.com/wd/hub
 ```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents" style="text-decoration: none;">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## :iphone: 4.1 Validate Available Devices
+
+Run:
+
+curl -u "YOUR_USERNAME:YOUR_ACCESS_KEY" \
+https://api.browserstack.com/app-automate/devices.json
+
+### Filter iPhone
+
+curl -u "YOUR_USERNAME:YOUR_ACCESS_KEY" \
+https://api.browserstack.com/app-automate/devices.json | grep -i iphone
+
+### Filter Samsung
+
+curl -u "YOUR_USERNAME:YOUR_ACCESS_KEY" \
+https://api.browserstack.com/app-automate/devices.json | grep -i samsung
 
 <div align="right">
   <strong>
