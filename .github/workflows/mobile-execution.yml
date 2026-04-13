@@ -33,7 +33,7 @@ jobs:
       matrix:
         # Device list comes from repository variable SUPPORTED_DEVICES (vars.SUPPORTED_DEVICES)
         # To update it go to: Settings → Secrets and variables → Actions → Variables
-        device: ${{ inputs.device == 'ALL' && fromJson(vars.SUPPORTED_DEVICES) || fromJson(format('[{{"deviceName":"{0}"}}]', inputs.device)) }}
+        device: ${{ fromJson(vars.SUPPORTED_DEVICES) }}
 
     env:
       USERNAME: ${{ secrets.USERNAME }}
@@ -48,6 +48,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Mobile Tests
+        if: ${{ inputs.device == 'ALL' || matrix.device.deviceName == inputs.device }}
         timeout-minutes: ${{ inputs.device == 'ALL' && 60 || 35 }}
         uses: ./.github/actions/execute-mobile-tests
         env:
