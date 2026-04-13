@@ -1,0 +1,8 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","495","Successful logout from the application","","2026-04-13","broken","2026-04-13","","Login functionality","Successful logout from the application",""
+"","1112","Login with empty username","","2026-04-13","broken","2026-04-13","","Login functionality","Login with empty username",""
+"","1701","Successful login","","2026-04-13","broken","2026-04-13","","Login functionality","Successful login",""
+"","412","Add one product to the cart","","2026-04-13","broken","2026-04-13","","Login functionality","Add one product to the cart",""
+"","689","Open product detail and validate product information","","2026-04-13","broken","2026-04-13","","Login functionality","Open product detail and validate product information",""
+"","419","Login with empty password","","2026-04-13","broken","2026-04-13","","Login functionality","Login with empty password",""
+"","343","Verify correct product is added to the cart","","2026-04-13","broken","2026-04-13","","Login functionality","Verify correct product is added to the cart",""
