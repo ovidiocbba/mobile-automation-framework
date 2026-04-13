@@ -63,6 +63,8 @@ runs:
         echo "================================="
         echo "Running mobile tests"
         echo "Device: ${{ inputs.deviceName }}"
+        echo "Platform Version: ${{ inputs.platformVersion }}"
+        echo "Automation: ${{ inputs.automationName }}"
         echo "================================="
 
         # Validate credentials
