@@ -9,7 +9,7 @@ on:
         default: "@regression"
 
       device:
-        description: "Device (ALL | Samsung Galaxy S23 | Google Pixel 7 )"
+        description: "Device (ALL | Samsung Galaxy S23 | Google Pixel 7 | iPhone 15)"
         required: true
         default: ALL
 
