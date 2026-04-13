@@ -112,8 +112,8 @@ Create a new variable:
     "automationName": "UiAutomator2"
   },
   {
-    "deviceName": "iPhone 14",
-    "platformVersion": "16",
+    "deviceName": "iPhone 15",
+    "platformVersion": "17",
     "platform": "IOS",
     "automationName": "XCUITest"
   }
