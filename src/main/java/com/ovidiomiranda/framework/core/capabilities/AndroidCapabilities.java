@@ -1,7 +1,10 @@
 package com.ovidiomiranda.framework.core.capabilities;
 
+import static com.ovidiomiranda.framework.core.capabilities.BaseCapabilities.isAppAbsent;
+import static com.ovidiomiranda.framework.core.capabilities.BaseCapabilities.setAppCapability;
 import static com.ovidiomiranda.framework.core.capabilities.BaseCapabilities.setCommonCapabilities;
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP;
+import static com.ovidiomiranda.framework.core.enums.ExecutionType.BROWSERSTACK;
+import static com.ovidiomiranda.framework.core.enums.ExecutionType.LOCAL;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP_ACTIVITY;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP_PACKAGE;
 
@@ -53,28 +56,31 @@ public class AndroidCapabilities {
    */
   public UiAutomator2Options getCapabilities(final String sessionName) {
     final UiAutomator2Options options = new UiAutomator2Options();
-    options.setPlatformName("Android");
-    setCommonCapabilities(options, config);
-    final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
-    switch (executionType) {
-      case BROWSERSTACK:
-        browserStackBuilder.apply(options, sessionName);
-        break;
 
-      case LOCAL:
-      default:
-        final String app = config.optional(APP);
-        if (app != null && !app.isBlank()) {
-          options.setApp(app);
-        } else {
-          options.setAppPackage(config.require(APP_PACKAGE));
-          options.setAppActivity(config.require(APP_ACTIVITY));
-        }
-        options.setAppWaitActivity("*");
-        options.setAppWaitDuration(Duration.ofSeconds(30));
-        options.setAutoGrantPermissions(true);
-        break;
+    options.setPlatformName("Android");
+
+    setCommonCapabilities(options, config);
+
+    final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
+
+    if (executionType == BROWSERSTACK) {
+      browserStackBuilder.apply(options, sessionName);
     }
+
+    setAppCapability(options, config);
+
+    if (executionType == LOCAL) {
+      if (isAppAbsent(options)) {
+        options.setAppPackage(config.require(APP_PACKAGE));
+        options.setAppActivity(config.require(APP_ACTIVITY));
+      }
+
+      // Waits for any activity to avoid launch timing issues
+      options.setAppWaitActivity("*");
+      options.setAppWaitDuration(Duration.ofSeconds(30));
+      options.setAutoGrantPermissions(true);
+    }
+
     return options;
   }
 }
