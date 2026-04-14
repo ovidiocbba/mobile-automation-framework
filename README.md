@@ -411,7 +411,7 @@ bundleId=com.saucelabs.mydemoapp.rn
 appiumServerUrl=http://127.0.0.1:4723
 
 framework.explicitWait=20
-threads=2
+framework.threads=2
 ```
 
 ---
