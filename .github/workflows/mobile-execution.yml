@@ -31,9 +31,9 @@ jobs:
       # Allow all executions even if one device fails
       fail-fast: false
       matrix:
-        # Device list comes from repository variable SUPPORTED_DEVICES (vars.SUPPORTED_DEVICES)
+        # Device list comes from repository variable EXECUTION_DEVICES (vars.EXECUTION_DEVICES)
         # To update it go to: Settings → Secrets and variables → Actions → Variables
-        device: ${{ fromJson(vars.SUPPORTED_DEVICES) }}
+        device: ${{ fromJson(vars.EXECUTION_DEVICES) }}
 
     env:
       APP_USERNAME: ${{ secrets.APP_USERNAME }}
