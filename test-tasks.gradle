@@ -58,17 +58,17 @@ def supportedProperties = [
     "explicitWait",
     "threads",
     "execution",
-    "bs.username",
-    "bs.accessKey",
-    "bs.app",
-    "bs.url",
-    "bs.projectName",
-    "bs.buildName",
-    "bs.video",
-    "bs.deviceLogs",
-    "bs.appiumLogs",
-    "bs.networkLogs",
-    "bs.appiumVersion"
+    "browserstack.username",
+    "browserstack.accessKey",
+    "browserstack.app",
+    "browserstack.url",
+    "browserstack.projectName",
+    "browserstack.buildName",
+    "browserstack.video",
+    "browserstack.deviceLogs",
+    "browserstack.appiumLogs",
+    "browserstack.networkLogs",
+    "browserstack.appiumVersion"
 ]
 
 // ========================================
