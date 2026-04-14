@@ -37,7 +37,7 @@ jobs:
 
     env:
       APP_USERNAME: ${{ secrets.APP_USERNAME }}
-      PASSWORD: ${{ secrets.PASSWORD }}
+      APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
 
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
@@ -54,7 +54,7 @@ jobs:
         uses: ./.github/actions/execute-mobile-tests
         env:
           APP_USERNAME: ${{ secrets.APP_USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
           BROWSERSTACK_APP_ANDROID: ${{ secrets.BROWSERSTACK_APP_ANDROID }}
