@@ -83,4 +83,20 @@ public class ConfigValidator {
           "Property must be a valid integer: " + key.getPropertiesName(), e);
     }
   }
+
+  /**
+   * Returns a required boolean property.
+   *
+   * @param key configuration key
+   * @return boolean value
+   * @throws IllegalArgumentException if the value is not a valid boolean
+   */
+  public boolean requireBoolean(final PropertiesInput key) {
+    final String value = require(key);
+    if (!"true".equalsIgnoreCase(value) && !"false".equalsIgnoreCase(value)) {
+      throw new IllegalArgumentException(
+          "Property must be a valid boolean (true/false): " + key.getPropertiesName());
+    }
+    return Boolean.parseBoolean(value);
+  }
 }
