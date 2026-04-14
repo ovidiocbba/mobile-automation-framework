@@ -19,7 +19,7 @@ Click on **Secrets → New repository secret** and add the following:
 
 | Name            | Example Value                  | Description                                |
 |-----------------|--------------------------------|--------------------------------------------|
-| `USERNAME`      | `standard_user`                | Username used during mobile test execution |
+| `APP_USERNAME`      | `standard_user`                | Username used during mobile test execution |
 | `PASSWORD`      | `secret_sauce`                 | Password used during mobile test execution |
 | `BROWSERSTACK_USERNAME`   | `your_browserstack_username`   | BrowserStack account username              |
 | `BROWSERSTACK_ACCESS_KEY` | `your_browserstack_access_key` | BrowserStack access key                    |
@@ -30,7 +30,7 @@ Click on **Secrets → New repository secret** and add the following:
 
 ### 📘 USERNAME and PASSWORD
 
-The `USERNAME` and `PASSWORD` repository secrets are required for the
+The `APP_USERNAME` and `PASSWORD` repository secrets are required for the
 mobile test execution workflow.
 
 These values are **not hardcoded in the framework**. Instead, they are
@@ -40,14 +40,14 @@ Example usage inside the workflow:
 
 ``` yaml
 env:
-  USERNAME: ${{ secrets.USERNAME }}
+  APP_USERNAME: ${{ secrets.APP_USERNAME }}
   PASSWORD: ${{ secrets.PASSWORD }}
 ```
 
 These variables are then passed to Gradle as system properties:
 
 ``` bash
--Dusername=${USERNAME}
+-Dapp.username=${APP_USERNAME}
 -Dpassword=${PASSWORD}
 ```
 ------------------------------------------------------------------------
@@ -176,7 +176,7 @@ allowing the tests to execute correctly in CI.
 
 2.  GitHub Actions loads the secrets:
 
-    USERNAME\
+    APP_USERNAME\
     PASSWORD\
     BROWSERSTACK_USERNAME\
     BROWSERSTACK_ACCESS_KEY\
