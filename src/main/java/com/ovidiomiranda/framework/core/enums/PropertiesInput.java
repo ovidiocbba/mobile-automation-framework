@@ -64,7 +64,7 @@ public enum PropertiesInput {
   // ========================================
 
   /** Execution type (local, browserstack). */
-  EXECUTION("execution"),
+  FRAMEWORK_EXECUTION("framework.execution"),
 
   /** Appium server URL. */
   APPIUM_SERVER_URL("appiumServerUrl"),
