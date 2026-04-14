@@ -36,7 +36,7 @@ jobs:
         device: ${{ fromJson(vars.SUPPORTED_DEVICES) }}
 
     env:
-      USERNAME: ${{ secrets.USERNAME }}
+      APP_USERNAME: ${{ secrets.APP_USERNAME }}
       PASSWORD: ${{ secrets.PASSWORD }}
 
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
@@ -53,7 +53,7 @@ jobs:
         timeout-minutes: ${{ inputs.device == 'ALL' && 60 || 35 }}
         uses: ./.github/actions/execute-mobile-tests
         env:
-          USERNAME: ${{ secrets.USERNAME }}
+          APP_USERNAME: ${{ secrets.APP_USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
