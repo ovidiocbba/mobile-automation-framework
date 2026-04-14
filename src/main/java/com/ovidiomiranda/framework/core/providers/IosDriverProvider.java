@@ -1,7 +1,5 @@
 package com.ovidiomiranda.framework.core.providers;
 
-import static com.ovidiomiranda.framework.core.enums.ExecutionType.BROWSERSTACK;
-import static com.ovidiomiranda.framework.core.enums.ExecutionType.LOCAL;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BS_ACCESS_KEY;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BS_URL;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BS_USERNAME;
@@ -19,7 +17,12 @@ import java.net.URL;
 /**
  * Creates iOS driver instances.
  *
- * <p>This implementation connects to the Appium server and starts a session using iOS capabilities.
+ * <p>Supports:
+ *
+ * <ul>
+ *   <li>Local Appium execution
+ *   <li>BrowserStack cloud execution
+ * </ul>
  *
  * @author Ovidio Miranda
  */
@@ -49,19 +52,25 @@ public class IosDriverProvider implements DriverProvider {
       switch (executionType) {
         case BROWSERSTACK:
           final String baseUrl = config.require(BS_URL);
+
           url =
-              String.format(
-                  "https://%s:%s@%s",
-                  config.require(BS_USERNAME),
-                  config.require(BS_ACCESS_KEY),
-                  baseUrl.replace("https://", ""));
+              baseUrl.replace(
+                  "https://",
+                  "https://"
+                      + config.require(BS_USERNAME)
+                      + ":"
+                      + config.require(BS_ACCESS_KEY)
+                      + "@");
           break;
+
         case LOCAL:
         default:
           url = config.require(PropertiesInput.APPIUM_SERVER_URL);
           break;
       }
+
       return new IOSDriver(new URL(url), capabilities);
+
     } catch (Exception e) {
       throw new RuntimeException("Failed to create IOS driver", e);
     }
