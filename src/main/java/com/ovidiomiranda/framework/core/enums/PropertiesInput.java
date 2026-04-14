@@ -54,41 +54,45 @@ public enum PropertiesInput {
   /** Number of threads for parallel execution. */
   THREAD_COUNT("threads"),
 
+  // ========================================
+  // BROWSERSTACK CONFIG
+  // ========================================
+
   /** BrowserStack username. */
-  BS_USERNAME("bs.username"),
+  BROWSERSTACK_USERNAME("browserstack.username"),
 
   /** BrowserStack access key. */
-  BS_ACCESS_KEY("bs.accessKey"),
+  BROWSERSTACK_ACCESS_KEY("browserstack.accessKey"),
 
   /** BrowserStack app id. */
-  BS_APP("bs.app"),
+  BROWSERSTACK_APP("browserstack.app"),
 
   /** BrowserStack hub URL. */
-  BS_URL("bs.url"),
+  BROWSERSTACK_URL("browserstack.url"),
 
   /** Execution type (local, browserstack). */
   EXECUTION("execution"),
 
   /** BrowserStack project name used for grouping test runs. */
-  BS_PROJECT_NAME("bs.projectName"),
+  BROWSERSTACK_PROJECT_NAME("browserstack.projectName"),
 
   /** BrowserStack build name associated with the execution. */
-  BS_BUILD_NAME("bs.buildName"),
+  BROWSERSTACK_BUILD_NAME("browserstack.buildName"),
 
   /** Enables video recording for BrowserStack sessions. */
-  BS_VIDEO("bs.video"),
+  BROWSERSTACK_VIDEO("browserstack.video"),
 
   /** Enables device logs collection on BrowserStack. */
-  BS_DEVICE_LOGS("bs.deviceLogs"),
+  BROWSERSTACK_DEVICE_LOGS("browserstack.deviceLogs"),
 
   /** Enables Appium logs collection on BrowserStack. */
-  BS_APPIUM_LOGS("bs.appiumLogs"),
+  BROWSERSTACK_APPIUM_LOGS("browserstack.appiumLogs"),
 
   /** Enables network logs collection on BrowserStack. */
-  BS_NETWORK_LOGS("bs.networkLogs"),
+  BROWSERSTACK_NETWORK_LOGS("browserstack.networkLogs"),
 
   /** Specifies the Appium version used in BrowserStack. */
-  BS_APPIUM_VERSION("bs.appiumVersion");
+  BROWSERSTACK_APPIUM_VERSION("browserstack.appiumVersion");
 
   private final String propertiesName;
 
