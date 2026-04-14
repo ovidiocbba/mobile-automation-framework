@@ -17,7 +17,7 @@ public enum PropertiesInput {
   // ========================================
 
   /** Username for login. */
-  USERNAME("username"),
+  APP_USERNAME("app.username"),
 
   /** Password for login. */
   PASSWORD("password"),
