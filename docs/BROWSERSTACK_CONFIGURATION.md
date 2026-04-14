@@ -109,11 +109,19 @@ Upload
 
 ---
 
-### Step 7: Select your APK
+### Step 7: Select your APK and iOS Apps
 
-Choose your app file:
+**Android App (.apk)**
+
+Upload your Android app:
 `
-apps/android/mda-2.2.0-25.apk
+apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk
+`
+**iOS App (.ipa)**
+
+Upload your iOS app:
+`
+apps/ios/iOS.RealDevice.SauceLabs.Mobile.Sample.app.2.7.1.ipa
 `
 ---
 
