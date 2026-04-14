@@ -99,7 +99,7 @@ runs:
         "-Dframework.threads=${{ inputs.threads }}"
         )
 
-        BROWSERSTACK_PARAMS =(
+        BROWSERSTACK_PARAMS=(
         "-Dbrowserstack.projectName=Mobile-Automation-Framework"
         "-Dbrowserstack.buildName=${BUILD_NAME}"
         "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub"
