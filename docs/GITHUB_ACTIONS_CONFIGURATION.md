@@ -88,6 +88,8 @@ These values are passed to Gradle as system properties:
 
 ## 🔹 Repository Variables
 
+> `EXECUTION_DEVICES` defines the **actual devices used during execution**, not just supported ones.
+
 The workflow now supports **dynamic device execution** using a
 repository variable.
 
@@ -97,7 +99,7 @@ Repository → Settings → Secrets and variables → Actions → Variables
 
 Create a new variable:
 
-    SUPPORTED_DEVICES
+    EXECUTION_DEVICES (JSON format)
 
 ### Example value
 
@@ -144,9 +146,9 @@ When running the workflow manually, you will see this input:
 
     device = ALL
 
-the workflow executes **all devices defined in `SUPPORTED_DEVICES`**.
+the workflow executes **all devices defined in `EXECUTION_DEVICES`**.
 
-> Device names must match exactly (case-sensitive) with the values defined in `SUPPORTED_DEVICES`.
+> Device names must match exactly (case-sensitive) with the values defined in `EXECUTION_DEVICES`.
 
 ### If you want to run only one device
 
@@ -191,7 +193,7 @@ allowing the tests to execute correctly in CI.
     BROWSERSTACK_APP_ANDROID
     BROWSERSTACK_APP_IOS
 
-3.  The workflow reads the `SUPPORTED_DEVICES` variable
+3.  The workflow reads the `EXECUTION_DEVICES` variable
 
 4.  The framework receives all values as system properties and executes
     the tests
