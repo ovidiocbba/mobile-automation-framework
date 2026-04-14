@@ -51,6 +51,7 @@ appium.log
 # iOS
 # =========================
 *.ipa
+!apps/ios/*.ipa
 DerivedData/
 
 # =========================
