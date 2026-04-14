@@ -99,30 +99,30 @@ runs:
         "-Dframework.threads=${{ inputs.threads }}"
         )
 
-        BS_PARAMS=(
-        "-Dbrowserstack.username=${BROWSERSTACK_USERNAME}"
-        "-Dbrowserstack.accessKey=${BROWSERSTACK_ACCESS_KEY}"
-        "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub"
-        "-Dbrowserstack.app=${APP}"
+        BROWSERSTACK_PARAMS =(
         "-Dbrowserstack.projectName=Mobile-Automation-Framework"
         "-Dbrowserstack.buildName=${BUILD_NAME}"
+        "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub"
+        "-Dbrowserstack.username=${BROWSERSTACK_USERNAME}"
+        "-Dbrowserstack.accessKey=${BROWSERSTACK_ACCESS_KEY}"
+        "-Dbrowserstack.app=${APP}"
+        "-Dbrowserstack.appiumVersion=2.0.1"
         "-Dbrowserstack.video=true"
         "-Dbrowserstack.deviceLogs=true"
         "-Dbrowserstack.appiumLogs=true"
         "-Dbrowserstack.networkLogs=true"
-        "-Dbrowserstack.appiumVersion=2.0.1"
         )
 
         DEVICE_PARAMS=(
         "-Dplatform=${{ inputs.platform }}"
+        "-DautomationName=${{ inputs.automationName }}"
         "-DdeviceName=${{ inputs.deviceName }}"
         "-DplatformVersion=${{ inputs.platformVersion }}"
-        "-DautomationName=${{ inputs.automationName }}"
         )
 
         ALL_PARAMS=(
         "${CORE_PARAMS[@]}"
-        "${BS_PARAMS[@]}"
+        "${BROWSERSTACK_PARAMS[@]}"
         "${DEVICE_PARAMS[@]}"
         )
 
