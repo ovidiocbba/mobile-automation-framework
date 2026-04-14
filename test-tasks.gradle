@@ -56,7 +56,7 @@ def supportedProperties = [
     "bundleId",
     "appiumServerUrl",
     "framework.explicitWait",
-    "threads",
+    "framework.threads",
     "execution",
     "browserstack.username",
     "browserstack.accessKey",
@@ -111,7 +111,7 @@ tasks.withType(Test).configureEach {
         }
     }
 
-    def threadCount = getProp("threads", "1")
+    def threadCount = getProp("framework.threads", "1")
 
     // Required by TestNG to control parallel DataProvider threads
     systemProperty "dataproviderthreadcount", threadCount
@@ -134,7 +134,7 @@ tasks.withType(Test).configureEach {
         def deviceName = getProp("deviceName", "N/A")
         def platformVersion = getProp("platformVersion", "N/A")
         def explicitWait = getProp("framework.explicitWait", "30")
-        def threads = getProp("threads", "1")
+        def threads = getProp("framework.threads", "1")
 
         // CI detection
         def ciEnv = "Local"
@@ -171,7 +171,7 @@ Project=${project.name}
 Platform=${platformName}
 DeviceName=${deviceName}
 PlatformVersion=${platformVersion}
-Threads=${threads}
+Threads=${framework.threads}
 
 Java=${System.getProperty("java.version")}
 
