@@ -24,7 +24,7 @@ def call(devices, params, gradleFlags) {
         def buildDir = "build-${deviceId}"
 
         def coreParamsList = [
-                "-Dexecution=${currentDevice.type}",
+                "-Dframework.execution=${currentDevice.type}",
                 "-Dcucumber.filter.tags=${params.SCENARIO_TAG}",
                 "-Dapp.username=$APP_USERNAME",
                 "-Dapp.password=$APP_PASSWORD",
