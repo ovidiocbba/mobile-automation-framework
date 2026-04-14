@@ -69,7 +69,7 @@ runs:
         echo "================================="
 
         # Validate credentials
-        REQUIRED_VARS=("APP_USERNAME" "PASSWORD" "BROWSERSTACK_USERNAME" "BROWSERSTACK_ACCESS_KEY" "BROWSERSTACK_APP_ANDROID" "BROWSERSTACK_APP_IOS")
+        REQUIRED_VARS=("APP_USERNAME" "APP_PASSWORD" "BROWSERSTACK_USERNAME" "BROWSERSTACK_ACCESS_KEY" "BROWSERSTACK_APP_ANDROID" "BROWSERSTACK_APP_IOS")
 
         for var in "${REQUIRED_VARS[@]}"; do
          if [ -z "${!var:-}" ]; then
@@ -94,7 +94,7 @@ runs:
         "-Dexecution=browserstack"
         "-Dcucumber.filter.tags=${{ inputs.scenarioTag }}"
         "-Dapp.username=${APP_USERNAME}"
-        "-Dpassword=${PASSWORD}"
+        "-Dapp.password=${APP_PASSWORD}"
         "-DexplicitWait=${{ inputs.explicitWait }}"
         "-Dthreads=${{ inputs.threads }}"
         )
