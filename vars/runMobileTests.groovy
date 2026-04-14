@@ -26,8 +26,8 @@ def call(devices, params, gradleFlags) {
         def coreParamsList = [
                 "-Dexecution=${currentDevice.type}",
                 "-Dcucumber.filter.tags=${params.SCENARIO_TAG}",
-                "-Dusername=$APP_USERNAME",
-                "-Dpassword=$APP_PASSWORD",
+                "-Dapp.username=$APP_USERNAME",
+                "-Dapp.password=$APP_PASSWORD",
                 "-Dthreads=${params.THREADS}",
                 "-DexplicitWait=${params.EXPLICIT_WAIT}",
                 "-Dbranch=${branch}",
