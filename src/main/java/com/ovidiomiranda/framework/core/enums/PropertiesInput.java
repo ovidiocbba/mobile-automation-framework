@@ -35,6 +35,12 @@ public enum PropertiesInput {
   /** Mobile platform where tests will run (ANDROID or IOS). */
   PLATFORM("platform"),
 
+  /** Automation engine used by Appium. */
+  AUTOMATION_NAME("automationName"),
+
+  /** Path to the mobile application file. */
+  APP("app"),
+
   /** Device name used for execution. */
   DEVICE_NAME("deviceName"),
 
@@ -43,12 +49,6 @@ public enum PropertiesInput {
 
   /** Unique Device Identifier for mobile execution. */
   UDID("udid"),
-
-  /** Automation engine used by Appium. */
-  AUTOMATION_NAME("automationName"),
-
-  /** Path to the mobile application file. */
-  APP("app"),
 
   /** Android app package name. */
   APP_PACKAGE("appPackage"),
@@ -73,23 +73,23 @@ public enum PropertiesInput {
   // BROWSERSTACK CONFIG
   // ========================================
 
+  /** BrowserStack project name used for grouping test runs. */
+  BROWSERSTACK_PROJECT_NAME("browserstack.projectName"),
+
+  /** BrowserStack hub URL. */
+  BROWSERSTACK_URL("browserstack.url"),
+
+  /** BrowserStack build name associated with the execution. */
+  BROWSERSTACK_BUILD_NAME("browserstack.buildName"),
+
   /** BrowserStack username. */
   BROWSERSTACK_USERNAME("browserstack.username"),
 
   /** BrowserStack access key. */
   BROWSERSTACK_ACCESS_KEY("browserstack.accessKey"),
 
-  /** BrowserStack hub URL. */
-  BROWSERSTACK_URL("browserstack.url"),
-
   /** BrowserStack app id. */
   BROWSERSTACK_APP("browserstack.app"),
-
-  /** BrowserStack project name used for grouping test runs. */
-  BROWSERSTACK_PROJECT_NAME("browserstack.projectName"),
-
-  /** BrowserStack build name associated with the execution. */
-  BROWSERSTACK_BUILD_NAME("browserstack.buildName"),
 
   /** Enables video recording for BrowserStack sessions. */
   BROWSERSTACK_VIDEO("browserstack.video"),
