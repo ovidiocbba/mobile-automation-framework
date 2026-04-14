@@ -38,17 +38,17 @@ def call(devices, params, gradleFlags) {
 
         if (currentDevice.type == "browserstack") {
             browserStackParamsList = [
-                    "-Dbs.username=$BS_USERNAME",
-                    "-Dbs.accessKey=$BS_ACCESS_KEY",
-                    "-Dbs.url=https://hub-cloud.browserstack.com/wd/hub",
-                    "-Dbs.app=$BS_APP",
-                    "-Dbs.projectName=Mobile-Automation-Framework",
-                    "-Dbs.buildName=Jenkins-$BUILD_NUMBER-${deviceId}",
-                    "-Dbs.video=true",
-                    "-Dbs.deviceLogs=true",
-                    "-Dbs.appiumLogs=true",
-                    "-Dbs.networkLogs=true",
-                    "-Dbs.appiumVersion=2.0.1"
+                    "-Dbrowserstack.username=$BROWSERSTACK_USERNAME",
+                    "-Dbrowserstack.accessKey=$BROWSERSTACK_ACCESS_KEY",
+                    "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub",
+                    "-Dbrowserstack.app=$BROWSERSTACK_APP",
+                    "-Dbrowserstack.projectName=Mobile-Automation-Framework",
+                    "-Dbrowserstack.buildName=Jenkins-$BUILD_NUMBER-${deviceId}",
+                    "-Dbrowserstack.video=true",
+                    "-Dbrowserstack.deviceLogs=true",
+                    "-Dbrowserstack.appiumLogs=true",
+                    "-Dbrowserstack.networkLogs=true",
+                    "-Dbrowserstack.appiumVersion=2.0.1"
             ]
         }
 
