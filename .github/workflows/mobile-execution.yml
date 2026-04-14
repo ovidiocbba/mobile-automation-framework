@@ -39,10 +39,10 @@ jobs:
       USERNAME: ${{ secrets.USERNAME }}
       PASSWORD: ${{ secrets.PASSWORD }}
 
-      BS_USERNAME: ${{ secrets.BS_USERNAME }}
-      BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
-      BS_APP_ANDROID: ${{ secrets.BS_APP_ANDROID }}
-      BS_APP_IOS: ${{ secrets.BS_APP_IOS }}
+      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      BROWSERSTACK_APP_ANDROID: ${{ secrets.BROWSERSTACK_APP_ANDROID }}
+      BROWSERSTACK_APP_IOS: ${{ secrets.BROWSERSTACK_APP_IOS }}
 
     steps:
       - name: Checkout repository
@@ -55,10 +55,10 @@ jobs:
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          BS_USERNAME: ${{ secrets.BS_USERNAME }}
-          BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
-          BS_APP_ANDROID: ${{ secrets.BS_APP_ANDROID }}
-          BS_APP_IOS: ${{ secrets.BS_APP_IOS }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          BROWSERSTACK_APP_ANDROID: ${{ secrets.BROWSERSTACK_APP_ANDROID }}
+          BROWSERSTACK_APP_IOS: ${{ secrets.BROWSERSTACK_APP_IOS }}
         with:
           scenarioTag: ${{ inputs.scenarioTag || '@regression' }}
           deviceName: ${{ matrix.device.deviceName }}
