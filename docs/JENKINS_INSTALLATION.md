@@ -89,9 +89,9 @@ docker run -d \
   -e GIT_BRANCH=main \
   -e APP_USERNAME=standard_user \
   -e APP_PASSWORD=secret_sauce \
-  -e BS_USERNAME=your_browserstack_username \
-  -e BS_ACCESS_KEY=your_browserstack_access_key \
-  -e BS_APP=bs://your_uploaded_app_id \
+  -e BROWSERSTACK_USERNAME=your_browserstack_username \
+  -e BROWSERSTACK_ACCESS_KEY=your_browserstack_access_key \
+  -e BROWSERSTACK_APP=bs://your_uploaded_app_id \
   -e SUPPORTED_DEVICES='[
     {
       "deviceName": "Samsung Galaxy S23",
