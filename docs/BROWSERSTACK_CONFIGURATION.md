@@ -162,7 +162,7 @@ Open `config.properties` and update:
 
 ```properties
 # Execution
-execution=browserstack
+framework.execution=browserstack
 
 # Device
 deviceName=Google Pixel 7
@@ -213,7 +213,7 @@ https://api.browserstack.com/app-automate/devices.json | grep -i samsung
 Run the following command:
 
 ```bash
-./gradlew clean executeFeatures -Dexecution=browserstack
+./gradlew clean executeFeatures -Dframework.execution=browserstack
 ```
 
 <div align="right">
