@@ -55,7 +55,7 @@ def supportedProperties = [
     "appActivity",
     "bundleId",
     "appiumServerUrl",
-    "explicitWait",
+    "framework.explicitWait",
     "threads",
     "execution",
     "browserstack.username",
@@ -133,7 +133,7 @@ tasks.withType(Test).configureEach {
         def platformName = getProp("platform", "ANDROID")
         def deviceName = getProp("deviceName", "N/A")
         def platformVersion = getProp("platformVersion", "N/A")
-        def explicitWait = getProp("explicitWait", "30")
+        def explicitWait = getProp("framework.explicitWait", "30")
         def threads = getProp("threads", "1")
 
         // CI detection
