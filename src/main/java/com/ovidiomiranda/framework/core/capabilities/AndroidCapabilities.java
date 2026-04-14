@@ -24,18 +24,18 @@ import java.time.Duration;
 public class AndroidCapabilities {
 
   private final ConfigValidator config;
-  private final BrowserStackCapabilitiesBuilder bsBuilder;
+  private final BrowserStackCapabilitiesBuilder browserStackBuilder;
 
   /**
    * Constructor.
    *
    * @param config configuration validator
-   * @param bsBuilder BrowserStack capabilities builder
+   * @param browserStackBuilder BrowserStack capabilities builder
    */
   public AndroidCapabilities(
-      final ConfigValidator config, final BrowserStackCapabilitiesBuilder bsBuilder) {
+      final ConfigValidator config, final BrowserStackCapabilitiesBuilder browserStackBuilder) {
     this.config = config;
-    this.bsBuilder = bsBuilder;
+    this.browserStackBuilder = browserStackBuilder;
   }
 
   /**
@@ -58,7 +58,7 @@ public class AndroidCapabilities {
     final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
     switch (executionType) {
       case BROWSERSTACK:
-        bsBuilder.apply(options, sessionName);
+        browserStackBuilder.apply(options, sessionName);
         break;
 
       case LOCAL:
