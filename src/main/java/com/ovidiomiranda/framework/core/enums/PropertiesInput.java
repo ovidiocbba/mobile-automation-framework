@@ -12,11 +12,25 @@ package com.ovidiomiranda.framework.core.enums;
  */
 public enum PropertiesInput {
 
+  // ========================================
+  // BASE CONFIG
+  // ========================================
+
   /** Username for login. */
   USERNAME("username"),
 
   /** Password for login. */
   PASSWORD("password"),
+
+  /** Explicit wait timeout in seconds. */
+  EXPLICIT_WAIT("explicitWait"),
+
+  /** Number of threads for parallel execution. */
+  THREAD_COUNT("threads"),
+
+  // ========================================
+  // PLATFORM CONFIG
+  // ========================================
 
   /** Mobile platform where tests will run (ANDROID or IOS). */
   PLATFORM("platform"),
@@ -45,14 +59,15 @@ public enum PropertiesInput {
   /** iOS application bundle identifier. */
   BUNDLE_ID("bundleId"),
 
+  // ========================================
+  // EXECUTION CONFIG
+  // ========================================
+
+  /** Execution type (local, browserstack). */
+  EXECUTION("execution"),
+
   /** Appium server URL. */
   APPIUM_SERVER_URL("appiumServerUrl"),
-
-  /** Explicit wait timeout in seconds. */
-  EXPLICIT_WAIT("explicitWait"),
-
-  /** Number of threads for parallel execution. */
-  THREAD_COUNT("threads"),
 
   // ========================================
   // BROWSERSTACK CONFIG
@@ -64,14 +79,11 @@ public enum PropertiesInput {
   /** BrowserStack access key. */
   BROWSERSTACK_ACCESS_KEY("browserstack.accessKey"),
 
-  /** BrowserStack app id. */
-  BROWSERSTACK_APP("browserstack.app"),
-
   /** BrowserStack hub URL. */
   BROWSERSTACK_URL("browserstack.url"),
 
-  /** Execution type (local, browserstack). */
-  EXECUTION("execution"),
+  /** BrowserStack app id. */
+  BROWSERSTACK_APP("browserstack.app"),
 
   /** BrowserStack project name used for grouping test runs. */
   BROWSERSTACK_PROJECT_NAME("browserstack.projectName"),
