@@ -100,11 +100,11 @@ runs:
         )
 
         BROWSERSTACK_PARAMS=(
-        "-Dbrowserstack.projectName=Mobile-Automation-Framework"
-        "-Dbrowserstack.buildName=${BUILD_NAME}"
-        "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub"
         "-Dbrowserstack.username=${BROWSERSTACK_USERNAME}"
         "-Dbrowserstack.accessKey=${BROWSERSTACK_ACCESS_KEY}"
+        "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub"
+        "-Dbrowserstack.projectName=Mobile-Automation-Framework"
+        "-Dbrowserstack.buildName=${BUILD_NAME}"
         "-Dbrowserstack.app=${APP}"
         "-Dbrowserstack.appiumVersion=2.0.1"
         "-Dbrowserstack.video=true"
