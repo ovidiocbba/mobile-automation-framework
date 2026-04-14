@@ -3,16 +3,16 @@
  EXECUTION GUIDE
  =====================================================
  Run iOS locally:
- ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dframework.execution=local
 
  Run on BrowserStack:
- ./gradlew clean executeFeatures -Dplatform=ANDROID -Dexecution=browserstack -Dcucumber.filter.tags='@TC-00001'
- ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=browserstack -Dcucumber.filter.tags='@TC-00001'
+ ./gradlew clean executeFeatures -Dplatform=ANDROID -Dframework.execution=browserstack -Dcucumber.filter.tags='@TC-00001'
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dframework.execution=browserstack -Dcucumber.filter.tags='@TC-00001'
 
  Run by tag:
- ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local -Dcucumber.filter.tags='@regression'
- ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local -Dcucumber.filter.tags='@smoke'
- ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local -Dcucumber.filter.tags='@TC-00001'
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dframework.execution=local -Dcucumber.filter.tags='@regression'
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dframework.execution=local -Dcucumber.filter.tags='@smoke'
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dframework.execution=local -Dcucumber.filter.tags='@TC-00001'
 
  Override any configuration:
  ./gradlew clean executeFeatures -Dapp.username=standard_user -Dapp.password=secret_sauce -Dplatform=ANDROID -DdeviceName=emulator-5554 -DplatformVersion=14 -DautomationName=UiAutomator2 -Dapp=apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk -DappiumServerUrl=http://127.0.0.1:4723
@@ -57,7 +57,7 @@ def supportedProperties = [
     "appiumServerUrl",
     "framework.explicitWait",
     "framework.threads",
-    "execution",
+    "framework.execution",
     "browserstack.username",
     "browserstack.accessKey",
     "browserstack.app",
