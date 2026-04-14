@@ -51,23 +51,25 @@ public class BrowserStackCapabilitiesBuilder {
     options.setCapability("app", config.require(BROWSERSTACK_APP));
 
     // Build BrowserStack options map
-    final Map<String, Object> bstackOptions = new HashMap<>();
-    bstackOptions.put("userName", config.require(BROWSERSTACK_USERNAME));
-    bstackOptions.put("accessKey", config.require(BROWSERSTACK_ACCESS_KEY));
-    bstackOptions.put("projectName", config.require(BROWSERSTACK_PROJECT_NAME));
-    bstackOptions.put("buildName", config.require(BROWSERSTACK_BUILD_NAME));
-    bstackOptions.put("sessionName", sessionName);
+    final Map<String, Object> browserstackOptions = new HashMap<>();
+    browserstackOptions.put("userName", config.require(BROWSERSTACK_USERNAME));
+    browserstackOptions.put("accessKey", config.require(BROWSERSTACK_ACCESS_KEY));
+    browserstackOptions.put("projectName", config.require(BROWSERSTACK_PROJECT_NAME));
+    browserstackOptions.put("buildName", config.require(BROWSERSTACK_BUILD_NAME));
+    browserstackOptions.put("sessionName", sessionName);
 
-    bstackOptions.put("deviceName", config.require(DEVICE_NAME));
-    bstackOptions.put("osVersion", config.require(PLATFORM_VERSION));
+    browserstackOptions.put("deviceName", config.require(DEVICE_NAME));
+    browserstackOptions.put("osVersion", config.require(PLATFORM_VERSION));
 
-    bstackOptions.put("video", Boolean.parseBoolean(config.require(BROWSERSTACK_VIDEO)));
-    bstackOptions.put("deviceLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_DEVICE_LOGS)));
-    bstackOptions.put("appiumLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_APPIUM_LOGS)));
-    bstackOptions.put(
+    browserstackOptions.put("video", Boolean.parseBoolean(config.require(BROWSERSTACK_VIDEO)));
+    browserstackOptions.put(
+        "deviceLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_DEVICE_LOGS)));
+    browserstackOptions.put(
+        "appiumLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_APPIUM_LOGS)));
+    browserstackOptions.put(
         "networkLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_NETWORK_LOGS)));
-    bstackOptions.put("appiumVersion", config.require(BROWSERSTACK_APPIUM_VERSION));
+    browserstackOptions.put("appiumVersion", config.require(BROWSERSTACK_APPIUM_VERSION));
     // Attach to capabilities
-    options.setCapability("bstack:options", bstackOptions);
+    options.setCapability("bstack:options", browserstackOptions);
   }
 }
