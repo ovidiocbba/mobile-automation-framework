@@ -1,6 +1,6 @@
 package com.ovidiomiranda.framework.core.utils;
 
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.EXECUTION;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.FRAMEWORK_EXECUTION;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.enums.ExecutionType;
@@ -23,7 +23,7 @@ public final class ExecutionUtils {
    * @return ExecutionType
    */
   public static ExecutionType getExecutionType(final ConfigValidator config) {
-    return ExecutionType.from(config.optional(EXECUTION));
+    return ExecutionType.from(config.optional(FRAMEWORK_EXECUTION));
   }
 
   /**
