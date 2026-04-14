@@ -1,8 +1,8 @@
 package com.ovidiomiranda.framework.core.providers;
 
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BS_ACCESS_KEY;
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BS_URL;
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BS_USERNAME;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_ACCESS_KEY;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_URL;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_USERNAME;
 
 import com.ovidiomiranda.framework.core.capabilities.AndroidCapabilities;
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
@@ -52,14 +52,14 @@ public class AndroidDriverProvider implements DriverProvider {
       String url;
       switch (executionType) {
         case BROWSERSTACK:
-          final String baseUrl = config.require(BS_URL);
+          final String baseUrl = config.require(BROWSERSTACK_URL);
           url =
               baseUrl.replace(
                   "https://",
                   "https://"
-                      + config.require(BS_USERNAME)
+                      + config.require(BROWSERSTACK_USERNAME)
                       + ":"
-                      + config.require(BS_ACCESS_KEY)
+                      + config.require(BROWSERSTACK_ACCESS_KEY)
                       + "@");
           break;
 
