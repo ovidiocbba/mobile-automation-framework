@@ -1,8 +1,9 @@
 package com.ovidiomiranda.framework.core.waits;
 
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.FRAMEWORK_EXPLICIT_WAIT;
+
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.core.driver.DriverContext;
-import com.ovidiomiranda.framework.core.enums.PropertiesInput;
 import java.time.Duration;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -37,7 +38,7 @@ public class WaitManager {
    */
   public WebDriverWait getWait() {
     if (wait == null) {
-      final int timeout = config.optionalInt(PropertiesInput.EXPLICIT_WAIT, 15);
+      final int timeout = config.optionalInt(FRAMEWORK_EXPLICIT_WAIT, 30);
       wait = new WebDriverWait(driverContext.getDriver(), Duration.ofSeconds(timeout));
     }
     return wait;
