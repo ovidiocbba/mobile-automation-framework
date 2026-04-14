@@ -148,9 +148,9 @@ pipeline {
 
                         if (devices.any { it.type == "browserstack" }) {
                             credentialsList  += [
-                                string(credentialsId: 'BS_USERNAME', variable: 'BS_USERNAME'),
-                                string(credentialsId: 'BS_ACCESS_KEY', variable: 'BS_ACCESS_KEY'),
-                                string(credentialsId: 'BS_APP', variable: 'BS_APP')
+                                string(credentialsId: 'BROWSERSTACK_USERNAME', variable: 'BROWSERSTACK_USERNAME'),
+                                string(credentialsId: 'BROWSERSTACK_ACCESS_KEY', variable: 'BROWSERSTACK_ACCESS_KEY'),
+                                string(credentialsId: 'BROWSERSTACK_APP', variable: 'BROWSERSTACK_APP')
                             ]
                         }
 
