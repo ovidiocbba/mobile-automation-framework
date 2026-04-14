@@ -57,11 +57,12 @@ These variables are then passed to Gradle as system properties:
 To execute tests on **real devices in BrowserStack**, the following
 secrets must also be configured.
 
-| Secret        | Description                                |
-|---------------|--------------------------------------------|
-| BS_USERNAME   | BrowserStack username                      |
-| BS_ACCESS_KEY | BrowserStack access key                    |
-| BS_APP        | App uploaded to BrowserStack (bs://app-id) |
+| Secret         | Description                                        |
+|----------------|----------------------------------------------------|
+| BS_USERNAME    | BrowserStack username                              |
+| BS_ACCESS_KEY  | BrowserStack access key                            |
+| BS_APP_ANDROID | Android app uploaded to BrowserStack (bs://app-id) |
+| BS_APP_IOS     | iOS app uploaded to BrowserStack (bs://app-id)     |
 
 Example configuration inside the workflow:
 
@@ -69,7 +70,8 @@ Example configuration inside the workflow:
 env:
   BS_USERNAME: ${{ secrets.BS_USERNAME }}
   BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
-  BS_APP: ${{ secrets.BS_APP }}
+  BS_APP_ANDROID: ${{ secrets.BS_APP_ANDROID }}
+  BS_APP_IOS: ${{ secrets.BS_APP_IOS }}
 ```
 
 These values are passed to Gradle as system properties:
