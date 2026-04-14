@@ -20,7 +20,7 @@ public enum PropertiesInput {
   APP_USERNAME("app.username"),
 
   /** Password for login. */
-  PASSWORD("password"),
+  APP_PASSWORD("app.password"),
 
   /** Explicit wait timeout in seconds. */
   EXPLICIT_WAIT("explicitWait"),
