@@ -21,9 +21,9 @@ Click on **Secrets → New repository secret** and add the following:
 |-----------------|--------------------------------|--------------------------------------------|
 | `USERNAME`      | `standard_user`                | Username used during mobile test execution |
 | `PASSWORD`      | `secret_sauce`                 | Password used during mobile test execution |
-| `BS_USERNAME`   | `your_browserstack_username`   | BrowserStack account username              |
-| `BS_ACCESS_KEY` | `your_browserstack_access_key` | BrowserStack access key                    |
-| `BS_APP`        | `bs://xxxxxxxxxxxxxxxx`        | BrowserStack uploaded app ID               |
+| `BROWSERSTACK_USERNAME`   | `your_browserstack_username`   | BrowserStack account username              |
+| `BROWSERSTACK_ACCESS_KEY` | `your_browserstack_access_key` | BrowserStack access key                    |
+| `BROWSERSTACK_APP`        | `bs://xxxxxxxxxxxxxxxx`        | BrowserStack uploaded app ID               |
 
 ----------------------------------------------------------------------------------------------
 
@@ -59,27 +59,27 @@ secrets must also be configured.
 
 | Secret         | Description                                        |
 |----------------|----------------------------------------------------|
-| BS_USERNAME    | BrowserStack username                              |
-| BS_ACCESS_KEY  | BrowserStack access key                            |
-| BS_APP_ANDROID | Android app uploaded to BrowserStack (bs://app-id) |
-| BS_APP_IOS     | iOS app uploaded to BrowserStack (bs://app-id)     |
+| BROWSERSTACK_USERNAME    | BrowserStack username                              |
+| BROWSERSTACK_ACCESS_KEY  | BrowserStack access key                            |
+| BROWSERSTACK_APP_ANDROID | Android app uploaded to BrowserStack (bs://app-id) |
+| BROWSERSTACK_APP_IOS     | iOS app uploaded to BrowserStack (bs://app-id)     |
 
 Example configuration inside the workflow:
 
 ``` yaml
 env:
-  BS_USERNAME: ${{ secrets.BS_USERNAME }}
-  BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
-  BS_APP_ANDROID: ${{ secrets.BS_APP_ANDROID }}
-  BS_APP_IOS: ${{ secrets.BS_APP_IOS }}
+  BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+  BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+  BROWSERSTACK_APP_ANDROID: ${{ secrets.BROWSERSTACK_APP_ANDROID }}
+  BROWSERSTACK_APP_IOS: ${{ secrets.BROWSERSTACK_APP_IOS }}
 ```
 
 These values are passed to Gradle as system properties:
 
 ``` bash
--Dbs.username=${BS_USERNAME}
--Dbs.accessKey=${BS_ACCESS_KEY}
--Dbs.app=${BS_APP}
+-Dbrowserstack.username=${BROWSERSTACK_USERNAME}
+-Dbrowserstack.accessKey=${BROWSERSTACK_ACCESS_KEY}
+-Dbrowserstack.app=${BROWSERSTACK_APP}
 ```
 
 ------------------------------------------------------------------------
@@ -178,9 +178,9 @@ allowing the tests to execute correctly in CI.
 
     USERNAME\
     PASSWORD\
-    BS_USERNAME\
-    BS_ACCESS_KEY\
-    BS_APP
+    BROWSERSTACK_USERNAME\
+    BROWSERSTACK_ACCESS_KEY\
+    BROWSERSTACK_APP
 
 3.  The workflow reads the `SUPPORTED_DEVICES` variable
 
