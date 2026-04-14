@@ -106,21 +106,21 @@ Create a new variable:
 ``` json
 [
   {
+    "platform": "ANDROID",
     "deviceName": "Samsung Galaxy S23",
     "platformVersion": "13",
-    "platform": "ANDROID",
     "automationName": "UiAutomator2"
   },
   {
+    "platform": "ANDROID",
     "deviceName": "Google Pixel 7",
     "platformVersion": "13",
-    "platform": "ANDROID",
     "automationName": "UiAutomator2"
   },
   {
+    "platform": "IOS",
     "deviceName": "iPhone 15",
     "platformVersion": "17",
-    "platform": "IOS",
     "automationName": "XCUITest"
   }
 ]
