@@ -1,7 +1,10 @@
 package com.ovidiomiranda.framework.core.capabilities;
 
+import static com.ovidiomiranda.framework.core.capabilities.BaseCapabilities.isAppAbsent;
+import static com.ovidiomiranda.framework.core.capabilities.BaseCapabilities.setAppCapability;
 import static com.ovidiomiranda.framework.core.capabilities.BaseCapabilities.setCommonCapabilities;
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP;
+import static com.ovidiomiranda.framework.core.enums.ExecutionType.BROWSERSTACK;
+import static com.ovidiomiranda.framework.core.enums.ExecutionType.LOCAL;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BUNDLE_ID;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
@@ -26,18 +29,18 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 public class IosCapabilities {
 
   private final ConfigValidator config;
-  private final BrowserStackCapabilitiesBuilder bsBuilder;
+  private final BrowserStackCapabilitiesBuilder browserStackBuilder;
 
   /**
    * Constructor.
    *
    * @param config configuration validator
-   * @param bsBuilder BrowserStack capabilities builder
+   * @param browserStackBuilder BrowserStack capabilities builder
    */
   public IosCapabilities(
-      final ConfigValidator config, final BrowserStackCapabilitiesBuilder bsBuilder) {
+      final ConfigValidator config, final BrowserStackCapabilitiesBuilder browserStackBuilder) {
     this.config = config;
-    this.bsBuilder = bsBuilder;
+    this.browserStackBuilder = browserStackBuilder;
   }
 
   /**
@@ -73,25 +76,21 @@ public class IosCapabilities {
     options.setCapability("usePrebuiltWDA", true);
     options.setCapability("appium:maxTypingFrequency", 15);
     options.setCapability("appium:sendKeyStrategy", "oneByOne");
+
     setCommonCapabilities(options, config);
 
     final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
 
-    switch (executionType) {
-      case BROWSERSTACK:
-        bsBuilder.apply(options, sessionName);
-        break;
+    if (executionType == BROWSERSTACK) {
+      browserStackBuilder.apply(options, sessionName);
+    }
 
-      case LOCAL:
-      default:
-        final String app = config.optional(APP);
+    setAppCapability(options, config);
 
-        if (app != null && !app.isBlank()) {
-          options.setApp(app);
-        } else {
-          options.setBundleId(config.require(BUNDLE_ID));
-        }
-        break;
+    if (executionType == LOCAL) {
+      if (isAppAbsent(options)) {
+        options.setBundleId(config.require(BUNDLE_ID));
+      }
     }
 
     return options;
