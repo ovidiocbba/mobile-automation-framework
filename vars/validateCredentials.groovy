@@ -4,9 +4,9 @@ def call(String execution) {
     validate(env.APP_PASSWORD, "APP_PASSWORD")
 
     if (execution == "browserstack") {
-        validate(env.BS_USERNAME, "BS_USERNAME")
-        validate(env.BS_ACCESS_KEY, "BS_ACCESS_KEY")
-        validate(env.BS_APP, "BS_APP")
+        validate(env.BROWSERSTACK_USERNAME, "BROWSERSTACK_USERNAME")
+        validate(env.BROWSERSTACK_ACCESS_KEY, "BROWSERSTACK_ACCESS_KEY")
+        validate(env.BROWSERSTACK_APP, "BROWSERSTACK_APP")
     }
 
     echo "Credentials validated"
