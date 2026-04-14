@@ -17,13 +17,14 @@ Repository → Settings → Secrets and variables → Actions
 
 Click on **Secrets → New repository secret** and add the following:
 
-| Name                      | Example Value                  | Description                                |
-|---------------------------|--------------------------------|--------------------------------------------|
-| `APP_USERNAME`            | `standard_user`                | Username used during mobile test execution |
-| `APP_PASSWORD`            | `secret_sauce`                 | Password used during mobile test execution |
-| `BROWSERSTACK_USERNAME`   | `your_browserstack_username`   | BrowserStack account username              |
-| `BROWSERSTACK_ACCESS_KEY` | `your_browserstack_access_key` | BrowserStack access key                    |
-| `BROWSERSTACK_APP`        | `bs://xxxxxxxxxxxxxxxx`        | BrowserStack uploaded app ID               |
+| Name                       | Example Value                  | Description                                |
+|----------------------------|--------------------------------|--------------------------------------------|
+| `APP_USERNAME`             | `standard_user`                | Username used during mobile test execution |
+| `APP_PASSWORD`             | `secret_sauce`                 | Password used during mobile test execution |
+| `BROWSERSTACK_USERNAME`    | `your_browserstack_username`   | BrowserStack account username              |
+| `BROWSERSTACK_ACCESS_KEY`  | `your_browserstack_access_key` | BrowserStack access key                    |
+| `BROWSERSTACK_APP_ANDROID` | `bs://xxxxxxxxxxxxxxxx`        | Android app uploaded to BrowserStack       |
+| `BROWSERSTACK_APP_IOS`     | `bs://xxxxxxxxxxxxxxxx`        | iOS app uploaded to BrowserStack           |
 
 ----------------------------------------------------------------------------------------------
 
@@ -53,6 +54,8 @@ These variables are then passed to Gradle as system properties:
 
 # ☁️ BrowserStack Configuration
 
+> The workflow automatically selects the correct app based on the platform (ANDROID or IOS).
+
 To execute tests on **real devices in BrowserStack**, the following
 secrets must also be configured.
 
@@ -78,7 +81,7 @@ These values are passed to Gradle as system properties:
 ``` bash
 -Dbrowserstack.username=${BROWSERSTACK_USERNAME}
 -Dbrowserstack.accessKey=${BROWSERSTACK_ACCESS_KEY}
--Dbrowserstack.app=${BROWSERSTACK_APP}
+-Dbrowserstack.app=<automatically resolved based on platform (ANDROID / IOS)>
 ```
 
 ------------------------------------------------------------------------
@@ -125,7 +128,7 @@ This allows the workflow to run:
 
 -   All devices at the same time
 -   One specific device
--   Multiple platforms (Android + iOS)
+-   Multiple platforms (Android + IOS)
 
 without modifying the workflow file.
 
@@ -143,13 +146,19 @@ When running the workflow manually, you will see this input:
 
 the workflow executes **all devices defined in `SUPPORTED_DEVICES`**.
 
+> Device names must match exactly (case-sensitive) with the values defined in `SUPPORTED_DEVICES`.
+
 ### If you want to run only one device
 
 You must type the exact device name defined in the JSON.
 
 Example:
 
-    device = Samsung Galaxy S23
+**Device**
+
+```
+Samsung Galaxy S23
+```
 
 This will execute only that device.
 
@@ -175,11 +184,12 @@ allowing the tests to execute correctly in CI.
 
 2.  GitHub Actions loads the secrets:
 
-    APP_USERNAME\
-    APP_PASSWORD\
-    BROWSERSTACK_USERNAME\
-    BROWSERSTACK_ACCESS_KEY\
-    BROWSERSTACK_APP
+    APP_USERNAME
+    APP_PASSWORD
+    BROWSERSTACK_USERNAME
+    BROWSERSTACK_ACCESS_KEY
+    BROWSERSTACK_APP_ANDROID
+    BROWSERSTACK_APP_IOS
 
 3.  The workflow reads the `SUPPORTED_DEVICES` variable
 
@@ -217,12 +227,6 @@ git push origin gh-pages
 
 After this step, the workflow will be able to deploy Allure reports
 automatically.
-
-------------------------------------------------------------------------
-
-## 🔹 Repository Variables
-
-No additional repository variables are required for mobile execution.
 
 ------------------------------------------------------------------------
 
