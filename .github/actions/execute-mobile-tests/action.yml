@@ -95,7 +95,7 @@ runs:
         "-Dcucumber.filter.tags=${{ inputs.scenarioTag }}"
         "-Dapp.username=${APP_USERNAME}"
         "-Dapp.password=${APP_PASSWORD}"
-        "-DexplicitWait=${{ inputs.explicitWait }}"
+        "-Dframework.explicitWait=${{ inputs.explicitWait }}"
         "-Dthreads=${{ inputs.threads }}"
         )
 
