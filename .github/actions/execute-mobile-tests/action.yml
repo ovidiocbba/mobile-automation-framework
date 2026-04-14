@@ -96,7 +96,7 @@ runs:
         "-Dapp.username=${APP_USERNAME}"
         "-Dapp.password=${APP_PASSWORD}"
         "-Dframework.explicitWait=${{ inputs.explicitWait }}"
-        "-Dthreads=${{ inputs.threads }}"
+        "-Dframework.threads=${{ inputs.threads }}"
         )
 
         BS_PARAMS=(
