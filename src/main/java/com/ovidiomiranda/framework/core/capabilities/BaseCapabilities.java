@@ -54,7 +54,7 @@ public abstract class BaseCapabilities {
    *   <li>app (for local execution)
    * </ul>
    *
-   * <p>If neither property is defined, no app capability is set.
+   * <p>Make sure to use the correct app for the selected platform (Android or iOS).
    *
    * @param options Appium options to enrich
    * @param config configuration validator
