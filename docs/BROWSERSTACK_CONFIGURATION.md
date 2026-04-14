@@ -51,8 +51,8 @@ Access Key
 4. Use them in your configuration:
 
 ```properties
-bs.username=YOUR_USERNAME
-bs.accessKey=YOUR_ACCESS_KEY
+browserstack.username=YOUR_USERNAME
+browserstack.accessKey=YOUR_ACCESS_KEY
 ```
 
 <div align="right">
@@ -145,7 +145,7 @@ bs://123abc456
 
 Add it to your configuration:
 ```text
-bs.app=bs://123abc45
+browserstack.app=bs://123abc45
 ```
 
 <div align="right">
@@ -169,10 +169,10 @@ deviceName=Google Pixel 7
 platformVersion=13.0
 
 # BrowserStack
-bs.username=YOUR_USERNAME
-bs.accessKey=YOUR_ACCESS_KEY
-bs.app=bs://123abc456
-bs.url=https://hub-cloud.browserstack.com/wd/hub
+browserstack.username=YOUR_USERNAME
+browserstack.accessKey=YOUR_ACCESS_KEY
+browserstack.app=bs://123abc456
+browserstack.url=https://hub-cloud.browserstack.com/wd/hub
 ```
 
 <div align="right">
@@ -255,7 +255,7 @@ You will see:
 
 ### App not found
 
-* Make sure `bs.app` starts with `bs://`
+* Make sure `browserstack.app` starts with `bs://`
 
 ### Session not created
 
