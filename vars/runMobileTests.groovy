@@ -29,7 +29,7 @@ def call(devices, params, gradleFlags) {
                 "-Dapp.username=$APP_USERNAME",
                 "-Dapp.password=$APP_PASSWORD",
                 "-Dthreads=${params.THREADS}",
-                "-DexplicitWait=${params.EXPLICIT_WAIT}",
+                "-Dframework.explicitWait=${params.EXPLICIT_WAIT}",
                 "-Dbranch=${branch}",
                 "-Dcommit=${commit}"
         ]
