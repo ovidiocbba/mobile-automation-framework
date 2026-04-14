@@ -69,7 +69,7 @@ runs:
         echo "================================="
 
         # Validate credentials
-        REQUIRED_VARS=("USERNAME" "PASSWORD" "BS_USERNAME" "BS_ACCESS_KEY" "BS_APP_ANDROID" "BS_APP_IOS")
+        REQUIRED_VARS=("USERNAME" "PASSWORD" "BROWSERSTACK_USERNAME" "BROWSERSTACK_ACCESS_KEY" "BROWSERSTACK_APP_ANDROID" "BROWSERSTACK_APP_IOS")
 
         for var in "${REQUIRED_VARS[@]}"; do
          if [ -z "${!var:-}" ]; then
@@ -80,9 +80,9 @@ runs:
 
         # Select correct app based on platform
         if [ "${{ inputs.platform }}" = "IOS" ]; then
-          APP=${BS_APP_IOS}
+          APP=${BROWSERSTACK_APP_IOS}
         else
-          APP=${BS_APP_ANDROID}
+          APP=${BROWSERSTACK_APP_ANDROID}
         fi
 
         echo "Using app: $APP"
@@ -100,17 +100,17 @@ runs:
         )
 
         BS_PARAMS=(
-        "-Dbs.username=${BS_USERNAME}"
-        "-Dbs.accessKey=${BS_ACCESS_KEY}"
-        "-Dbs.url=https://hub-cloud.browserstack.com/wd/hub"
-        "-Dbs.app=${APP}"
-        "-Dbs.projectName=Mobile-Automation-Framework"
-        "-Dbs.buildName=${BUILD_NAME}"
-        "-Dbs.video=true"
-        "-Dbs.deviceLogs=true"
-        "-Dbs.appiumLogs=true"
-        "-Dbs.networkLogs=true"
-        "-Dbs.appiumVersion=2.0.1"
+        "-Dbrowserstack.username=${BROWSERSTACK_USERNAME}"
+        "-Dbrowserstack.accessKey=${BROWSERSTACK_ACCESS_KEY}"
+        "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub"
+        "-Dbrowserstack.app=${APP}"
+        "-Dbrowserstack.projectName=Mobile-Automation-Framework"
+        "-Dbrowserstack.buildName=${BUILD_NAME}"
+        "-Dbrowserstack.video=true"
+        "-Dbrowserstack.deviceLogs=true"
+        "-Dbrowserstack.appiumLogs=true"
+        "-Dbrowserstack.networkLogs=true"
+        "-Dbrowserstack.appiumVersion=2.0.1"
         )
 
         DEVICE_PARAMS=(
