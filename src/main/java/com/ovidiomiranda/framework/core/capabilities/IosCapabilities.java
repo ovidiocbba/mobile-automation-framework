@@ -5,10 +5,19 @@ import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BUNDLE_ID;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
+import com.ovidiomiranda.framework.core.enums.ExecutionType;
+import com.ovidiomiranda.framework.core.utils.ExecutionUtils;
 import io.appium.java_client.ios.options.XCUITestOptions;
 
 /**
  * Builds iOS capabilities for Appium sessions.
+ *
+ * <p>This class supports both execution modes:
+ *
+ * <ul>
+ *   <li>Local execution (using .app file or bundleId)
+ *   <li>BrowserStack execution (using uploaded app via bs:// reference)
+ * </ul>
  *
  * <p>The app can be launched using the app file path or the installed app bundle identifier.
  *
@@ -17,27 +26,45 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 public class IosCapabilities {
 
   private final ConfigValidator config;
+  private final BrowserStackCapabilitiesBuilder bsBuilder;
 
   /**
    * Constructor.
    *
    * @param config configuration validator
+   * @param bsBuilder BrowserStack capabilities builder
    */
-  public IosCapabilities(final ConfigValidator config) {
+  public IosCapabilities(
+      final ConfigValidator config, final BrowserStackCapabilitiesBuilder bsBuilder) {
     this.config = config;
+    this.bsBuilder = bsBuilder;
   }
 
   /**
    * Creates iOS capabilities.
    *
-   * <p>If the {@code app} property is provided, the framework installs the application. Otherwise,
-   * the app is launched using the bundle id.
+   * <p>Supports two execution modes:
    *
-   * @param sessionName session name used to identify the test execution in BrowserStack
+   * <ul>
+   *   <li>Local execution:
+   *       <ul>
+   *         <li>Uses {@code app} if provided
+   *         <li>Otherwise uses {@code bundleId}
+   *       </ul>
+   *   <li>BrowserStack execution:
+   *       <ul>
+   *         <li>Applies BrowserStack configuration (credentials, device, app, etc.)
+   *         <li>Uses {@code bs.app} (bs:// reference)
+   *       </ul>
+   * </ul>
+   *
+   * @param sessionName session name used to identify the test execution
    * @return configured XCUITestOptions
    */
   public XCUITestOptions getCapabilities(final String sessionName) {
+
     final XCUITestOptions options = new XCUITestOptions();
+
     options.setPlatformName("iOS");
     options.setAutoAcceptAlerts(true);
     options.setCapability("autoDismissAlerts", true);
@@ -47,12 +74,26 @@ public class IosCapabilities {
     options.setCapability("appium:maxTypingFrequency", 15);
     options.setCapability("appium:sendKeyStrategy", "oneByOne");
     setCommonCapabilities(options, config);
-    final String app = config.optional(APP);
-    if (app != null && !app.isBlank()) {
-      options.setApp(app);
-    } else {
-      options.setBundleId(config.require(BUNDLE_ID));
+
+    final ExecutionType executionType = ExecutionUtils.getExecutionType(config);
+
+    switch (executionType) {
+      case BROWSERSTACK:
+        bsBuilder.apply(options, sessionName);
+        break;
+
+      case LOCAL:
+      default:
+        final String app = config.optional(APP);
+
+        if (app != null && !app.isBlank()) {
+          options.setApp(app);
+        } else {
+          options.setBundleId(config.require(BUNDLE_ID));
+        }
+        break;
     }
+
     return options;
   }
 }
