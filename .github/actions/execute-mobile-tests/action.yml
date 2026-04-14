@@ -62,13 +62,14 @@ runs:
 
         echo "================================="
         echo "Running mobile tests"
+        echo "Platform: ${{ inputs.platform }}"
         echo "Device: ${{ inputs.deviceName }}"
         echo "Platform Version: ${{ inputs.platformVersion }}"
         echo "Automation: ${{ inputs.automationName }}"
         echo "================================="
 
         # Validate credentials
-        REQUIRED_VARS=("USERNAME" "PASSWORD" "BS_USERNAME" "BS_ACCESS_KEY" "BS_APP")
+        REQUIRED_VARS=("USERNAME" "PASSWORD" "BS_USERNAME" "BS_ACCESS_KEY" "BS_APP_ANDROID" "BS_APP_IOS")
 
         for var in "${REQUIRED_VARS[@]}"; do
          if [ -z "${!var:-}" ]; then
@@ -76,6 +77,15 @@ runs:
           exit 1
          fi
         done
+
+        # Select correct app based on platform
+        if [ "${{ inputs.platform }}" = "IOS" ]; then
+          APP=${BS_APP_IOS}
+        else
+          APP=${BS_APP_ANDROID}
+        fi
+
+        echo "Using app: $APP"
 
         DEVICE_ID="${{ steps.normalize.outputs.device_id }}"
         BUILD_NAME="GH-${GITHUB_RUN_NUMBER}-${DEVICE_ID}"
@@ -93,7 +103,7 @@ runs:
         "-Dbs.username=${BS_USERNAME}"
         "-Dbs.accessKey=${BS_ACCESS_KEY}"
         "-Dbs.url=https://hub-cloud.browserstack.com/wd/hub"
-        "-Dbs.app=${BS_APP}"
+        "-Dbs.app=${APP}"
         "-Dbs.projectName=Mobile-Automation-Framework"
         "-Dbs.buildName=${BUILD_NAME}"
         "-Dbs.video=true"
