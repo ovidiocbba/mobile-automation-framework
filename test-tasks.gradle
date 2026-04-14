@@ -15,7 +15,7 @@
  ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local -Dcucumber.filter.tags='@TC-00001'
 
  Override any configuration:
- ./gradlew clean executeFeatures -Dusername=standard_user -Dpassword=secret_sauce -Dplatform=ANDROID -DdeviceName=emulator-5554 -DplatformVersion=14 -DautomationName=UiAutomator2 -Dapp=apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk -DappiumServerUrl=http://127.0.0.1:4723
+ ./gradlew clean executeFeatures -Dapp.username=standard_user -Dpassword=secret_sauce -Dplatform=ANDROID -DdeviceName=emulator-5554 -DplatformVersion=14 -DautomationName=UiAutomator2 -Dapp=apps/android/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk -DappiumServerUrl=http://127.0.0.1:4723
 
  Re-run only failed scenarios:
  ./gradlew reExecuteFeatures
@@ -43,7 +43,7 @@ def getProp = { key, defaultValue = null ->
 // ========================================
 def supportedProperties = [
     "cucumber.filter.tags",
-    "username",
+    "app.username",
     "password",
     "platform",
     "deviceName",
