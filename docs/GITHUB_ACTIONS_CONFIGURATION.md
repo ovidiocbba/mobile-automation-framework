@@ -26,8 +26,30 @@ Click on **Secrets → New repository secret** and add the following:
 | `BROWSERSTACK_APP_ANDROID` | `bs://xxxxxxxxxxxxxxxx`        | Android app uploaded to BrowserStack       |
 | `BROWSERSTACK_APP_IOS`     | `bs://xxxxxxxxxxxxxxxx`        | iOS app uploaded to BrowserStack           |
 
-----------------------------------------------------------------------------------------------
+------------------------------------------------------------------------
 
+### 📲 How to get BROWSERSTACK_APP_*
+
+Get the app URL from BrowserStack after uploading your app:
+
+👉 https://app-automate.browserstack.com/utilities/app_management
+
+Steps:
+1. Upload your `.apk` or `.ipa`
+2. Copy the generated value
+
+Example:
+```
+bs://123abc456def
+```
+
+💡 Alternative (CI/CD):
+Upload via API:
+```
+curl -u "USERNAME:ACCESS_KEY" -X POST https://api-cloud.browserstack.com/app-automate/upload -F "file=@app.apk"
+```
+
+------------------------------------------------------------------------
 ### 📘 USERNAME and PASSWORD
 
 The `APP_USERNAME` and `APP_PASSWORD` repository secrets are required for the
@@ -50,6 +72,7 @@ These variables are then passed to Gradle as system properties:
 -Dapp.username=${APP_USERNAME}
 -Dapp.password=${APP_PASSWORD}
 ```
+
 ------------------------------------------------------------------------
 
 # ☁️ BrowserStack Configuration
@@ -97,9 +120,11 @@ Go to:
 
 Repository → Settings → Secrets and variables → Actions → Variables
 
-Create a new variable:
+Create a new variable(JSON format):
 
-    EXECUTION_DEVICES (JSON format)
+```
+EXECUTION_DEVICES
+```
 
 ### Example value
 
