@@ -6,7 +6,8 @@
  ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local
 
  Run on BrowserStack:
- ./gradlew clean executeFeatures -Dplatform=ANDROID -Dexecution=browserstack
+ ./gradlew clean executeFeatures -Dplatform=ANDROID -Dexecution=browserstack -Dcucumber.filter.tags='@TC-00001'
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=browserstack -Dcucumber.filter.tags='@TC-00001'
 
  Run by tag:
  ./gradlew clean executeFeatures -Dplatform=IOS -Dexecution=local -Dcucumber.filter.tags='@regression'
