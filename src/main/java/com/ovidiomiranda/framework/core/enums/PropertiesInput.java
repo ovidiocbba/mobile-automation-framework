@@ -23,10 +23,10 @@ public enum PropertiesInput {
   APP_PASSWORD("app.password"),
 
   /** Explicit wait timeout in seconds. */
-  EXPLICIT_WAIT("framework.explicitWait"),
+  FRAMEWORK_EXPLICIT_WAIT("framework.explicitWait"),
 
   /** Number of threads for parallel execution. */
-  THREAD_COUNT("threads"),
+  FRAMEWORK_THREADS("framework.threads"),
 
   // ========================================
   // PLATFORM CONFIG
