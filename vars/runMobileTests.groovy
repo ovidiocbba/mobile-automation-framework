@@ -28,7 +28,7 @@ def call(devices, params, gradleFlags) {
                 "-Dcucumber.filter.tags=${params.SCENARIO_TAG}",
                 "-Dapp.username=$APP_USERNAME",
                 "-Dapp.password=$APP_PASSWORD",
-                "-Dthreads=${params.THREADS}",
+                "-Dframework.threads=${params.THREADS}",
                 "-Dframework.explicitWait=${params.EXPLICIT_WAIT}",
                 "-Dbranch=${branch}",
                 "-Dcommit=${commit}"
