@@ -1,7 +1,6 @@
 package com.ovidiomiranda.framework.core.capabilities;
 
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_ACCESS_KEY;
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_APP;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_APPIUM_LOGS;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_APPIUM_VERSION;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_BUILD_NAME;
@@ -47,9 +46,6 @@ public class BrowserStackCapabilitiesBuilder {
    */
   public void apply(final BaseOptions<?> options, final String sessionName) {
 
-    // Set app uploaded to BrowserStack
-    options.setCapability("app", config.require(BROWSERSTACK_APP));
-
     // Build BrowserStack options map
     final Map<String, Object> browserstackOptions = new HashMap<>();
     browserstackOptions.put("userName", config.require(BROWSERSTACK_USERNAME));
@@ -68,7 +64,9 @@ public class BrowserStackCapabilitiesBuilder {
         "appiumLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_APPIUM_LOGS)));
     browserstackOptions.put(
         "networkLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_NETWORK_LOGS)));
+
     browserstackOptions.put("appiumVersion", config.require(BROWSERSTACK_APPIUM_VERSION));
+
     // Attach to capabilities
     options.setCapability("bstack:options", browserstackOptions);
   }
