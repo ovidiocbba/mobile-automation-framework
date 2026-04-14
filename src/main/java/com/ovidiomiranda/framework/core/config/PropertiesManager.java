@@ -83,7 +83,7 @@ public class PropertiesManager {
     }
 
     // Determine execution environment (default local)
-    final String execution = System.getProperty("execution", "local");
+    final String execution = System.getProperty("framework.execution", "local");
 
     if ("browserstack".equalsIgnoreCase(execution)) {
       loadFile(props, "config/browserstack.properties");
