@@ -54,7 +54,7 @@ public class IosCapabilities {
    *   <li>BrowserStack execution:
    *       <ul>
    *         <li>Applies BrowserStack configuration (credentials, device, app, etc.)
-   *         <li>Uses {@code bs.app} (bs:// reference)
+   *         <li>Uses {@code browserstack.app} (bs:// reference)
    *       </ul>
    * </ul>
    *
