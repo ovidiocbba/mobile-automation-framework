@@ -91,7 +91,7 @@ runs:
         BUILD_NAME="GH-${GITHUB_RUN_NUMBER}-${DEVICE_ID}"
 
         CORE_PARAMS=(
-        "-Dexecution=browserstack"
+        "-Dframework.execution=browserstack"
         "-Dcucumber.filter.tags=${{ inputs.scenarioTag }}"
         "-Dapp.username=${APP_USERNAME}"
         "-Dapp.password=${APP_PASSWORD}"
