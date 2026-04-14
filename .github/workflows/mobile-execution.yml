@@ -41,7 +41,8 @@ jobs:
 
       BS_USERNAME: ${{ secrets.BS_USERNAME }}
       BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
-      BS_APP: ${{ secrets.BS_APP }}
+      BS_APP_ANDROID: ${{ secrets.BS_APP_ANDROID }}
+      BS_APP_IOS: ${{ secrets.BS_APP_IOS }}
 
     steps:
       - name: Checkout repository
@@ -56,7 +57,8 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           BS_USERNAME: ${{ secrets.BS_USERNAME }}
           BS_ACCESS_KEY: ${{ secrets.BS_ACCESS_KEY }}
-          BS_APP: ${{ secrets.BS_APP }}
+          BS_APP_ANDROID: ${{ secrets.BS_APP_ANDROID }}
+          BS_APP_IOS: ${{ secrets.BS_APP_IOS }}
         with:
           scenarioTag: ${{ inputs.scenarioTag || '@regression' }}
           deviceName: ${{ matrix.device.deviceName }}
