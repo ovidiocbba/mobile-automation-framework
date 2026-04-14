@@ -48,24 +48,28 @@ public class BrowserStackCapabilitiesBuilder {
 
     // Build BrowserStack options map
     final Map<String, Object> browserstackOptions = new HashMap<>();
+
+    // Authentication
     browserstackOptions.put("userName", config.require(BROWSERSTACK_USERNAME));
     browserstackOptions.put("accessKey", config.require(BROWSERSTACK_ACCESS_KEY));
+
+    // Project metadata (Dashboard)
     browserstackOptions.put("projectName", config.require(BROWSERSTACK_PROJECT_NAME));
     browserstackOptions.put("buildName", config.require(BROWSERSTACK_BUILD_NAME));
     browserstackOptions.put("sessionName", sessionName);
 
+    // Device
     browserstackOptions.put("deviceName", config.require(DEVICE_NAME));
     browserstackOptions.put("osVersion", config.require(PLATFORM_VERSION));
 
-    browserstackOptions.put("video", Boolean.parseBoolean(config.require(BROWSERSTACK_VIDEO)));
-    browserstackOptions.put(
-        "deviceLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_DEVICE_LOGS)));
-    browserstackOptions.put(
-        "appiumLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_APPIUM_LOGS)));
-    browserstackOptions.put(
-        "networkLogs", Boolean.parseBoolean(config.require(BROWSERSTACK_NETWORK_LOGS)));
-
+    // Appium version used in BrowserStack
     browserstackOptions.put("appiumVersion", config.require(BROWSERSTACK_APPIUM_VERSION));
+
+    // Logs & debugging
+    browserstackOptions.put("video", config.requireBoolean(BROWSERSTACK_VIDEO));
+    browserstackOptions.put("deviceLogs", config.requireBoolean(BROWSERSTACK_DEVICE_LOGS));
+    browserstackOptions.put("appiumLogs", config.requireBoolean(BROWSERSTACK_APPIUM_LOGS));
+    browserstackOptions.put("networkLogs", config.requireBoolean(BROWSERSTACK_NETWORK_LOGS));
 
     // Attach to capabilities
     options.setCapability("bstack:options", browserstackOptions);
