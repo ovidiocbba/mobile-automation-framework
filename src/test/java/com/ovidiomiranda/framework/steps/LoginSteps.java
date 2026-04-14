@@ -1,7 +1,7 @@
 package com.ovidiomiranda.framework.steps;
 
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP_PASSWORD;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP_USERNAME;
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PASSWORD;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
 import com.ovidiomiranda.framework.ui.pages.LoginPage;
@@ -62,7 +62,7 @@ public class LoginSteps {
   @When("I enter valid credentials")
   public void enterValidCredentials() {
     final String username = config.require(APP_USERNAME);
-    final String password = config.require(PASSWORD);
+    final String password = config.require(APP_PASSWORD);
     loginPage.enterCredentials(username, password);
   }
 
@@ -76,7 +76,7 @@ public class LoginSteps {
   @When("I log in with valid credentials")
   public void loginWithValidCredentials() {
     final String username = config.require(APP_USERNAME);
-    final String password = config.require(PASSWORD);
+    final String password = config.require(APP_PASSWORD);
     loginPage.login(username, password);
   }
 
