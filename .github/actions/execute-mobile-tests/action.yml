@@ -88,7 +88,10 @@ runs:
         echo "Using app: $APP"
 
         DEVICE_ID="${{ steps.normalize.outputs.device_id }}"
-        BUILD_NAME="GH-${GITHUB_RUN_NUMBER}-${DEVICE_ID}"
+        BRANCH=$(echo "${GITHUB_REF_NAME}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9-')
+        SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
+
+        BUILD_NAME="gh-${BRANCH}-${GITHUB_RUN_NUMBER}-${SHORT_SHA}-${DEVICE_ID}"
 
         CORE_PARAMS=(
         "-Dframework.execution=browserstack"
@@ -103,7 +106,7 @@ runs:
         "-Dbrowserstack.username=${BROWSERSTACK_USERNAME}"
         "-Dbrowserstack.accessKey=${BROWSERSTACK_ACCESS_KEY}"
         "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub"
-        "-Dbrowserstack.projectName=Mobile-Automation-Framework"
+        "-Dbrowserstack.projectName=mobile-automation-framework"
         "-Dbrowserstack.buildName=${BUILD_NAME}"
         "-Dbrowserstack.app=${APP}"
         "-Dbrowserstack.appiumVersion=2.0.1"
