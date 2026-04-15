@@ -226,6 +226,17 @@ Start using Jenkins
 
 ✅ Jenkins is now ready to use.
 
+> ⚠️ **Important (JCasC Setup):**
+> Since this project uses Jenkins Configuration as Code, a **manual restart is required on the first run** to properly load the pipeline configuration.
+>
+> After Jenkins starts for the first time, restart the container:
+>
+> ```bash
+> docker restart jenkins-mobile-automation
+> ```
+>
+> Once restarted, all pipelines and configurations will be correctly loaded.
+
 ![05-jenkins-is-now-ready-to-use.png](images/jenkins/05-jenkins-is-now-ready-to-use.png)
 
 ![06-jenkins-is-now-ready-to-use.png](images/jenkins/06-jenkins-is-now-ready-to-use.png)
