@@ -8,6 +8,11 @@ tool:
       - name: "jdk21"
         home: "/opt/java/openjdk"
 
+  git:
+    installations:
+      - name: "Default"
+        home: "/usr/bin/git"
+
   allure:
     installations:
       - name: "allure"
