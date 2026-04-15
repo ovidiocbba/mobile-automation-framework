@@ -28,8 +28,8 @@ def call(devices, params, gradleFlags) {
                 "-Dcucumber.filter.tags=${params.SCENARIO_TAG}",
                 "-Dapp.username=$APP_USERNAME",
                 "-Dapp.password=$APP_PASSWORD",
-                "-Dframework.threads=${params.THREADS}",
                 "-Dframework.explicitWait=${params.EXPLICIT_WAIT}",
+                "-Dframework.threads=${params.THREADS}",
                 "-Dbranch=${branch}",
                 "-Dcommit=${commit}"
         ]
@@ -37,26 +37,41 @@ def call(devices, params, gradleFlags) {
         def browserStackParamsList = []
 
         if (currentDevice.type == "browserstack") {
+
+            def app = (currentDevice.platform == "IOS")
+                    ? env.BROWSERSTACK_APP_IOS
+                    : env.BROWSERSTACK_APP_ANDROID
+            def ciName = "jenkins"
+
+            def normalizedBranch = branch
+                    .toLowerCase()
+                    .replaceAll(" ", "-")
+                    .replaceAll("[^a-z0-9-]", "")
+
+            def shortCommit = commit.take(7)
+
+            def buildName = "${ciName}-${normalizedBranch}-${BUILD_NUMBER}-${shortCommit}-${deviceId}"
+
             browserStackParamsList = [
                     "-Dbrowserstack.username=$BROWSERSTACK_USERNAME",
                     "-Dbrowserstack.accessKey=$BROWSERSTACK_ACCESS_KEY",
                     "-Dbrowserstack.url=https://hub-cloud.browserstack.com/wd/hub",
-                    "-Dbrowserstack.app=$BROWSERSTACK_APP",
-                    "-Dbrowserstack.projectName=Mobile-Automation-Framework",
-                    "-Dbrowserstack.buildName=Jenkins-$BUILD_NUMBER-${deviceId}",
+                    "-Dbrowserstack.projectName=mobile-automation-framework",
+                    "-Dbrowserstack.buildName=${buildName}",
+                    "-Dbrowserstack.app=${app}",
+                    "-Dbrowserstack.appiumVersion=2.0.1",
                     "-Dbrowserstack.video=true",
                     "-Dbrowserstack.deviceLogs=true",
                     "-Dbrowserstack.appiumLogs=true",
-                    "-Dbrowserstack.networkLogs=true",
-                    "-Dbrowserstack.appiumVersion=2.0.1"
+                    "-Dbrowserstack.networkLogs=true"
             ]
         }
 
         def deviceParamsList = [
                 "-Dplatform=${currentDevice.platform}",
+                "-DautomationName=${currentDevice.automationName}",
                 "-DdeviceName=${currentDevice.deviceName}",
                 "-DplatformVersion=${currentDevice.platformVersion}",
-                "-DautomationName=${currentDevice.automationName}",
                 "-Dallure.results.directory=${buildDir}/allure-results",
                 "-Dorg.gradle.project.buildDir=${buildDir}"
         ]
