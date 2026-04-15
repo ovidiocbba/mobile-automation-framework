@@ -150,7 +150,8 @@ pipeline {
                             credentialsList  += [
                                 string(credentialsId: 'BROWSERSTACK_USERNAME', variable: 'BROWSERSTACK_USERNAME'),
                                 string(credentialsId: 'BROWSERSTACK_ACCESS_KEY', variable: 'BROWSERSTACK_ACCESS_KEY'),
-                                string(credentialsId: 'BROWSERSTACK_APP', variable: 'BROWSERSTACK_APP')
+                                string(credentialsId: 'BROWSERSTACK_APP_ANDROID', variable: 'BROWSERSTACK_APP_ANDROID'),
+                                string(credentialsId: 'BROWSERSTACK_APP_IOS', variable: 'BROWSERSTACK_APP_IOS')
                             ]
                         }
 
