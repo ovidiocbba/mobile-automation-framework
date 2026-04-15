@@ -140,7 +140,7 @@ pipeline {
                     script {
                         def credentialsList   = [
                             usernamePassword(
-                                credentialsId: 'USERNAME',
+                                credentialsId: 'APP_USERNAME',
                                 usernameVariable: 'APP_USERNAME',
                                 passwordVariable: 'APP_PASSWORD'
                             )
