@@ -3,7 +3,7 @@
  */
 def call(devices, params, gradleFlags) {
 
-    def branch = params.BRANCH
+    def branch = params.BRANCH ?: env.BRANCH_NAME ?: "unknown"
 
     def commit = sh(
             script: "git rev-parse HEAD",
@@ -16,10 +16,7 @@ def call(devices, params, gradleFlags) {
 
         def currentDevice = device
 
-        def deviceId = currentDevice.deviceName
-                .toLowerCase()
-                .replaceAll(" ", "-")
-                .replaceAll("[^a-z0-9-]", "")
+        def deviceId = utils.normalize(currentDevice.deviceName)
 
         def buildDir = "build-${deviceId}"
 
@@ -41,15 +38,16 @@ def call(devices, params, gradleFlags) {
             def app = (currentDevice.platform == "IOS")
                     ? env.BROWSERSTACK_APP_IOS
                     : env.BROWSERSTACK_APP_ANDROID
+
             def ciName = "jenkins"
 
-            def normalizedBranch = branch
-                    .toLowerCase()
-                    .replaceAll(" ", "-")
-                    .replaceAll("[^a-z0-9-]", "")
+            def normalizedBranch = utils.normalize(branch)
 
-            def shortCommit = commit.take(7)
+            def shortCommit = commit ? commit.take(7) : "nohash"
 
+            // Build naming convention:
+            // <ci>-<branch>-<buildNumber>-<commit>-<deviceId>
+            // Example: jenkins-main-142-a1b2c3-iphone-15
             def buildName = "${ciName}-${normalizedBranch}-${BUILD_NUMBER}-${shortCommit}-${deviceId}"
 
             browserStackParamsList = [
