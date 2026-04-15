@@ -6,7 +6,8 @@ def call(String execution) {
     if (execution == "browserstack") {
         validate(env.BROWSERSTACK_USERNAME, "BROWSERSTACK_USERNAME")
         validate(env.BROWSERSTACK_ACCESS_KEY, "BROWSERSTACK_ACCESS_KEY")
-        validate(env.BROWSERSTACK_APP, "BROWSERSTACK_APP")
+        validate(env.BROWSERSTACK_APP_ANDROID, "BROWSERSTACK_APP_ANDROID")
+        validate(env.BROWSERSTACK_APP_IOS, "BROWSERSTACK_APP_IOS")
     }
 
     echo "Credentials validated"
