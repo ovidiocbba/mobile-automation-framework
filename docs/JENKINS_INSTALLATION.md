@@ -91,21 +91,8 @@ docker run -d \
   -e APP_PASSWORD=secret_sauce \
   -e BROWSERSTACK_USERNAME=your_browserstack_username \
   -e BROWSERSTACK_ACCESS_KEY=your_browserstack_access_key \
-  -e BROWSERSTACK_APP=bs://your_uploaded_app_id \
-  -e SUPPORTED_DEVICES='[
-    {
-      "deviceName": "Samsung Galaxy S23",
-      "platformVersion": "13",
-      "platform": "ANDROID",
-      "automationName": "UiAutomator2"
-    },
-    {
-      "deviceName": "Google Pixel 7",
-      "platformVersion": "13",
-      "platform": "ANDROID",
-      "automationName": "UiAutomator2"
-    }
-  ]' \
+  -e BROWSERSTACK_APP_ANDROID=bs://your_uploaded_app_id \
+  -e BROWSERSTACK_APP_IOS=bs://your_uploaded_app_id
   jenkins-mobile-ci:1.0.0
 ```
 
