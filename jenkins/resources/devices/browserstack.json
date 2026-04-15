@@ -1,16 +1,23 @@
 [
   {
     "type": "browserstack",
+    "platform": "ANDROID",
     "deviceName": "Samsung Galaxy S23",
     "platformVersion": "13",
-    "platform": "ANDROID",
     "automationName": "UiAutomator2"
   },
   {
     "type": "browserstack",
+    "platform": "ANDROID",
     "deviceName": "Google Pixel 7",
     "platformVersion": "13",
-    "platform": "ANDROID",
     "automationName": "UiAutomator2"
+  },
+  {
+    "type": "browserstack",
+    "platform": "IOS",
+    "deviceName": "iPhone 15",
+    "platformVersion": "17",
+    "automationName": "XCUITest"
   }
 ]
