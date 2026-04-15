@@ -95,7 +95,7 @@ runs:
 
         # Build naming convention:
         # <ci>-<branch>-<buildNumber>-<commit>-<deviceId>
-        # Example: gh-main-58-a1b2c3-samsung-galaxy-s23
+        # Example: github-main-58-a1b2c3-samsung-galaxy-s23
         BUILD_NAME="${CI_NAME}-${BRANCH}-${GITHUB_RUN_NUMBER}-${SHORT_COMMIT}-${DEVICE_ID}"
 
         CORE_PARAMS=(
