@@ -88,13 +88,15 @@ runs:
         echo "Using app: $APP"
 
         DEVICE_ID="${{ steps.normalize.outputs.device_id }}"
+
+        CI_NAME="github"
         BRANCH=$(echo "${GITHUB_REF_NAME}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9-')
-        SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
+        SHORT_COMMIT=$(echo $GITHUB_SHA | cut -c1-7)
 
         # Build naming convention:
         # <ci>-<branch>-<buildNumber>-<commit>-<deviceId>
         # Example: gh-main-58-a1b2c3-samsung-galaxy-s23
-        BUILD_NAME="gh-${BRANCH}-${GITHUB_RUN_NUMBER}-${SHORT_SHA}-${DEVICE_ID}"
+        BUILD_NAME="${CI_NAME}-${BRANCH}-${GITHUB_RUN_NUMBER}-${SHORT_COMMIT}-${DEVICE_ID}"
 
         CORE_PARAMS=(
         "-Dframework.execution=browserstack"
