@@ -226,6 +226,8 @@ Start using Jenkins
 
 ✅ Jenkins is now ready to use.
 
+![05.0-start-using-jenkins.png](images/jenkins/05.0-start-using-jenkins.png)
+
 > ⚠️ **Important (JCasC Setup):**
 > Since this project uses Jenkins Configuration as Code, a **manual restart is required on the first run** to properly load the pipeline configuration.
 >
