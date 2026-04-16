@@ -445,20 +445,18 @@ Example configuration for devices:
 [
   {
     "type": "local",
-    "deviceName": "Pixel 7 API 34",
-    "avd": "Pixel_7_API_34",
-    "platformVersion": "14",
     "platform": "ANDROID",
+    "deviceName": "Pixel 7 API 34",
+    "platformVersion": "14",
     "automationName": "UiAutomator2",
     "udid": "emulator-5554",
     "appiumServerUrl": "http://host.docker.internal:4723"
   },
   {
     "type": "local",
-    "deviceName": "Pixel 8 API 35",
-    "avd": "Pixel_8_API_35",
-    "platformVersion": "15",
     "platform": "ANDROID",
+    "deviceName": "Pixel 8 API 35",
+    "platformVersion": "15",
     "automationName": "UiAutomator2",
     "udid": "emulator-5556",
     "appiumServerUrl": "http://host.docker.internal:4723"
