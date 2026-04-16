@@ -1,5 +1,6 @@
 package com.ovidiomiranda.framework.core.capabilities;
 
+import static com.ovidiomiranda.framework.core.enums.ExecutionType.BROWSERSTACK;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.AUTOMATION_NAME;
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_APP;
@@ -8,6 +9,7 @@ import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM_VE
 import static com.ovidiomiranda.framework.core.enums.PropertiesInput.UDID;
 
 import com.ovidiomiranda.framework.core.config.ConfigValidator;
+import com.ovidiomiranda.framework.core.enums.ExecutionType;
 import io.appium.java_client.remote.options.BaseOptions;
 import java.time.Duration;
 
@@ -45,28 +47,33 @@ public abstract class BaseCapabilities {
   }
 
   /**
-   * Resolves and sets the application capability.
+   * Resolves and sets the application capability based on execution type.
    *
    * <p>Resolution priority:
    *
    * <ul>
-   *   <li>browserstack.app (for cloud execution)
-   *   <li>app (for local execution)
+   *   <li>For BrowserStack execution: uses {@code browserstack.app} (bs:// reference)
+   *   <li>For local execution: uses {@code app}
    * </ul>
    *
    * <p>Make sure to use the correct app for the selected platform (Android or iOS).
    *
    * @param options Appium options to enrich
    * @param config configuration validator
+   * @param executionType execution environment (LOCAL or BROWSERSTACK)
    */
   protected static void setAppCapability(
-      final BaseOptions<?> options, final ConfigValidator config) {
-    final String browserstackApp = config.optional(BROWSERSTACK_APP);
+      final BaseOptions<?> options,
+      final ConfigValidator config,
+      final ExecutionType executionType) {
 
-    final String app =
-        browserstackApp != null && !browserstackApp.isBlank()
-            ? browserstackApp
-            : config.optional(APP);
+    String app = null;
+
+    if (executionType == BROWSERSTACK) {
+      app = config.optional(BROWSERSTACK_APP);
+    } else {
+      app = config.optional(APP);
+    }
 
     if (app != null && !app.isBlank()) {
       options.setCapability("app", app);
