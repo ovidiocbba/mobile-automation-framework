@@ -67,7 +67,7 @@ public class AndroidCapabilities {
       browserStackBuilder.apply(options, sessionName);
     }
 
-    setAppCapability(options, config);
+    setAppCapability(options, config, executionType);
 
     if (executionType == LOCAL) {
       if (isAppAbsent(options)) {
