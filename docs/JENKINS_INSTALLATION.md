@@ -10,9 +10,10 @@ This guide explains how to build and run a fully configured **Jenkins Mobile Aut
 * [:floppy_disk: 2. Create Persistent Volume](#floppy_disk-2-create-persistent-volume)
 * [:rocket: 3. Run Jenkins Container](#rocket-3-run-jenkins-container)
 * [:gear: 4. Initial Jenkins Setup](#gear-4-initial-jenkins-setup)
-* [:wastebasket: 5. Clean Setup (Optional)](#wastebasket-5-clean-setup-optional)
-* [:memo: 6. Notes](#memo-6-notes)
-* [:iphone: 7. Local Android Emulators](#iphone-7-local-android-emulators)
+* [:iphone: 5. Local Android Emulators](#iphone-5-local-android-emulators)
+* [:key: 6. Accessing the Jenkins Container](#key-6-accessing-the-jenkins-container)
+* [:wastebasket: 7. Clean Setup (Optional)](#wastebasket-7-clean-setup-optional)
+* [:memo: 8. Notes](#memo-8-notes)
 ---
 
 ## :whale: 1. Build Docker Image
@@ -138,33 +139,6 @@ docker run -d \
   </strong>
 </div>
 
-### :key: 3.1 Accessing the Jenkins Container
-
-To access the Jenkins container's shell for troubleshooting or configuration, run this command:
-
-```
-docker exec -it jenkins-mobile-automation bash
-```
-
-This will open an interactive shell inside the running container. From here, you can:
-
-- Check logs
-- Change Jenkins settings
-- Troubleshoot problems
-
-To exit the shell, type:
-```
-exit
-```
-
-<div align="right">
-  <strong>
-    <a href="#table-of-contents">↥ Back to top</a>
-  </strong>
-</div>
-
----
-
 ## :gear: 4. Initial Jenkins Setup
 
 ### 4.1 Plugin Installation
@@ -251,48 +225,7 @@ Start using Jenkins
 
 ---
 
-## :wastebasket: 5. Clean Setup (Optional)
-
-Remove container:
-
-```bash
-docker rm -f jenkins-mobile-automation
-```
-
-Remove volume:
-
-```bash
-docker volume rm jenkins_mobile_ci
-```
-
-⚠ This will permanently delete all Jenkins data.
-
-<div align="right">
-  <strong>
-    <a href="#table-of-contents">↥ Back to top</a>
-  </strong>
-</div>
-
----
-
-## :memo: 6. Notes
-
-* This setup is optimized for Mobile Automation using BrowserStack
-* UTF-8 is enabled to avoid encoding issues
-* Devices are configurable via environment variables
-* Supports:
-  - Parallel execution
-  - Allure reports
-  - Dynamic device selection
-
-<div align="right">
-  <strong>
-    <a href="#table-of-contents">↥ Back to top</a>
-  </strong>
-</div>
-
----
-# :iphone: 7. Local Android Emulators
+# :iphone: 5. Local Android Emulators
 
 This framework also supports **running tests on local Android emulators
 using Appium**.
@@ -305,7 +238,7 @@ This is useful for:
 -   Parallel execution using multiple emulators
 
 ------------------------------------------------------------------------
-## 7.0 Install Android System Images
+## 5.0 Install Android System Images
 
 If you have **low RAM**, use images **without Play Store (google_apis)**:
 
@@ -342,7 +275,7 @@ sdkmanager.bat "system-images;android-35;google_apis_playstore;x86_64"
 
 ---
 
-## 7.1 Create Android Emulators
+## 5.1 Create Android Emulators
 
 Create the emulators:
 
@@ -368,8 +301,7 @@ avdmanager.bat create avd \
 
 ---
 
-
-## 7.2 Start Android Emulators
+## 5.2 Start Android Emulators
 
 Run the emulators:
 
@@ -413,7 +345,7 @@ emulator-5556   device
 
 ---
 
-## 7.3 Start Appium Server
+## 5.3 Start Appium Server
 
 Run:
 
@@ -439,7 +371,7 @@ http://host.docker.internal:4723
 
 ---
 
-## 7.3 Local Emulator Configuration
+## 5.4 Local Emulator Configuration
 
 Example configuration for devices:
 
@@ -474,7 +406,7 @@ Example configuration for devices:
 
 ---
 
-## 7.4 If You Changed `localDevices.json`
+## 5.5 If You Changed `localDevices.json`
 
 If Jenkins is already running and you updated the device configuration
 file (`localDevices.json`), you need to copy the new file into the
@@ -513,7 +445,7 @@ You should see the updated device configuration.
 
 ---
 
-## 7.5 Parallel Execution
+## 5.6 Parallel Execution
 
 When two emulators are running:
 
@@ -523,6 +455,76 @@ emulator-5556
 ```
 
 The framework can distribute tests between both devices.
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+
+### :key: 6. Accessing the Jenkins Container
+
+To access the Jenkins container's shell for troubleshooting or configuration, run this command:
+
+```
+docker exec -it jenkins-mobile-automation bash
+```
+
+This will open an interactive shell inside the running container. From here, you can:
+
+- Check logs
+- Change Jenkins settings
+- Troubleshoot problems
+
+To exit the shell, type:
+```
+exit
+```
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## :wastebasket: 7. Clean Setup (Optional)
+
+Remove container:
+
+```bash
+docker rm -f jenkins-mobile-automation
+```
+
+Remove volume:
+
+```bash
+docker volume rm jenkins_mobile_ci
+```
+
+⚠ This will permanently delete all Jenkins data.
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## :memo: 8. Notes
+
+* This setup is optimized for Mobile Automation using BrowserStack
+* UTF-8 is enabled to avoid encoding issues
+* Devices are configurable via environment variables
+* Supports:
+    - Parallel execution
+    - Allure reports
+    - Dynamic device selection
 
 <div align="right">
   <strong>
