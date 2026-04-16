@@ -347,18 +347,33 @@ emulator-5556   device
 
 ## 5.3 Start Appium Server
 
-Run:
+> ⚠️ **Important**
+>
+> Run Appium **from the project root folder**.
+> If not, it may not find APK/iOS files and tests can fail.
+
+### 1. Go to project folder
+
+```bash
+cd C:\\Users\\ovidio.miranda\\Documents\\Projects\\mobile-automation-framework
+```
+
+### 2. Start Appium
 
 ``` bash
 appium
 ```
 
-Default URL:
+### 3. Default URL (local execution)
+
 ```
 http://localhost:4723
 ```
 
-Inside Docker the container accesses it using:
+### 4. Docker usage
+
+Inside Docker, the container accesses Appium using:
+
 ```
 http://host.docker.internal:4723
 ```
@@ -464,6 +479,59 @@ The framework can distribute tests between both devices.
 
 ---
 
+## 5.7 Delete Android Emulators
+
+To remove an existing Android emulator (AVD), follow these steps:
+
+### 1. List available emulators
+
+```bash
+avdmanager.bat list avd
+```
+
+Example output:
+
+```bash
+Available Android Virtual Devices:
+    Name: Pixel_7_API_34
+    Name: Pixel_8_API_35
+```
+
+---
+
+### 2. Delete a specific emulator
+
+```bash
+avdmanager.bat delete avd -n Pixel_7_API_34
+```
+
+```bash
+avdmanager.bat delete avd -n Pixel_8_API_35
+```
+
+---
+
+### 3. Verify deletion
+
+```bash
+avdmanager.bat list avd
+```
+
+The deleted emulator should no longer appear in the list.
+
+---
+
+### ⚠️ Notes
+
+- Make sure the emulator is **not running** before deleting it.
+- If needed, stop it using:
+
+```bash
+adb -s emulator-5554 emu kill
+```
+
+- Deleting an AVD **does not remove system images**, only the emulator instance.
+---
 
 ### :key: 6. Accessing the Jenkins Container
 
