@@ -1,6 +1,7 @@
 # :book: Git Hooks Guide
 
-This project uses **Git Hooks** to enforce code quality before commits and pushes.
+This project uses **Git Hooks** to enforce code quality automatically
+before commits and pushes.
 
 ---
 
@@ -17,10 +18,13 @@ This project uses **Git Hooks** to enforce code quality before commits and pushe
 
 Git hooks are scripts that run automatically during Git actions like commit and push.
 
-They help:
-- Enforce code quality
-- Prevent broken commits
-- Maintain team consistency
+They are used in this project to:
+
+- Enforce code formatting
+- Detect code issues early
+- Block broken or non-compiling code
+- Enforce quality rules
+- Keep team consistency
 
 <div align="right">
   <strong>
@@ -32,19 +36,43 @@ They help:
 
 ## :shield: 2. Hooks Used
 
-### Pre-commit
-- Runs code formatting and validation
-- Command:
-```
-./gradlew spotlessCheck
-```
+### ✅ Pre-commit
 
-### Pre-push
-- Runs full quality checks
-- Command:
-```
-./gradlew preCommitCheck
-```
+Runs fast validations focused on **code quality before committing**.
+
+Commands executed:
+
+    ./gradlew spotlessCheck
+    ./gradlew staticAnalysis
+
+Behavior:
+
+-   If formatting fails, the hook offers to run `spotlessApply`
+-   If Checkstyle or PMD fails, the commit is blocked
+-   Developer must fix issues before committing
+
+------------------------------------------------------------------------
+
+### 🚀 Pre-push
+
+Runs deeper validations focused on **project integrity before pushing**.
+
+Commands executed:
+
+    ./gradlew assemble
+    ./gradlew staticAnalysis
+    ./gradlew javadoc
+
+Behavior:
+
+Push is blocked if:
+
+-   The project does not compile
+-   Spotless, Checkstyle, or PMD fail
+-   Javadoc contains errors
+
+This guarantees that **only clean, compilable, documented code reaches
+the remote repository**.
 
 <div align="right">
   <strong>
@@ -56,15 +84,17 @@ They help:
 
 ## :wrench: 3. Installation
 
-To install the hooks, just run:
+To install the hooks, run:
 
-```
-githooks/scripts/setup-hooks.sh
-```
+    githooks/scripts/setup-hooks.sh
 
 This script will:
-- Configure Git to use the project hooks
-- Enable pre-commit and pre-push hooks
+
+-   Configure Git to use the project hooks path
+-   Enable `pre-commit` and `pre-push` hooks automatically
+-   Work on macOS, Linux, and Git Bash on Windows
+
+You only need to run this **once per clone**.
 
 <div align="right">
   <strong>
@@ -76,11 +106,19 @@ This script will:
 
 ## :white_check_mark: 4. Expected Behavior
 
-- Code is formatted before commit
-- Push is blocked if:
-    - Formatting fails
-    - Static analysis fails
-    - Javadoc fails
+| Action            | What happens                                                   |
+| ----------------- | -------------------------------------------------------------- |
+| `git commit`      | Validates code formatting and static analysis (Checkstyle/PMD) |
+| `git push`        | Validates compilation, static analysis, and Javadoc            |
+| Formatting issues | You are prompted to auto-fix using Spotless                    |
+| Quality issues    | Commit/Push is blocked until the issues are fixed              |
+
+These hooks ensure the repository is always:
+
+-   Formatted
+-   Clean
+-   Compilable
+-   Documented
 
 <div align="right">
   <strong>
