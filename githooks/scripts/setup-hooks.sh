@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "==> Configuring git hooks..."
+printf '==> Configuring git hooks...\n'
 
 # Configure hooks path
 git config core.hooksPath githooks
@@ -9,5 +9,5 @@ git config core.hooksPath githooks
 chmod +x githooks/pre-commit
 chmod +x githooks/pre-push
 
-echo "[OK] Git hooks configured successfully."
+printf '[OK] Git hooks configured successfully.\n'
 
