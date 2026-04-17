@@ -1,21 +1,21 @@
 #!/bin/sh
 
-printf $'\n==> Running pre-push verification...\n'
+printf '\n==> Running pre-push verification...\n'
 
 if ! ./gradlew -q assemble; then
-  echo "[ERROR] Compilation failed."
+  printf '[ERROR] Compilation failed.\n'
   exit 1
 fi
 
 if ! ./gradlew -q staticAnalysis; then
-  echo "[ERROR] Spotless / Checkstyle / PMD violations found."
+  printf '[ERROR] Spotless / Checkstyle / PMD violations found.\n'
   exit 1
 fi
 
 if ! ./gradlew -q javadoc; then
-  echo "[ERROR] Javadoc errors found."
+  printf '[ERROR] Javadoc errors found.\n'
   exit 1
 fi
 
-echo "[OK] Push allowed: code compiles, passes quality checks, and Javadoc is valid."
+printf '[OK] Push allowed: code compiles, passes quality checks, and Javadoc is valid.\n'
 exit 0
