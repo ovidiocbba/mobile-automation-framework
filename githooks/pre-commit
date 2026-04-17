@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "==> Running pre-commit checks..."
+echo "\n==> Running pre-commit checks..."
 
 # 1 Check formatting first
 if ! ./gradlew -q spotlessCheck; then
