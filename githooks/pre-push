@@ -1,8 +1,8 @@
 #!/bin/sh
 
-echo $'"\n==> Running pre-push full verification...'
+echo $'\n==> Running pre-push full verification...'
 
-if ! ./gradlew -q clean check; then
+if ! ./gradlew -q check; then
   echo "[ERROR] Push blocked: tests, javadoc or quality checks failed."
   exit 1
 fi
