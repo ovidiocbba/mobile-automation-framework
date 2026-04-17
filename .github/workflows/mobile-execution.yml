@@ -24,16 +24,52 @@ on:
         default: "30"
 
 jobs:
+  # Device list comes from repository variable EXECUTION_DEVICES (vars.EXECUTION_DEVICES)
+  # To update it go to: Settings → Secrets and variables → Actions → Variables
+  prepare-matrix:
+    runs-on: ubuntu-latest
+
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - name: Build dynamic matrix
+        id: set-matrix
+        shell: bash
+        run: |
+          DEVICES='${{ vars.EXECUTION_DEVICES }}'
+
+          echo "Selected device: ${{ inputs.device }}"
+
+          if [ "${{ inputs.device }}" = "ALL" ]; then
+            echo "Using all devices"
+            echo "matrix=$DEVICES" >> $GITHUB_OUTPUT
+          else
+            echo "Filtering device..."
+
+            FILTERED=$(echo "$DEVICES" | jq --arg device "${{ inputs.device }}" '[.[] | select(.deviceName == $device)]')
+
+            if [ "$FILTERED" = "[]" ]; then
+              echo "::error::Device '${{ inputs.device }}' not found"
+              echo "Available devices:"
+              echo "$DEVICES" | jq -r '.[].deviceName'
+              exit 1
+            fi
+
+            echo "Using device: ${{ inputs.device }}"
+            echo "matrix=$FILTERED" >> $GITHUB_OUTPUT
+          fi
+
   execution:
+    needs: prepare-matrix
     runs-on: ubuntu-latest
 
     strategy:
       # Allow all executions even if one device fails
       fail-fast: false
       matrix:
-        # Device list comes from repository variable EXECUTION_DEVICES (vars.EXECUTION_DEVICES)
-        # To update it go to: Settings → Secrets and variables → Actions → Variables
-        device: ${{ fromJson(vars.EXECUTION_DEVICES) }}
+        # Uses filtered devices from prepare-matrix job
+        device: ${{ fromJson(needs.prepare-matrix.outputs.matrix) }}
 
     env:
       APP_USERNAME: ${{ secrets.APP_USERNAME }}
@@ -49,7 +85,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Mobile Tests
-        if: ${{ inputs.device == 'ALL' || matrix.device.deviceName == inputs.device }}
         timeout-minutes: ${{ inputs.device == 'ALL' && 60 || 35 }}
         uses: ./.github/actions/execute-mobile-tests
         env:
