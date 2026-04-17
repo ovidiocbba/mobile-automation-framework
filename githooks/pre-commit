@@ -1,17 +1,18 @@
-#!/bin/bash
+#!/bin/sh
 
-echo $'\n==> Running pre-commit checks...'
+printf '\n==> Running pre-commit checks...\n'
 
 # 1 Check formatting first
 if ! ./gradlew -q spotlessCheck; then
-    read -p $'\nCode is not formatted. Run spotlessApply? [y/n]: ' -n 1 -r < /dev/tty
-    echo
+    printf '\nCode is not formatted. Run spotlessApply? [y/n]: '
+    read REPLY
 
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
         ./gradlew spotlessApply
-        echo $'\n[FIXED] Code formatted. Stage changes and commit again.'
+        printf '\n[FIXED] Code formatted.\n'
+        printf 'Run: git add -A && git commit again.\n'
     else
-        echo $'\n[ERROR] Please format the code before committing.'
+        printf '\n[ERROR] Please format the code before committing.\n'
     fi
 
     exit 1
@@ -19,10 +20,10 @@ fi
 
 # 2 Now run static analysis
 if ! ./gradlew -q staticAnalysis; then
-    echo $'\n[ERROR] Checkstyle/PMD violations found. Review the report:'
-    echo "build/reports/checkstyle/"
-    echo "build/reports/pmd/"
+    printf '\n[ERROR] Checkstyle/PMD violations found. Review the report:\n'
+    printf 'build/reports/checkstyle/\n'
+    printf 'build/reports/pmd/\n'
     exit 1
 fi
 
-echo "[OK] Pre-commit checks passed."
+printf '[OK] Pre-commit checks passed.\n'
