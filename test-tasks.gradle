@@ -3,7 +3,10 @@
  EXECUTION GUIDE
  =====================================================
  Run iOS locally:
- ./gradlew clean executeFeatures -Dplatform=IOS -Dframework.execution=local
+ ./gradlew clean executeFeatures -Dplatform=IOS -Dframework.execution=local -Dcucumber.filter.tags='@TC-00001'
+
+  Run Android locally:
+ ./gradlew clean executeFeatures -Dplatform=ANDROID -Dframework.execution=local -Dcucumber.filter.tags='@TC-00001'
 
  Run on BrowserStack:
  ./gradlew clean executeFeatures -Dplatform=ANDROID -Dframework.execution=browserstack -Dcucumber.filter.tags='@TC-00001'
