@@ -43,13 +43,13 @@ jobs:
 
           if [ "${{ inputs.device }}" = "ALL" ]; then
             echo "Using all devices"
-            echo "matrix=$DEVICES" >> $GITHUB_OUTPUT
+            RESULT="$DEVICES"
           else
             echo "Filtering device..."
 
-            FILTERED=$(echo "$DEVICES" | jq --arg device "${{ inputs.device }}" '[.[] | select(.deviceName == $device)]')
+            RESULT=$(echo "$DEVICES" | jq --arg device "${{ inputs.device }}" '[.[] | select(.deviceName == $device)]')
 
-            if [ "$FILTERED" = "[]" ]; then
+            if [ "$RESULT" = "[]" ]; then
               echo "::error::Device '${{ inputs.device }}' not found"
               echo "Available devices:"
               echo "$DEVICES" | jq -r '.[].deviceName'
@@ -57,8 +57,11 @@ jobs:
             fi
 
             echo "Using device: ${{ inputs.device }}"
-            echo "matrix=$FILTERED" >> $GITHUB_OUTPUT
           fi
+
+          echo "matrix<<EOF" >> $GITHUB_OUTPUT
+          echo "$RESULT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
   execution:
     needs: prepare-matrix
