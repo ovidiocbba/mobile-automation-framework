@@ -2,17 +2,26 @@
 
 echo "==> Running pre-commit checks..."
 
-if ! ./gradlew spotlessCheck; then
-    read -p $'\nCode is not formatted. Auto-fix with spotlessApply? [y/n]: ' -n 1 -r < /dev/tty
+# 1 Check formatting first
+if ! ./gradlew -q spotlessCheck; then
+    read -p $'\nCode is not formatted. Run spotlessApply? [y/n]: ' -n 1 -r < /dev/tty
     echo
 
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        ./gradlew spotlessApply && \
-        echo $'\n[OK] Code formatted successfully. Please review, stage changes, and commit again.'
+        ./gradlew spotlessApply
+        echo $'\n[FIXED] Code formatted. Stage changes and commit again.'
     else
-        echo $'\nNo changes were applied. Please format the code manually before committing.'
+        echo $'\n[ERROR] Please format the code before committing.'
     fi
 
+    exit 1
+fi
+
+# 2 Now run static analysis
+if ! ./gradlew -q staticAnalysis; then
+    echo $'\n[ERROR] Checkstyle/PMD violations found. Review the report:'
+    echo "build/reports/checkstyle/"
+    echo "build/reports/pmd/"
     exit 1
 fi
 
