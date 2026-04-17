@@ -1,14 +1,11 @@
 #!/bin/sh
 
-echo "==> Running pre-push checks..."
+echo "==> Running pre-push full verification..."
 
-./gradlew preCommitCheck
-RESULT=$?
-
-if [ $RESULT -ne 0 ]; then
-  echo "[ERROR] Push blocked: quality checks failed."
+if ! ./gradlew -q clean check; then
+  echo "[ERROR] Push blocked: tests, javadoc or quality checks failed."
   exit 1
 fi
 
-echo "[OK] Push allowed: all checks passed."
+echo "[OK] Push allowed: full verification passed."
 exit 0
