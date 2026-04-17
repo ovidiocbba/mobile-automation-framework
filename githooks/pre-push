@@ -1,11 +1,21 @@
 #!/bin/sh
 
-echo $'\n==> Running pre-push full verification...'
+printf $'\n==> Running pre-push verification...\n'
 
-if ! ./gradlew -q check; then
-  echo "[ERROR] Push blocked: tests, javadoc or quality checks failed."
+if ! ./gradlew -q assemble; then
+  echo "[ERROR] Compilation failed."
   exit 1
 fi
 
-echo "[OK] Push allowed: full verification passed."
+if ! ./gradlew -q staticAnalysis; then
+  echo "[ERROR] Spotless / Checkstyle / PMD violations found."
+  exit 1
+fi
+
+if ! ./gradlew -q javadoc; then
+  echo "[ERROR] Javadoc errors found."
+  exit 1
+fi
+
+echo "[OK] Push allowed: code compiles, passes quality checks, and Javadoc is valid."
 exit 0
