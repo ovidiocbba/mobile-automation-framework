@@ -1,7 +1,15 @@
 package com.ovidiomiranda.framework.utils;
 
 import static com.ovidiomiranda.framework.core.enums.ExecutionType.BROWSERSTACK;
-import static com.ovidiomiranda.framework.core.enums.PropertiesInput.*;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APP;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.APPIUM_SERVER_URL;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.AUTOMATION_NAME;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_BUILD_NAME;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.BROWSERSTACK_PROJECT_NAME;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.DEVICE_NAME;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.FRAMEWORK_THREADS;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM;
+import static com.ovidiomiranda.framework.core.enums.PropertiesInput.PLATFORM_VERSION;
 import static com.ovidiomiranda.framework.core.utils.ExecutionUtils.getExecutionType;
 import static com.ovidiomiranda.framework.utils.ScenarioUtils.getTestCaseTitle;
 
@@ -39,7 +47,7 @@ public final class ExecutionLogger {
   }
 
   /**
-   * Logs execution configuration details in three clear sections:
+   * Logs execution configuration details in three clear sections.
    *
    * <ul>
    *   <li>RUNNER INFORMATION: Where the test runs
