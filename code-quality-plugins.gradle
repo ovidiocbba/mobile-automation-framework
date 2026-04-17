@@ -118,12 +118,3 @@ tasks.register('staticAnalysis') {
             'pmdMain',
             'pmdTest')
 }
-
-tasks.register('preCommitCheck') {
-    group = "verification"
-    description = "Runs all checks required before commit"
-
-    dependsOn(
-            'staticAnalysis',
-            'javadoc')
-}
