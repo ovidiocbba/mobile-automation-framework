@@ -1,6 +1,6 @@
 unclassified:
   # extendedEmailPublisher → Builds the rich HTML email used by emailext()
-  extendedEmailPublisher:
+  email-ext:
     mailAccount:
       smtpHost: "smtp.office365.com"
       smtpPort: 587
