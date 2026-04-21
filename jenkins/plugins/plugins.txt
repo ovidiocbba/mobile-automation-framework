@@ -66,4 +66,6 @@ timestamper
 # Workspace / Utilities
 # --------------------------------------------------
 # ws-cleanup → Allows cleaning the workspace in pipelines using cleanWs()
+# pipeline-utility-steps → Essential for reading/writing JSON, YAML, CSV and .properties files (like email.env)
 ws-cleanup
+pipeline-utility-steps
