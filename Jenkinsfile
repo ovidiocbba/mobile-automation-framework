@@ -205,8 +205,7 @@ pipeline {
                     subject: env.EMAIL_SUBJECT,
                     mimeType: 'text/html',
                     body: readFile('email-report.html'),
-                    to: params.EMAILS,
-                    debug: true
+                    to: params.EMAILS
                 )
             }
         }
