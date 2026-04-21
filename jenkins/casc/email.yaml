@@ -1,0 +1,20 @@
+unclassified:
+  # extendedEmailPublisher → Builds the rich HTML email used by emailext()
+  extendedEmailPublisher:
+    smtpHost: "smtp.office365.com"
+    smtpPort: "587"
+    useSsl: false
+    useTls: true
+    defaultContentType: "text/html"
+    defaultFrom: "${SMTP_FROM}"
+    authentication:
+      credentialsId: "SMTP_CREDENTIALS"
+
+  # mailer → Base SMTP engine that actually sends the email
+  mailer:
+    smtpHost: "smtp.office365.com"
+    smtpPort: "587"
+    useSsl: false
+    useTls: true
+    authentication:
+      credentialsId: "SMTP_CREDENTIALS"
