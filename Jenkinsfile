@@ -197,12 +197,16 @@ pipeline {
                 script {
                     def props = readProperties file: 'email.env'
                     env.EMAIL_SUBJECT = props.EMAIL_SUBJECT
+
+                    echo "Attempting to send email to: ${params.EMAILS}"
+                    echo "Subject: ${env.EMAIL_SUBJECT}"
                 }
                 emailext (
                     subject: env.EMAIL_SUBJECT,
                     mimeType: 'text/html',
                     body: readFile('email-report.html'),
                     to: params.EMAILS
+                    debug: true
                 )
             }
         }
