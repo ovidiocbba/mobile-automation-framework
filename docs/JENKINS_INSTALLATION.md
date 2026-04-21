@@ -20,9 +20,8 @@ This guide explains how to build and run a fully configured **Jenkins Mobile Aut
 
 The `Dockerfile` is located at:
 
-```
-mobile-automation-framework/Dockerfile
-```
+> mobile-automation-framework/Dockerfile
+
 
 If you are inside the `mobile-automation-framework` folder, you can run
 
@@ -74,42 +73,22 @@ This volume stores:
 
 ## :rocket: 3. Run Jenkins Container
 
-You can run the Jenkins container using **two different approaches** depending on your needs.
+### Run Jenkins using the `.env` file:
 
-### Option 1: Inline environment variables (Quick Start)
-```bash
-docker run -d \
-  --name jenkins-mobile-automation \
-  --restart unless-stopped \
-  -p 8081:8080 \
-  -p 50001:50000 \
-  -v jenkins_mobile_ci:/var/jenkins_home \
-  -e JENKINS_ADMIN_ID=admin \
-  -e JENKINS_ADMIN_PASSWORD=SuperSecurePass2026! \
-  -e GIT_REPO=https://github.com/ovidiocbba/mobile-automation-framework \
-  -e GIT_BRANCH=main \
-  -e APP_USERNAME=standard_user \
-  -e APP_PASSWORD=secret_sauce \
-  -e BROWSERSTACK_USERNAME=your_browserstack_username \
-  -e BROWSERSTACK_ACCESS_KEY=your_browserstack_access_key \
-  -e BROWSERSTACK_APP_ANDROID=bs://your_uploaded_app_id \
-  -e BROWSERSTACK_APP_IOS=bs://your_uploaded_app_id
-  jenkins-mobile-ci:1.0.0
-```
+Jenkins **must** be started using the `.env` file.
 
-**Note**:
+**Environment file location**
 
-Be sure to change the default password `SuperSecurePass2026!` to a password you choose. This will help keep your Jenkins secure before using it.
-The password you set here will be used for the Jenkins admin login during the first setup.
+All required variables are defined in:
 
-### Option 2: Using `.env` file (Recommended)
-
-Instead of passing all environment variables manually, you can use an .env file.
-
-File location:
 ```
 jenkins/env/.env.qa
 ```
+
+> You only maintain this file.
+> The Docker command never needs to change.
+
+---
 
 ```bash
 docker run -d \
