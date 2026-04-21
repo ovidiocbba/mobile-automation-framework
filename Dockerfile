@@ -27,6 +27,7 @@ RUN apt-get update && \
     xvfb \
     xauth \
     git \
+    jq \
     locales && \
     \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
