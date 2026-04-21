@@ -199,7 +199,6 @@ pipeline {
                     env.EMAIL_SUBJECT = props.EMAIL_SUBJECT
                 }
                 emailext (
-                    debug: true,
                     subject: env.EMAIL_SUBJECT,
                     mimeType: 'text/html',
                     body: readFile('email-report.html'),
