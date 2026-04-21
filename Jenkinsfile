@@ -50,9 +50,21 @@ pipeline {
         )
 
         string(
+            name: 'DEVICE',
+            defaultValue: 'ALL',
+            description: 'Device to execute'
+        )
+
+        string(
             name: 'SCENARIO_TAG',
             defaultValue: '@regression',
             description: 'Scenario tag to execute (e.g. "@TC-00001")'
+        )
+
+        string(
+            name: 'EMAILS',
+            defaultValue: 'qa@company.com',
+            description: 'Emails separated by comma'
         )
 
         string(
@@ -182,6 +194,22 @@ pipeline {
                     keepAll: true,                    // keep old builds
                     alwaysLinkToLastBuild: true       // link to latest build
                 ])
+            }
+        }
+
+        stage('Send Execution Email') {
+            steps {
+                sh 'bash jenkins/scripts/generate-email-report.sh'
+                script {
+                    def props = readProperties file: 'email.env'
+                    env.EMAIL_SUBJECT = props.EMAIL_SUBJECT
+                }
+                emailext (
+                    subject: env.EMAIL_SUBJECT,
+                    mimeType: 'text/html',
+                    body: readFile('email-report.html'),
+                    to: params.EMAILS
+                )
             }
         }
     }
