@@ -50,12 +50,6 @@ pipeline {
         )
 
         string(
-            name: 'DEVICE',
-            defaultValue: 'ALL',
-            description: 'Device to execute'
-        )
-
-        string(
             name: 'SCENARIO_TAG',
             defaultValue: '@regression',
             description: 'Scenario tag to execute (e.g. "@TC-00001")'
@@ -205,6 +199,7 @@ pipeline {
                     env.EMAIL_SUBJECT = props.EMAIL_SUBJECT
                 }
                 emailext (
+                    debug: true,
                     subject: env.EMAIL_SUBJECT,
                     mimeType: 'text/html',
                     body: readFile('email-report.html'),
