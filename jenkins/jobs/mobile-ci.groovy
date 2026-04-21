@@ -58,6 +58,12 @@ pipelineJob(JOB_NAME) {
         )
 
         stringParam(
+                'EMAILS',
+                'qa@company.com',
+                'Emails separated by comma'
+        )
+
+        stringParam(
                 'EXPLICIT_WAIT',
                 '30',
                 'Explicit wait timeout in seconds (e.g. "30")'
