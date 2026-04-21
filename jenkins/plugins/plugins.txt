@@ -27,17 +27,25 @@ credentials-binding
 # --------------------------------------------------
 # allure-jenkins-plugin → Integrates Allure test reports
 # htmlpublisher → Publishes HTML reports in Jenkins (used for Allure report UI)
+# email-ext → Advanced email notifications from pipelines (HTML body, dynamic subject, attachments)
+# token-macro → Required by email-ext to render variables/macros in subject and body correctly
+# mailer → Core SMTP mail sender used internally by email-ext to actually deliver emails
 allure-jenkins-plugin
 htmlpublisher
+email-ext
+token-macro
+mailer
 
 # --------------------------------------------------
 # Infrastructure as Code / Job Management
 # --------------------------------------------------
 # configuration-as-code → Enables Jenkins configuration via YAML (JCasC), eliminating manual UI setup
 # job-dsl → Enables creation of Jenkins jobs via code (Job DSL)
+# structs → Required by job-dsl and complex parameter types (Active Choices) to survive Jenkins restarts
 # uno-choice → Enables dynamic parameters (Active Choices) used for DEVICE combo
 configuration-as-code
 job-dsl
+structs
 uno-choice
 
 # --------------------------------------------------
