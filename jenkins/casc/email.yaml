@@ -8,8 +8,7 @@ unclassified:
       smtpHost: "${SMTP_HOST}"
       smtpPort: "${SMTP_PORT}"
       useTls: true
-      smtpUsername: "${SMTP_USERNAME}"
-      smtpPassword: "${SMTP_PASSWORD}"
+      credentialsId: "SMTP_CREDENTIALS"
       address: "${SMTP_FROM}"
 
     defaultContentType: "text/html"
@@ -23,5 +22,4 @@ unclassified:
     useTls: true
     replyToAddress: "${SMTP_FROM}"
     authentication:
-      username: "${SMTP_USERNAME}"
-      password: "${SMTP_PASSWORD}"
+      credentialsId: "SMTP_CREDENTIALS"
