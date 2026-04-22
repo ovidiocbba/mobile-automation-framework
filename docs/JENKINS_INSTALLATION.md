@@ -13,7 +13,8 @@ This guide explains how to build and run a fully configured **Jenkins Mobile Aut
 * [:iphone: 5. Local Android Emulators](#iphone-5-local-android-emulators)
 * [:key: 6. Accessing the Jenkins Container](#key-6-accessing-the-jenkins-container)
 * [:wastebasket: 7. Clean Setup (Optional)](#wastebasket-7-clean-setup-optional)
-* [:memo: 8. Notes](#memo-8-notes)
+* [:repeat: 8. Update .env Variables](#repeat-8-update-env-variables)
+* [:memo: 9. Notes](#memo-9-notes)
 ---
 
 ## :whale: 1. Build Docker Image
@@ -558,7 +559,67 @@ docker volume rm jenkins_mobile_ci
 
 ---
 
-## :memo: 8. Notes
+## :repeat: 8. Update .env Variables
+
+If you need to update environment variables (for example SMTP credentials, API keys, etc.), follow these steps:
+
+### 1. Stop the container
+
+```bash
+docker stop jenkins-mobile-automation
+```
+
+### 2. Remove the container
+
+```bash
+docker rm jenkins-mobile-automation
+```
+
+### 3. Update your `.env` file
+
+Edit:
+
+```
+jenkins/env/.env.qa
+```
+
+Update values like:
+
+```
+SMTP_USERNAME=your_email
+SMTP_PASSWORD=your_password
+SMTP_HOST=smtp.gmail.com
+```
+
+### 4. Start container again with same command
+
+```bash
+docker run -d \
+  --name jenkins-mobile-automation \
+  --restart unless-stopped \
+  -p 8081:8080 \
+  -p 50001:50000 \
+  -v jenkins_mobile_ci:/var/jenkins_home \
+  --env-file jenkins/env/.env.qa \
+  --add-host=host.docker.internal:host-gateway \
+  jenkins-mobile-ci:1.0.0
+```
+
+**⚠️ Important**
+
+- You do NOT need to rebuild the Docker image
+- You do NOT lose Jenkins data (volume persists)
+- Only environment variables are refreshed
+
+<div align="right">
+  <strong>
+    <a href="#table-of-contents">↥ Back to top</a>
+  </strong>
+</div>
+
+---
+
+## :memo: 9. Notes
 
 * This setup is optimized for Mobile Automation using BrowserStack
 * UTF-8 is enabled to avoid encoding issues
