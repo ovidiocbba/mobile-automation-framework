@@ -20,8 +20,7 @@ This guide explains how to build and run a fully configured **Jenkins Mobile Aut
 
 The `Dockerfile` is located at:
 
-> mobile-automation-framework/Dockerfile
-
+`mobile-automation-framework/Dockerfile`
 
 If you are inside the `mobile-automation-framework` folder, you can run
 
@@ -81,12 +80,10 @@ Jenkins **must** be started using the `.env` file.
 
 All required variables are defined in:
 
-> jenkins/env/.env.qa
+`jenkins/env/.env.qa`
 
 You only maintain this file.
 The Docker command never needs to change.
-
----
 
 ```bash
 docker run -d \
