@@ -8,19 +8,11 @@ printf '\n==> Running pre-commit checks...\n'
 # 1. Check code format using Spotless
 if ! ./gradlew -q spotlessCheck; then
 
-     # Check if we can ask the user (terminal available)
-     # Works in Mac, Linux, and Windows (Git Bash)
-     if [ -t 0 ] || [ -t 1 ] || [ -n "$MSYSTEM" ]; then
+     # Check if running in a terminal environment
+     # (Mac, Linux, Windows Git Bash)
+     if [ -t 0 ] || [ -t 1 ] ; then
         printf '\nCode is not formatted. Run spotlessApply? [y/n]: '
-
-        # Try to read user input from the real terminal
-        # This is needed because git hooks sometimes cannot read input
-        if [ -e /dev/tty ]; then
-            read REPLY < /dev/tty
-        else
-            # Fallback option if '/dev/tty' is not available
-            read REPLY
-        fi
+        read REPLY < /dev/tty
 
         # If user types "y", fix the code format
         if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
@@ -31,8 +23,8 @@ if ! ./gradlew -q spotlessCheck; then
             printf '\n[ERROR] Please format the code before committing.\n'
         fi
     else
-        # No terminal (example: IDE or CI)
-        # We cannot ask the user, so we just stop the commit
+        # No interactive terminal available (CI or IDE)
+        # Stop commit without asking user
         printf '\n[ERROR] Code is not formatted.\n'
         printf 'Run: ./gradlew spotlessApply\n'
     fi
