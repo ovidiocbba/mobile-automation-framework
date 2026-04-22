@@ -1,24 +1,46 @@
 #!/bin/sh
 
+# Pre-commit hook for code quality checks
+# This script runs before every commit
+
 printf '\n==> Running pre-commit checks...\n'
 
-# 1 Check formatting first
+# 1. Check code format using Spotless
 if ! ./gradlew -q spotlessCheck; then
-    printf '\nCode is not formatted. Run spotlessApply? [y/n]: '
-    read REPLY
 
-    if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
-        ./gradlew spotlessApply
-        printf '\n[FIXED] Code formatted.\n'
-        printf 'Run: git add -A && git commit again.\n'
+     # Check if we can ask the user (terminal available)
+     # Works in Mac, Linux, and Windows (Git Bash)
+     if [ -t 0 ] || [ -t 1 ] || [ -n "$MSYSTEM" ]; then
+        printf '\nCode is not formatted. Run spotlessApply? [y/n]: '
+
+        # Try to read user input from the real terminal
+        # This is needed because git hooks sometimes cannot read input
+        if [ -e /dev/tty ]; then
+            read REPLY < /dev/tty
+        else
+            # Fallback option if '/dev/tty' is not available
+            read REPLY
+        fi
+
+        # If user types "y", fix the code format
+        if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
+            ./gradlew spotlessApply
+            printf '\n[FIXED] Code formatted.\n'
+            printf 'Run: git add -A && git commit again.\n'
+        else
+            printf '\n[ERROR] Please format the code before committing.\n'
+        fi
     else
-        printf '\n[ERROR] Please format the code before committing.\n'
+        # No terminal (example: IDE or CI)
+        # We cannot ask the user, so we just stop the commit
+        printf '\n[ERROR] Code is not formatted.\n'
+        printf 'Run: ./gradlew spotlessApply\n'
     fi
 
     exit 1
 fi
 
-# 2 Now run static analysis
+# 2. Run static analysis (Checkstyle / PMD)
 if ! ./gradlew -q staticAnalysis; then
     printf '\n[ERROR] Checkstyle/PMD violations found. Review the report:\n'
     printf 'build/reports/checkstyle/\n'
@@ -26,4 +48,5 @@ if ! ./gradlew -q staticAnalysis; then
     exit 1
 fi
 
+# All checks passed
 printf '[OK] Pre-commit checks passed.\n'
