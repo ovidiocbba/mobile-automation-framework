@@ -1,9 +1,12 @@
 unclassified:
+  location:
+    adminAddress: "${SMTP_FROM}"
+
   # extendedEmailPublisher → Builds the rich HTML email used by emailext()
   email-ext:
     mailAccount:
-      smtpHost: "smtp.office365.com"
-      smtpPort: 587
+      smtpHost: "${SMTP_HOST}"
+      smtpPort: "${SMTP_PORT}"
       useTls: true
       smtpUsername: "${SMTP_USERNAME}"
       smtpPassword: "${SMTP_PASSWORD}"
@@ -15,8 +18,8 @@ unclassified:
 
   # mailer → Base SMTP engine that actually sends the email
   mailer:
-    smtpHost: "smtp.office365.com"
-    smtpPort: "587"
+    smtpHost: "${SMTP_HOST}"
+    smtpPort: "${SMTP_PORT}"
     useTls: true
     replyToAddress: "${SMTP_FROM}"
     authentication:
