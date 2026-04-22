@@ -81,12 +81,10 @@ Jenkins **must** be started using the `.env` file.
 
 All required variables are defined in:
 
-```
-jenkins/env/.env.qa
-```
+> jenkins/env/.env.qa
 
-> You only maintain this file.
-> The Docker command never needs to change.
+You only maintain this file.
+The Docker command never needs to change.
 
 ---
 
@@ -185,12 +183,12 @@ Start using Jenkins
 > Since this project uses Jenkins Configuration as Code, a **manual restart is required on the first run** to properly load the pipeline configuration.
 >
 > After Jenkins starts for the first time, restart the container:
->
-> ```bash
-> docker restart jenkins-mobile-automation
-> ```
->
-> Once restarted, all pipelines and configurations will be correctly loaded.
+
+```bash
+docker restart jenkins-mobile-automation
+```
+
+Once restarted, all pipelines and configurations will be correctly loaded.
 
 ![05-jenkins-is-now-ready-to-use.png](images/jenkins/05-jenkins-is-now-ready-to-use.png)
 
