@@ -193,14 +193,35 @@ pipeline {
 
         stage('Send Execution Email') {
             steps {
-                sh 'bash jenkins/scripts/generate-email-report.sh'
+
                 script {
+                    if (!fileExists('allure-report')) {
+                        error "Allure report not found. Skipping email."
+                    }
+                }
+
+                withEnv([
+                    "BRANCH=${params.BRANCH}",
+                    "EXECUTION=${params.EXECUTION}",
+                    "SCENARIO_TAG=${params.SCENARIO_TAG}",
+                    "BUILD_NUMBER=${env.BUILD_NUMBER}",
+                    "BUILD_URL=${env.BUILD_URL}"
+                ]) {
+                    sh "bash jenkins/scripts/generate-email-report.sh"
+                }
+
+                script {
+                    if (!fileExists('email-report.html')) {
+                        error "Email report not generated"
+                    }
+
                     def props = readProperties file: 'email.env'
                     env.EMAIL_SUBJECT = props.EMAIL_SUBJECT
 
-                    echo "Attempting to send email to: ${params.EMAILS}"
+                    echo "Sending email to: ${params.EMAILS}"
                     echo "Subject: ${env.EMAIL_SUBJECT}"
                 }
+
                 emailext (
                     subject: env.EMAIL_SUBJECT,
                     mimeType: 'text/html',
